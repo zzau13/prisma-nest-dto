@@ -6,30 +6,22 @@
 - Add per model index and default reexport
 - Add support for class-validator by comment, by name, (in future by @db annotations)
 - Refactor decimal.js to number and use hard cast from prisma client return type
+- Add short imports paths using typescript baseURL and paths options
+- Simplify comment annotations and remove boilerplate 
 - Ideas ?
 
-# Prisma Generator NestJS DTO
+# Prisma Generator NestJS
 
-[![Release](https://badge.fury.io/js/%40vegardit%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@vegardit/prisma-generator-nestjs-dto)
-[![License](https://img.shields.io/github/license/vegardit/prisma-generator-nestjs-dto.svg?label=license)](#license)
-
-1. [What is it?](#what-is-it)
-1. [Usage](#usage)
-1. [Annotations](#annotations)
-1. [Example](#example)
-1. [Principles](#principles)
-1. [License](#license)
-
-## <a name="what-is-it"></a>What is it?
+## What is it?
 
 Generates `ConnectDTO`, `CreateDTO`, `UpdateDTO`, and `Entity` classes for models in your Prisma Schema. This is useful if you want to leverage [OpenAPI](https://docs.nestjs.com/openapi/introduction) in your [NestJS](https://nestjs.com/) application - but also helps with GraphQL resources as well). NestJS Swagger requires input parameters in [controllers to be described through classes](https://docs.nestjs.com/openapi/types-and-parameters) because it leverages TypeScript's emitted metadata and `Reflection` to generate models/components for the OpenAPI spec. It does the same for response models/components on your controller methods.
 
 These classes can also be used with the built-in [ValidationPipe](https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe) and [Serialization](https://docs.nestjs.com/techniques/serialization).
 
-## <a name="usage"></a>Usage?
+## Usage?
 
 ```sh
-npm install --save-dev @vegardit/prisma-generator-nestjs-dto
+npm install --save-dev prisma-generator-nestjs
 ```
 
 ```prisma
@@ -218,7 +210,7 @@ export class Question {
 
 </details>
 
-## <a name="principles"></a>Principles
+## Principles
 
 Generally we read field properties from the `DMMF.Field` information provided by `@prisma/generator-helper`. Since a few scenarios don't become quite clear from that, we also check for additional [annotations](#annotations) (or `decorators`) in a field's `documentation` (that is anything provided as a [tripple slash comments](https://www.prisma.io/docs/concepts/components/prisma-schema#comments) for that field in your `prisma.schema`).
 
@@ -235,7 +227,7 @@ A `Model`s `ConnectDTO` class is composed from a unique'd list of `isId` and `is
 ### CreateDTO
 
 This kind of DTO represents the structure of input-data to expect from 'outside' (e.g. REST API consumer) when attempting to `create` a new instance of a `Model`.
-Typically the requirements for database schema differ from what we want to allow users to do.
+Typically, the requirements for database schema differ from what we want to allow users to do.
 As an example (and this is the opinion represented in this generator), we don't think that relation scalar fields should be exposed to users for `create`, `update`, or `delete` activities (btw. TypeScript types generated in PrismaClient exclude these fields as well). If however, your schema defines a required relation, creating an entity of that Model would become quite difficult without the relation data.
 In some cases you can derive information regarding related instances from context (e.g. HTTP path on the rest endpoint `/api/post/:postid/comment` to create a `Comment` with relation to a `Post`). For all other cases, we have the
 
@@ -285,7 +277,7 @@ Relation and [relation scalar](https://www.prisma.io/docs/concepts/components/pr
   - the relation was originally flagged as required (`isRequired = true`)
   - the relation field is annotated with `@DtoRelationRequired` (do this when you mark a relation as optional in PrismaSchema because you don't want (SQL) `ON DELETE CASCADE` behavior - but your logical data schema sees this relation as required)
 
-## <a name="license"></a>License
+## License
 
 All files are released under the [Apache License 2.0](https://github.com/vegardit/prisma-generator-nestjs-dto/blob/master/LICENSE).
 This project is a fork from [https://github.com/vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
