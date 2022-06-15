@@ -1,3 +1,13 @@
+# Refactor roadmap
+- Fix unused model fields (ids, uniques,..) when generate
+- Create various dto depending on index fields
+- Refactor generated classes with composition
+- Add extension.{entity,dto}.ts files for implement complex structures
+- Add per model index and default reexport
+- Add support for class-validator by comment, by name, (in future by @db annotations)
+- Refactor decimal.js to number and use hard cast from prisma client return type
+- Ideas ?
+
 # Prisma Generator NestJS DTO
 
 [![Release](https://badge.fury.io/js/%40vegardit%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@vegardit/prisma-generator-nestjs-dto)
@@ -278,3 +288,4 @@ Relation and [relation scalar](https://www.prisma.io/docs/concepts/components/pr
 ## <a name="license"></a>License
 
 All files are released under the [Apache License 2.0](https://github.com/vegardit/prisma-generator-nestjs-dto/blob/master/LICENSE).
+This project is a fork from [https://github.com/vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)

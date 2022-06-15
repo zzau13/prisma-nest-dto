@@ -35,9 +35,8 @@ export const isAnnotatedWithOneOf = (
 // relationToFields,
 // relationOnDelete,
 
-export const isId = (field: DMMF.Field): boolean => {
-  return field.isId;
-};
+// TODO: Despite the amount of weed that I have smoked, I have realized this shit. What about multiple columns id's? Or uniques?
+export const isId = (field: DMMF.Field): boolean => field.isId;
 
 export const isRequired = (field: DMMF.Field): boolean => {
   return field.isRequired;

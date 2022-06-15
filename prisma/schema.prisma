@@ -59,3 +59,10 @@ model Company {
   id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   Product Product[]
 }
+
+model Another {
+  id1 String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id2 String @db.Uuid
+
+  @@id([id1, id2])
+}

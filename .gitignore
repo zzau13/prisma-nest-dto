@@ -3,3 +3,6 @@ coverage
 dist
 .env
 /src/@generated
+.gitignore
+package-lock.json
+.idea
