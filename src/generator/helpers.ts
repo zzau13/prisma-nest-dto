@@ -12,8 +12,9 @@ import type { DMMF } from '@prisma/generator-helper';
 import type { TemplateHelpers } from './template-helpers';
 import type { ImportStatementParams, Model, ParsedField } from './types';
 
-export const uniq = <T = any>(input: T[]): T[] => Array.from(new Set(input));
-export const concatIntoArray = <T = any>(source: T[], target: T[]) =>
+export const uniq = <T = unknown>(input: T[]): T[] =>
+  Array.from(new Set(input));
+export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
   source.forEach((item) => target.push(item));
 
 export const makeImportsFromPrismaClient = (

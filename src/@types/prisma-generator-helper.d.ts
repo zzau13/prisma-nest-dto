@@ -49,7 +49,7 @@ declare module '@prisma/generator-helper' {
       uniqueIndexes: uniqueIndex[];
       documentation?: string;
       idFields: string[];
-      [key: string]: any;
+      [key: string]: unknown;
     }
     type FieldKind = 'scalar' | 'object' | 'enum' | 'unsupported';
     type FieldNamespace = 'model' | 'prisma';
@@ -77,11 +77,11 @@ declare module '@prisma/generator-helper' {
       relationOnDelete?: string;
       relationName?: string;
       documentation?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     }
     interface FieldDefault {
       name: string;
-      args: any[];
+      args: unknown[];
     }
     interface Schema {
       rootQueryType?: string;
@@ -161,14 +161,14 @@ declare module '@prisma/generator-helper' {
       plural: string;
       findUnique?: string | null;
       findFirst?: string | null;
-      findMany?: string | null;
+      findMunknown?: string | null;
       create?: string | null;
-      createMany?: string | null;
+      createMunknown?: string | null;
       update?: string | null;
-      updateMany?: string | null;
+      updateMunknown?: string | null;
       upsert?: string | null;
       delete?: string | null;
-      deleteMany?: string | null;
+      deleteMunknown?: string | null;
       aggregate?: string | null;
       groupBy?: string | null;
       count?: string | null;
@@ -176,14 +176,14 @@ declare module '@prisma/generator-helper' {
     enum ModelAction {
       findUnique = 'findUnique',
       findFirst = 'findFirst',
-      findMany = 'findMany',
+      findMunknown = 'findMunknown',
       create = 'create',
-      createMany = 'createMany',
+      createMunknown = 'createMunknown',
       update = 'update',
-      updateMany = 'updateMany',
+      updateMunknown = 'updateMunknown',
       upsert = 'upsert',
       delete = 'delete',
-      deleteMany = 'deleteMany',
+      deleteMunknown = 'deleteMunknown',
       groupBy = 'groupBy',
       count = 'count',
       aggregate = 'aggregate',
@@ -195,13 +195,13 @@ declare module '@prisma/generator-helper' {
     type Request = {
       jsonrpc: '2.0';
       method: string;
-      params?: any;
+      params?: unknown;
       id: number;
     };
     type Response = SuccessResponse | ErrorResponse;
     type SuccessResponse = {
       jsonrpc: '2.0';
-      result: any;
+      result: unknown;
       id: number;
     };
     type ErrorResponse = {
@@ -209,7 +209,7 @@ declare module '@prisma/generator-helper' {
       error: {
         code: number;
         message: string;
-        data: any;
+        data: unknown;
       };
       id: number;
     };
@@ -297,7 +297,7 @@ declare module '@prisma/generator-helper' {
 
   // generatorHandler.d.ts
   export interface Handler {
-    onGenerate(options: GeneratorOptions): Promise<any>;
+    onGenerate(options: GeneratorOptions): Promise<unknown>;
     onManifest?(config: GeneratorConfig): GeneratorManifest;
   }
   export function generatorHandler(handler: Handler): void;
@@ -306,15 +306,15 @@ declare module '@prisma/generator-helper' {
   import { ChildProcessByStdio } from 'child_process';
   export class GeneratorError extends Error {
     code: number;
-    data?: any;
-    constructor(message: string, code: number, data?: any);
+    data?: unknown;
+    constructor(message: string, code: number, data?: unknown);
   }
   export class GeneratorProcess {
     private executablePath;
     private isNode?;
-    child?: ChildProcessByStdio<any, any, any>;
+    child?: ChildProcessByStdio<never, never, never>;
     listeners: {
-      [key: string]: (result: any, err?: Error) => void;
+      [key: string]: (result: unknown, err?: Error) => void;
     };
     private exitCode;
     private stderrLogs;
@@ -330,6 +330,6 @@ declare module '@prisma/generator-helper' {
     private getMessageId;
     stop(): void;
     getManifest(config: GeneratorConfig): Promise<GeneratorManifest | null>;
-    generate(options: GeneratorOptions): Promise<any>;
+    generate(options: GeneratorOptions): Promise<unknown>;
   }
 }

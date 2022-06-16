@@ -6,4 +6,3 @@ dist
 .gitignore
 package-lock.json
 .idea
-.eslintcache

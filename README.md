@@ -1,4 +1,5 @@
 # Refactor roadmap
+
 - Fix unused model fields (ids, uniques,..) when generate
 - Create various dto depending on index fields
 - Refactor generated classes with composition
@@ -7,7 +8,7 @@
 - Add support for class-validator by comment, by name, (in future by @db annotations)
 - Refactor decimal.js to number and use hard cast from prisma client return type
 - Add short imports paths using typescript baseURL and paths options
-- Simplify comment annotations and remove boilerplate 
+- Simplify comment annotations and remove boilerplate
 - Ideas ?
 
 # Prisma Generator NestJS
@@ -63,7 +64,7 @@ Annotations provide additional information to help this generator understand you
 model Post {
   /// @DtoCreateOptional
   /// @DtoUpdateHidden
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 ```
 

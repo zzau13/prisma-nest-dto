@@ -34,16 +34,19 @@ export const scalarToTS = (scalar: string, useInputTypes = false): string => {
 
 export const echo = (input: string) => input;
 
-export const when = (condition: any, thenTemplate: string, elseTemplate = '') =>
-  condition ? thenTemplate : elseTemplate;
+export const when = (
+  condition: unknown,
+  thenTemplate: string,
+  elseTemplate = '',
+) => (condition ? thenTemplate : elseTemplate);
 
 export const unless = (
-  condition: any,
+  condition: unknown,
   thenTemplate: string,
   elseTemplate = '',
 ) => (!condition ? thenTemplate : elseTemplate);
 
-export const each = <T = any>(
+export const each = <T = unknown>(
   arr: Array<T>,
   fn: (item: T) => string,
   joinWith = '',
