@@ -63,33 +63,10 @@ export const isRelation = (field: DMMF.Field): boolean => {
 export const isIdWithDefaultValue = (field: DMMF.Field): boolean =>
   isId(field) && hasDefaultValue(field);
 
-/**
- * checks if a DMMF.Field either has `isReadOnly` property or is annotated with
- * `@DtoReadOnly` comment.
- *
- * **Note:** this also removes relation scalar fields as they are marked as `isReadOnly`
- *
- * @param {FieldClassifierParam} param
- * @returns {boolean}
- */
 export const isReadOnly = (field: DMMF.Field): boolean =>
   field.isReadOnly || isAnnotatedWith(field, DTO_READ_ONLY);
 
-export const isUpdatedAt = (field: DMMF.Field): boolean => {
-  return field.isUpdatedAt;
-};
+export const isUpdatedAt = (field: DMMF.Field): boolean => !!field.isUpdatedAt;
 
-/**
- * for schema-required fields that fallback to a default value when empty.
- *
- * Think: `createdAt` timestamps
- *
- * @example
- * ```prisma
- *  model Post {
- *    createdAt   DateTime @default(now())
- *  }
- *  ```
- */
 export const isRequiredWithDefaultValue = (field: DMMF.Field): boolean =>
   isRequired(field) && hasDefaultValue(field);
