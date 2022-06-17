@@ -31,7 +31,7 @@ export const generate = (options: GeneratorOptions) => {
     dtoSuffix = 'Dto',
     entityPrefix = '',
     entitySuffix = '',
-    fileNamingStyle = 'camel',
+    fileNamingStyle = 'kebab',
   } = options.generator.config;
 
   const exportRelationModifierClasses = stringToBoolean(
@@ -41,15 +41,10 @@ export const generate = (options: GeneratorOptions) => {
 
   const outputToNestJsResourceStructure = stringToBoolean(
     options.generator.config.outputToNestJsResourceStructure,
-    // using `true` as default value would be a breaking change
     false,
   );
 
-  const reExport = stringToBoolean(
-    options.generator.config.reExport,
-    // using `true` as default value would be a breaking change
-    false,
-  );
+  const reExport = stringToBoolean(options.generator.config.reExport, false);
 
   const supportedFileNamingStyles = ['kebab', 'camel', 'pascal', 'snake'];
   const isSupportedFileNamingStyle = (style: string): style is NamingStyle =>

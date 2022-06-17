@@ -35,7 +35,7 @@ export const run = ({
   const {
     exportRelationModifierClasses,
     outputToNestJsResourceStructure,
-    fileNamingStyle = 'camel',
+    fileNamingStyle,
     ...preAndSuffixes
   } = options;
 
