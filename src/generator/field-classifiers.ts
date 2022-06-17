@@ -35,8 +35,10 @@ export const isAnnotatedWithOneOf = (
 // relationToFields,
 // relationOnDelete,
 
-// TODO: Despite the amount of weed that I have smoked, I have realized this shit. What about multiple columns id's? Or uniques?
-export const isId = (field: DMMF.Field): boolean => field.isId;
+export const isId = (
+  field: DMMF.Field,
+  primaryKey: DMMF.PrimaryKey | null,
+): boolean => field.isId || !!primaryKey?.fields.includes(field.name);
 
 export const isRequired = (field: DMMF.Field): boolean => {
   return field.isRequired;
@@ -60,8 +62,10 @@ export const isRelation = (field: DMMF.Field): boolean => {
   return kind === 'object' /* && relationName */;
 };
 
-export const isIdWithDefaultValue = (field: DMMF.Field): boolean =>
-  isId(field) && hasDefaultValue(field);
+export const isIdWithDefaultValue = (
+  field: DMMF.Field,
+  primaryKey: DMMF.PrimaryKey | null,
+): boolean => isId(field, primaryKey) && hasDefaultValue(field);
 
 export const isReadOnly = (field: DMMF.Field): boolean =>
   field.isReadOnly || isAnnotatedWith(field, DTO_READ_ONLY);

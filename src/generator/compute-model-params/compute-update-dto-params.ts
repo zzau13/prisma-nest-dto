@@ -83,7 +83,7 @@ export const computeUpdateDtoParams = ({
     const isDtoOptional = isAnnotatedWith(field, DTO_UPDATE_OPTIONAL);
 
     if (!isDtoOptional) {
-      if (isId(field)) return result;
+      if (isId(field, model.primaryKey)) return result;
       if (isUpdatedAt(field)) return result;
       if (isRequiredWithDefaultValue(field)) return result;
     }

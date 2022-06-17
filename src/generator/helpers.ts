@@ -111,7 +111,7 @@ export const getRelationConnectInputFields = ({
   });
 
   const idFields = relatedModel.fields.filter((relatedModelField) =>
-    isId(relatedModelField),
+    isId(relatedModelField, relatedModel.primaryKey),
   );
 
   const uniqueFields = relatedModel.fields.filter((relatedModelField) =>

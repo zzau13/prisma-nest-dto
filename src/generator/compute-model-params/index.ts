@@ -16,7 +16,6 @@ export const computeModelParams = ({
   allModels,
   templateHelpers,
 }: ComputeModelParamsParam): ModelParams => ({
-  // TODO find out if model needs `ConnectDTO`
   connect: computeConnectDtoParams({ model }),
   create: computeCreateDtoParams({
     model,

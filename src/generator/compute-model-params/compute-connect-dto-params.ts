@@ -7,10 +7,13 @@ import type { ConnectDtoParams } from '../types';
 interface ComputeConnectDtoParamsParam {
   model: DMMF.Model;
 }
+// TODO: various connects using unique fields
 export const computeConnectDtoParams = ({
   model,
 }: ComputeConnectDtoParamsParam): ConnectDtoParams => {
-  const idFields = model.fields.filter((field) => isId(field));
+  const idFields = model.fields.filter((field) =>
+    isId(field, model.primaryKey),
+  );
   const isUniqueFields = model.fields.filter((field) => isUnique(field));
 
   /**
