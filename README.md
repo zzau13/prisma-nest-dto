@@ -1,6 +1,7 @@
 # Refactor roadmap
 
 - Fix unused model fields (ids, uniques,..) when generate
+- Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast
 - Create various dto depending on index fields
 - Refactor generated classes with composition
 - Add extension.{entity,dto}.ts files for implement complex structures

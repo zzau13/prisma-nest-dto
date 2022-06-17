@@ -27,27 +27,22 @@ interface RunParam {
   fileNamingStyle: NamingStyle;
 }
 
+const transformers: Record<NamingStyle, (str: string) => string> = {
+  camel,
+  kebab,
+  pascal,
+  snake,
+};
+
 export const run = ({
   output,
   dmmf,
-  ...options
+  exportRelationModifierClasses,
+  outputToNestJsResourceStructure,
+  fileNamingStyle,
+  ...preAndSuffixes
 }: RunParam): WriteableFileSpecs[] => {
-  const {
-    exportRelationModifierClasses,
-    outputToNestJsResourceStructure,
-    fileNamingStyle,
-    ...preAndSuffixes
-  } = options;
-
-  const transformers: Record<NamingStyle, (str: string) => string> = {
-    camel,
-    kebab,
-    pascal,
-    snake,
-  };
-
   const transformFileNameCase = transformers[fileNamingStyle];
-
   const templateHelpers = makeHelpers({
     transformFileNameCase,
     transformClassNameCase: pascal,
@@ -57,8 +52,6 @@ export const run = ({
 
   const filteredModels: Model[] = allModels
     .filter((model) => !isAnnotatedWith(model, DTO_IGNORE_MODEL))
-    // adds `output` information for each model so we can compute relative import paths
-    // this assumes that NestJS resource modules (more specifically their folders on disk) are named as `transformFileNameCase(model.name)`
     .map((model) => ({
       ...model,
       output: {
