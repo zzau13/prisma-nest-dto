@@ -1,3 +1,5 @@
+import * as deco from 'class-validator/cjs/decorator/decorators';
+
 export const DTO_IGNORE_MODEL = /@DtoIgnoreModel/;
 export const DTO_READ_ONLY = /@DtoReadOnly/;
 export const DTO_ENTITY_HIDDEN = /@DtoEntityHidden/;
@@ -26,3 +28,8 @@ export const DTO_RELATION_MODIFIERS_ON_UPDATE = [
   DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
   DTO_RELATION_CAN_CONNECT_ON_UPDATE,
 ];
+
+const DECO: readonly string[] = Object.keys(deco).filter(
+  (x) => !!x && /^[A-Z][a-z]/.test(x),
+);
+export const IsDecoValidator = (x: string) => DECO.includes(x);
