@@ -9,9 +9,13 @@ export const generateConnectDto = ({
   fields,
   templateHelpers: t,
 }: GenerateConnectDtoParam) => {
+  const name = t.connectDtoName(model.name);
   const template = `
-  export class ${t.connectDtoName(model.name)} {
-    ${t.fieldsToDtoProps(fields, true)}
+  export class ${name} {
+    ${t.fieldsToDtoProps(
+      fields.map((x) => ({ ...x, isRequired: true })),
+      true,
+    )}
   }
   `;
 
