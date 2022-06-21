@@ -32,7 +32,6 @@ generator nestjsDto {
   output                          = "../src/generated/nestjs-dto"
   outputToNestJsResourceStructure = "false"
   exportRelationModifierClasses   = "true"
-  reExport                        = "false"
   createDtoPrefix                 = "Create"
   updateDtoPrefix                 = "Update"
   dtoSuffix                       = "Dto"

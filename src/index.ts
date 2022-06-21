@@ -44,8 +44,6 @@ export const generate = (options: GeneratorOptions) => {
     false,
   );
 
-  const reExport = stringToBoolean(options.generator.config.reExport, false);
-
   const supportedFileNamingStyles = ['kebab', 'camel', 'pascal', 'snake'];
   const isSupportedFileNamingStyle = (style: string): style is NamingStyle =>
     supportedFileNamingStyles.includes(style);
@@ -74,20 +72,33 @@ export const generate = (options: GeneratorOptions) => {
 
   const indexCollections: Record<string, WriteableFileSpecs> = {};
 
-  if (reExport) {
-    results.forEach(({ fileName }) => {
-      const dirName = path.dirname(fileName);
+  results.forEach(({ fileName }) => {
+    const dirName = path.dirname(fileName);
+    const parentDir = path.dirname(dirName);
 
-      const { [dirName]: fileSpec } = indexCollections;
-      indexCollections[dirName] = {
-        fileName: fileSpec?.fileName || path.join(dirName, 'index.ts'),
-        content: [
-          fileSpec?.content || '',
-          `export * from './${path.basename(fileName, '.ts')}';`,
-        ].join('\n'),
+    const { [dirName]: fileSpec } = indexCollections;
+    indexCollections[dirName] = {
+      fileName: fileSpec?.fileName || path.join(dirName, 'index.ts'),
+      content: [
+        fileSpec?.content || "export * from './__extension.entity';",
+        `export * from './${path.basename(fileName, '.ts')}';`,
+      ].join('\n'),
+    };
+
+    if (!indexCollections[parentDir])
+      indexCollections[parentDir] = {
+        fileName: path.join(parentDir, 'index.ts'),
+        content:
+          "export * from './__extension.entity';\nexport * from './dto';\nexport * from './entities';\n",
       };
-    });
-  }
+  });
+
+  const extensionsCollections = Object.values(indexCollections).map(
+    ({ fileName }) => ({
+      content: 'export {};\n',
+      fileName: path.join(path.dirname(fileName), '__extension.entity.ts'),
+    }),
+  );
 
   return Promise.all(
     results
@@ -95,7 +106,15 @@ export const generate = (options: GeneratorOptions) => {
       .map(async ({ fileName, content }) => {
         await makeDir(path.dirname(fileName));
         return fs.writeFile(fileName, content);
-      }),
+      })
+      .concat(
+        extensionsCollections.map(async ({ fileName, content }) => {
+          if (!(await fs.stat(fileName).catch(() => false))) {
+            await makeDir(path.dirname(fileName));
+            return fs.writeFile(fileName, content);
+          }
+        }),
+      ),
   );
 };
 
