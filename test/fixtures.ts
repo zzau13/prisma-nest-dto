@@ -1,10 +1,11 @@
-import { globby } from 'globby';
-import { readFile } from 'fs/promises';
-import { getConfig, getDMMF } from '@prisma/sdk';
-import path from 'path';
-import { parseOptions } from '../src/generate';
 import { expect } from 'vitest';
+import { readFile } from 'fs/promises';
+import path from 'path';
+import { globby } from 'globby';
+import { getConfig, getDMMF } from '@prisma/sdk';
+
 import { run } from '../src/generator';
+import { parseOptions } from '../src/options';
 
 const getFixtures = async (baseDir: string) => {
   const files = await globby(baseDir);

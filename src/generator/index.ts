@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { camel, pascal, kebab, snake } from 'case';
 import { logger } from '@prisma/sdk';
+
 import { makeHelpers } from './template-helpers';
 import { computeModelParams } from './compute-model-params';
 import { generateConnectDto } from './generate-connect-dto';
@@ -9,24 +10,9 @@ import { generateUpdateDto } from './generate-update-dto';
 import { generateEntity } from './generate-entity';
 import { DTO_IGNORE_MODEL } from './annotations';
 import { isAnnotatedWith } from './field-classifiers';
+import { NamingStyle, Model } from './types';
 
-import type { DMMF } from '@prisma/generator-helper';
-import { NamingStyle, Model, WriteableFileSpecs } from './types';
-
-interface RunParam {
-  output: string;
-  dmmf: DMMF.Document;
-  exportRelationModifierClasses: boolean;
-  outputToNestJsResourceStructure: boolean;
-  connectDtoPrefix: string;
-  createDtoPrefix: string;
-  updateDtoPrefix: string;
-  dtoSuffix: string;
-  entityPrefix: string;
-  entitySuffix: string;
-  fileNamingStyle: NamingStyle;
-  decimalAsNumber: boolean;
-}
+import { parseOptions } from '../options';
 
 const transformers: Record<NamingStyle, (str: string) => string> = {
   camel,
@@ -42,7 +28,7 @@ export const run = ({
   outputToNestJsResourceStructure,
   fileNamingStyle,
   ...preAndSuffixes
-}: RunParam): WriteableFileSpecs[] => {
+}: ReturnType<typeof parseOptions>) => {
   const transformFileNameCase = transformers[fileNamingStyle];
   const templateHelpers = makeHelpers({
     transformFileNameCase,

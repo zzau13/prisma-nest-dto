@@ -22,12 +22,6 @@ export interface ParsedField {
   isNullable?: boolean;
 }
 
-export interface ExtraModel {
-  originalName: string;
-  preAndPostfixedName: string;
-  isLocal?: boolean;
-}
-
 export interface ImportStatementParams {
   from: string;
   /**
@@ -74,10 +68,5 @@ export interface ModelParams {
   update: UpdateDtoParams;
   entity: EntityParams;
 }
-
-export type WriteableFileSpecs = {
-  fileName: string;
-  content: string;
-};
 
 export type NamingStyle = 'snake' | 'camel' | 'pascal' | 'kebab';
