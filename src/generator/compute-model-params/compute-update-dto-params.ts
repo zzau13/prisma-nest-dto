@@ -50,8 +50,11 @@ export const computeUpdateDtoParams = ({
   const relationScalarFieldNames = Object.keys(relationScalarFields);
 
   const fields = model.fields.reduce((result, field) => {
-    const { name } = field;
-    const overrides: Partial<DMMF.Field> = { isRequired: false };
+    const { name, isRequired } = field;
+    const overrides: Partial<DMMF.Field> = {
+      isNullable: !isRequired,
+      isRequired: false,
+    };
 
     if (isReadOnly(field)) return result;
     if (isRelation(field)) {

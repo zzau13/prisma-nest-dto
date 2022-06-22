@@ -49,15 +49,15 @@ import {Prisma} from '@prisma/client'
 
 
 export class UpdateProductDto {
-  name?: string;
-description?: string;
-images?: Prisma.InputJsonValue[];
-highlighted?: boolean;
-reviewCount?: number;
-attributes?: Prisma.InputJsonValue;
-score?: number;
-createdAt?: Date;
-updatedAt?: Date;
+  name?: string ;
+description?: string ;
+images?: Prisma.JsonValue[] ;
+highlighted?: boolean  | null;
+reviewCount?: number  | null;
+attributes?: Prisma.JsonValue  | null;
+score?: number  | null;
+createdAt?: Date ;
+updatedAt?: Date ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",

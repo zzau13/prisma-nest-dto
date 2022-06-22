@@ -24,6 +24,6 @@ ${t.each(
 
 ${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
 export class ${t.updateDtoName(model.name)} {
-  ${t.fieldsToDtoProps(fields, true)}
+  ${t.fieldsToEntityProps(fields)}
 }
 `;
