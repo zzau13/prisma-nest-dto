@@ -1,16 +1,14 @@
-# Refactor roadmap
+# Refactor roadmap and priority
 
-- Fix unused model fields (ids, uniques,..) when generate
+- ~~Fix unused model fields (ids, uniques,..) when generate~~
+- ~~Refactor generated classes with composition~~
+- ~~Add extension.{entity,dto}.ts files for implement complex structures~~
+- ~~Add per model index and default reexport~~
+- ~~Refactor decimal.js to number and use hard cast from prisma client return type~~
 - Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast
-- Create various dto depending on index fields
-- Refactor generated classes with composition
-- Add extension.{entity,dto}.ts files for implement complex structures
-- Add per model index and default reexport
-- Add support for class-validator by comment, by name, (in future by @db annotations)
-- Refactor decimal.js to number and use hard cast from prisma client return type
-- Add short imports paths using typescript baseURL and paths options
 - Simplify comment annotations and remove boilerplate
-- Ideas ?
+- Add support for class-validator by comment, by name, (in future by @db annotations)
+- Create various dto depending on index fields
 
 # Prisma Generator NestJS
 
