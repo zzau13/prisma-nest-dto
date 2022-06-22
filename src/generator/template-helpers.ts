@@ -1,20 +1,21 @@
 import { ImportStatementParams, ParsedField } from './types';
 
-const PrismaScalarToTypeScript = (decimalAsNumber: boolean) => ({
-  String: 'string',
-  Boolean: 'boolean',
-  Int: 'number',
-  // [Working with BigInt](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bigint)
-  BigInt: 'bigint',
-  Float: 'number',
-  // [Working with Decimal](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-decimal)
-  Decimal: decimalAsNumber ? 'number' : 'Prisma.Decimal',
-  DateTime: 'Date',
-  // [working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
-  Json: 'Prisma.JsonValue',
-  // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)
-  Bytes: 'Buffer',
-});
+const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
+  ({
+    String: 'string',
+    Boolean: 'boolean',
+    Int: 'number',
+    // [Working with BigInt](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bigint)
+    BigInt: 'bigint',
+    Float: 'number',
+    // [Working with Decimal](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-decimal)
+    Decimal: decimalAsNumber ? 'number' : 'Prisma.Decimal',
+    DateTime: 'Date',
+    // [working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
+    Json: 'Prisma.JsonValue',
+    // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)
+    Bytes: 'Buffer',
+  } as const);
 
 const _scalarToTS = (table: ReturnType<typeof PrismaScalarToTypeScript>) => {
   const knownPrismaScalarTypes = Object.keys(table);
