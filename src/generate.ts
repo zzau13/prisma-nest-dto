@@ -21,13 +21,9 @@ export const stringToBoolean = (input: string, defaultValue = false) => {
 };
 
 export const parseOptions = ({
-  config,
-  output,
+  generator: { config, output },
   dmmf,
-}: Pick<GeneratorOptions, 'dmmf'> & {
-  config: Record<string, string>;
-  output: EnvValue | null;
-}) => {
+}: Pick<GeneratorOptions, 'dmmf' | 'generator'>) => {
   const parsedOutput = output ? parseEnvValue(output) : '';
   const {
     connectDtoPrefix = 'Connect',
@@ -124,11 +120,8 @@ const writeFiles = (files: ReturnType<typeof completeFiles>) =>
     }),
   );
 
-export const generate = ({
-  generator: { output, config },
-  dmmf,
-}: GeneratorOptions) => {
-  const parsedOptions = parseOptions({ dmmf, output, config });
+export const generate = (options: GeneratorOptions) => {
+  const parsedOptions = parseOptions(options);
   const results = run(parsedOptions);
   const final = completeFiles(results);
 

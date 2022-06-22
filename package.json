@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
-    "test": "DATABASE_URL=postgresql://localhost:5432/prisma jest",
+    "test:watch": "DATABASE_URL=postgresql://localhost:5432/prisma vitest test.ts",
+    "test": "pnpm test:watch --run",
     "prerelease": "pnpm fix && pnpm test && pnpm build",
     "release": "release-it",
     "fix": "pnpm lint && pnpm fmt",
@@ -44,7 +45,7 @@
     "prisma-generator-nestjs": "dist/cli.js"
   },
   "engines": {
-    "node": ">=14.18"
+    "node": ">=16.15"
   },
   "files": [
     "dist"
@@ -72,16 +73,16 @@
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "globby": "^13.1.2",
     "husky": "^8.0.1",
-    "jest": "^28.1.1",
     "lint-staged": "^13.0.1",
     "prettier": "^2.7.0",
     "prettier-plugin-prisma": "^3.14.0",
     "prisma": "^3.15.2",
     "release-it": "^15.0.0",
-    "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "vitest": "^0.15.2"
   },
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",

@@ -7,9 +7,7 @@
     "lib": ["esnext"],
     "outDir": "dist",
     "removeComments": true,
-    "rootDir": "src",
-    "strict": true,
-    "target": "es2018"
+    "strict": true
   },
   "exclude": ["node_modules", "coverage", "dist"]
 }
