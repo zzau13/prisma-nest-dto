@@ -29,15 +29,16 @@ npm install --save-dev prisma-generator-nestjs
 ```prisma
 generator nestjsDto {
   provider                        = "prisma-generator-nestjs-dto"
-  output                          = "../src/generated/nestjs-dto"
-  outputToNestJsResourceStructure = "false"
+  output                          = "../src/model"
+  outputToNestJsResourceStructure = "true"
   exportRelationModifierClasses   = "true"
   createDtoPrefix                 = "Create"
   updateDtoPrefix                 = "Update"
   dtoSuffix                       = "Dto"
   entityPrefix                    = ""
   entitySuffix                    = ""
-  fileNamingStyle                 = "camel"
+  fileNamingStyle                 = "kebak"
+  decimalAsNumber                 = "false"
 }
 ```
 

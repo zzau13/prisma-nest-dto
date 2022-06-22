@@ -1,6 +1,6 @@
 import { ImportStatementParams, ParsedField } from './types';
 
-const PrismaScalarToTypeScript: Record<string, string> = {
+const PrismaScalarToTypeScript = (decimalAsNumber: boolean) => ({
   String: 'string',
   Boolean: 'boolean',
   Int: 'number',
@@ -8,28 +8,29 @@ const PrismaScalarToTypeScript: Record<string, string> = {
   BigInt: 'bigint',
   Float: 'number',
   // [Working with Decimal](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-decimal)
-  Decimal: 'Prisma.Decimal',
+  Decimal: decimalAsNumber ? 'number' : 'Prisma.Decimal',
   DateTime: 'Date',
   // [working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
   Json: 'Prisma.JsonValue',
   // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)
   Bytes: 'Buffer',
-};
+});
 
-const knownPrismaScalarTypes = Object.keys(PrismaScalarToTypeScript);
+const _scalarToTS = (table: ReturnType<typeof PrismaScalarToTypeScript>) => {
+  const knownPrismaScalarTypes = Object.keys(table);
+  return (scalar: string, useInputTypes = false): string => {
+    if (!knownPrismaScalarTypes.includes(scalar)) {
+      throw new Error(`Unrecognized scalar type: ${scalar}`);
+    }
 
-export const scalarToTS = (scalar: string, useInputTypes = false): string => {
-  if (!knownPrismaScalarTypes.includes(scalar)) {
-    throw new Error(`Unrecognized scalar type: ${scalar}`);
-  }
+    // [Working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
+    // supports different types for input / output. `Prisma.InputJsonValue` extends `Prisma.JsonValue` with `undefined`
+    if (useInputTypes && scalar === 'Json') {
+      return 'Prisma.InputJsonValue';
+    }
 
-  // [Working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
-  // supports different types for input / output. `Prisma.InputJsonValue` extends `Prisma.JsonValue` with `undefined`
-  if (useInputTypes && scalar === 'Json') {
-    return 'Prisma.InputJsonValue';
-  }
-
-  return PrismaScalarToTypeScript[scalar];
+    return table[scalar as keyof typeof table];
+  };
 };
 
 export const echo = (input: string) => input;
@@ -91,6 +92,7 @@ interface MakeHelpersParam {
   entitySuffix: string;
   transformClassNameCase?: (item: string) => string;
   transformFileNameCase?: (item: string) => string;
+  decimalAsNumber: boolean;
 }
 export const makeHelpers = ({
   connectDtoPrefix,
@@ -101,6 +103,7 @@ export const makeHelpers = ({
   entitySuffix,
   transformClassNameCase = echo,
   transformFileNameCase = echo,
+  decimalAsNumber,
 }: MakeHelpersParam) => {
   const className = (name: string, prefix = '', suffix = '') =>
     `${prefix}${transformClassNameCase(name)}${suffix}`;
@@ -135,6 +138,7 @@ export const makeHelpers = ({
 
   const entityFilename = (name: string, withExtension = false) =>
     fileName(name, undefined, '.entity', withExtension);
+  const scalarToTS = _scalarToTS(PrismaScalarToTypeScript(decimalAsNumber));
 
   const fieldType = (field: ParsedField, toInputType = false) =>
     `${
@@ -214,6 +218,7 @@ export const makeHelpers = ({
     transformFileNameCase,
     unless,
     when,
+    scalarToTS,
   };
 };
 

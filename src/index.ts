@@ -34,6 +34,10 @@ export const generate = (options: GeneratorOptions) => {
     fileNamingStyle = 'kebab',
   } = options.generator.config;
 
+  const decimalAsNumber = stringToBoolean(
+    options.generator.config.decimalAsNumber,
+    false,
+  );
   const exportRelationModifierClasses = stringToBoolean(
     options.generator.config.exportRelationModifierClasses,
     true,
@@ -68,6 +72,7 @@ export const generate = (options: GeneratorOptions) => {
     entityPrefix,
     entitySuffix,
     fileNamingStyle,
+    decimalAsNumber,
   });
 
   const indexCollections: Record<string, WriteableFileSpecs> = {};

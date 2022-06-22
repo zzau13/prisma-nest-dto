@@ -116,7 +116,10 @@ export const computeEntityParams = ({
   if (apiExtraModels.length)
     imports.unshift({ from: '@nestjs/swagger', destruct: ['ApiExtraModels'] });
 
-  const importPrismaClient = makeImportsFromPrismaClient(fields);
+  const importPrismaClient = makeImportsFromPrismaClient(
+    fields,
+    templateHelpers,
+  );
   if (importPrismaClient) imports.unshift(importPrismaClient);
 
   return {

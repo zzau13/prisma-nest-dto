@@ -25,6 +25,7 @@ interface RunParam {
   entityPrefix: string;
   entitySuffix: string;
   fileNamingStyle: NamingStyle;
+  decimalAsNumber: boolean;
 }
 
 const transformers: Record<NamingStyle, (str: string) => string> = {

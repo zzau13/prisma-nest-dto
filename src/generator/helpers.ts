@@ -6,7 +6,6 @@ import {
   isRelation,
   isUnique,
 } from './field-classifiers';
-import { scalarToTS } from './template-helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
 import type { TemplateHelpers } from './template-helpers';
@@ -19,6 +18,7 @@ export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
 
 export const makeImportsFromPrismaClient = (
   fields: ParsedField[],
+  { scalarToTS }: TemplateHelpers,
 ): ImportStatementParams | null => {
   const enumsToImport = uniq(
     fields.filter(({ kind }) => kind === 'enum').map(({ type }) => type),
