@@ -5,7 +5,7 @@ exports[`fixtures > fixtures/basic/**/*.prisma 1`] = `
   {
     "content": "
   export class ConnectProductDto {
-    id: string;
+  id: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
@@ -16,27 +16,25 @@ import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCategoryDto} from './connect-category.dto'
 import {ConnectCompanyDto} from './connect-company.dto'
-
 export class CreateProductCategoryRelationInputDto {
-    connect: ConnectCategoryDto;
+      connect: ConnectCategoryDto;
   }
 export class CreateProductCompanyRelationInputDto {
-    connect: ConnectCompanyDto;
+      connect: ConnectCompanyDto;
   }
-
 @ApiExtraModels(ConnectCategoryDto,CreateProductCategoryRelationInputDto,ConnectCompanyDto,CreateProductCompanyRelationInputDto)
 export class CreateProductDto {
   name: string;
-description: string;
-images: Prisma.InputJsonValue[];
-highlighted?: boolean;
-reviewCount?: number;
-attributes?: Prisma.InputJsonValue;
-score?: number;
-category: CreateProductCategoryRelationInputDto;
-company: CreateProductCompanyRelationInputDto;
-createdAt?: Date;
-updatedAt?: Date;
+  description: string;
+  images: Prisma.InputJsonValue[];
+  highlighted?: boolean;
+  reviewCount?: number;
+  attributes?: Prisma.InputJsonValue;
+  score?: number;
+  category: CreateProductCategoryRelationInputDto;
+  company: CreateProductCompanyRelationInputDto;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
@@ -46,46 +44,42 @@ updatedAt?: Date;
 import {Prisma} from '@prisma/client'
 
 
-
-
 export class UpdateProductDto {
+  id: string ;
   name?: string ;
-description?: string ;
-images?: Prisma.JsonValue[] ;
-highlighted?: boolean  | null;
-reviewCount?: number  | null;
-attributes?: Prisma.JsonValue  | null;
-score?: number  | null;
-createdAt?: Date ;
-updatedAt?: Date ;
+  description?: string ;
+  images?: Prisma.JsonValue[] ;
+  highlighted?: boolean  | null;
+  reviewCount?: number  | null;
+  attributes?: Prisma.JsonValue  | null;
+  score?: number  | null;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
   },
   {
-    "content": "import {Prisma} from '@prisma/client'
+    "content": "
+import {Prisma} from '@prisma/client'
 import {Category} from './category.entity'
 import {Company} from './company.entity'
 import {IntersectionType} from '@nestjs/swagger'
 
-
 export class Product {
   id: string ;
-name: string ;
-description: string ;
-images: Prisma.JsonValue[] ;
-highlighted: boolean  | null;
-reviewCount: number  | null;
-attributes: Prisma.JsonValue  | null;
-score: number  | null;
-categoryId: string ;
-companyId: string ;
+  name: string ;
+  description: string ;
+  images: Prisma.JsonValue[] ;
+  highlighted: boolean  | null;
+  reviewCount: number  | null;
+  attributes: Prisma.JsonValue  | null;
+  score: number  | null;
+  categoryId: string ;
+  companyId: string ;
 }
 export class ProductRel {
   category: Category ;
-company: Company ;
+  company: Company ;
 }
-
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
@@ -93,15 +87,13 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
   {
     "content": "
   export class ConnectCategoryDto {
-    id: string;
+  id: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-category.dto.ts",
   },
   {
     "content": "
-
-
 
 
 
@@ -116,18 +108,16 @@ export class CreateCategoryDto {
 
 
 
-
-
 export class UpdateCategoryDto {
-  
+  id: string ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-category.dto.ts",
   },
   {
-    "content": "import {Product} from './product.entity'
+    "content": "
+import {Product} from './product.entity'
 import {IntersectionType} from '@nestjs/swagger'
-
 
 export class Category {
   id: string ;
@@ -135,7 +125,6 @@ export class Category {
 export class CategoryRel {
   Product: Product[] ;
 }
-
 export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/category.entity.ts",
@@ -143,15 +132,13 @@ export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
   {
     "content": "
   export class ConnectCompanyDto {
-    id: string;
+  id: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-company.dto.ts",
   },
   {
     "content": "
-
-
 
 
 
@@ -166,18 +153,16 @@ export class CreateCompanyDto {
 
 
 
-
-
 export class UpdateCompanyDto {
-  
+  id: string ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-company.dto.ts",
   },
   {
-    "content": "import {Product} from './product.entity'
+    "content": "
+import {Product} from './product.entity'
 import {IntersectionType} from '@nestjs/swagger'
-
 
 export class Company {
   id: string ;
@@ -185,7 +170,6 @@ export class Company {
 export class CompanyRel {
   Product: Product[] ;
 }
-
 export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/company.entity.ts",
@@ -193,16 +177,14 @@ export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
   {
     "content": "
   export class ConnectAnotherDto {
-    id1: string;
-id2: string;
+  id1: string;
+  id2: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-another.dto.ts",
   },
   {
     "content": "
-
-
 
 
 
@@ -217,26 +199,24 @@ export class CreateAnotherDto {
 
 
 
-
-
 export class UpdateAnotherDto {
-  
+  id1: string ;
+  id2: string ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-another.dto.ts",
   },
   {
-    "content": "import {IntersectionType} from '@nestjs/swagger'
-
+    "content": "
+import {IntersectionType} from '@nestjs/swagger'
 
 export class Another {
   id1: string ;
-id2: string ;
+  id2: string ;
 }
 export class AnotherRel {
   
 }
-
 export class AnotherFull extends IntersectionType(Another, AnotherRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/another.entity.ts",

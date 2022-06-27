@@ -168,10 +168,10 @@ export const makeHelpers = ({
     useInputTypes = false,
     forceOptional = false,
   ) =>
-    `${each(
+    `  ${each(
       fields,
       (field) => fieldToDtoProp(field, useInputTypes, forceOptional),
-      '\n',
+      '\n  ',
     )}`;
 
   const fieldToEntityProp = (field: ParsedField) =>
@@ -181,7 +181,7 @@ export const makeHelpers = ({
     )};`;
 
   const fieldsToEntityProps = (fields: ParsedField[]) =>
-    `${each(fields, (field) => fieldToEntityProp(field), '\n')}`;
+    `  ${each(fields, (field) => fieldToEntityProp(field), '\n  ')}`;
 
   const apiExtraModels = (names: string[]) =>
     `@ApiExtraModels(${names.map(entityName)})`;

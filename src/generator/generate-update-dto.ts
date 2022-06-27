@@ -15,15 +15,13 @@ export const generateUpdateDto = ({
   templateHelpers: t,
 }: GenerateUpdateDtoParam) => `
 ${t.importStatements(imports)}
-
 ${t.each(
   extraClasses,
   exportRelationModifierClasses ? (content) => `export ${content}` : t.echo,
   '\n',
 )}
-
 ${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
 export class ${t.updateDtoName(model.name)} {
-  ${t.fieldsToEntityProps(fields)}
+${t.fieldsToEntityProps(fields)}
 }
 `;

@@ -12,24 +12,19 @@ export const generateEntity = ({
   templateHelpers: t,
 }: GenerateEntityParam) => {
   const name = t.entityName(model.name);
-  return `${t.importStatements(
-    imports.concat([
-      { from: '@nestjs/swagger', destruct: ['IntersectionType'] },
-    ]),
-  )}
-
+  return `
+${t.importStatements(
+  imports.concat([{ from: '@nestjs/swagger', destruct: ['IntersectionType'] }]),
+)}
 ${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
 export class ${name} {
-  ${t.fieldsToEntityProps(fields.filter((x) => x.isRequired))}
+${t.fieldsToEntityProps(fields.filter((x) => x.isRequired))}
 }
 export class ${name}Rel {
-  ${t.fieldsToEntityProps(
-    fields
-      .filter((x) => !x.isRequired)
-      .map((x) => ({ ...x, isRequired: true })),
-  )}
+${t.fieldsToEntityProps(
+  fields.filter((x) => !x.isRequired).map((x) => ({ ...x, isRequired: true })),
+)}
 }
-
 export class ${name}Full extends IntersectionType(${name}, ${name}Rel) {}
 `;
 };

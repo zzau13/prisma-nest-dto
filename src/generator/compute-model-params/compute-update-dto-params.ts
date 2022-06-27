@@ -10,7 +10,6 @@ import {
   isId,
   isReadOnly,
   isRelation,
-  isRequiredWithDefaultValue,
   isUpdatedAt,
 } from '../field-classifiers';
 import {
@@ -85,14 +84,13 @@ export const computeUpdateDtoParams = ({
     // as **not** required in UpdateDTO
     const isDtoOptional = isAnnotatedWith(field, DTO_UPDATE_OPTIONAL);
 
-    if (!isDtoOptional) {
-      if (isId(field, model.primaryKey)) return result;
-      if (isUpdatedAt(field)) return result;
-      if (isRequiredWithDefaultValue(field)) return result;
-    }
+    // TODO
+    if (isDtoOptional) return result;
+    else if (isId(field, model.primaryKey)) overrides.isRequired = true;
+
+    if (isUpdatedAt(field)) return result;
 
     if (field.kind === 'enum') hasEnum = true;
-
     return [...result, mapDMMFToParsedField(field, overrides)];
   }, [] as ParsedField[]);
 

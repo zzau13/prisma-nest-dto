@@ -1,11 +1,12 @@
 // Vitest Snapshot v1
 
-exports[`fixtures > fixtures/nulls.prisma 1`] = `
+exports[`fixtures > fixtures/arr-id.prisma 1`] = `
 [
   {
     "content": "
   export class ConnectProductDto {
   id: string;
+  anotherId: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
@@ -16,6 +17,7 @@ import {Prisma} from '@prisma/client'
 
 
 export class CreateProductDto {
+  anotherId: string;
   name: string;
   description: string;
   images: Prisma.InputJsonValue[];
@@ -37,6 +39,7 @@ import {Prisma} from '@prisma/client'
 
 export class UpdateProductDto {
   id: string ;
+  anotherId: string ;
   name?: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;
@@ -58,6 +61,7 @@ import {IntersectionType} from '@nestjs/swagger'
 
 export class Product {
   id: string ;
+  anotherId: string ;
   name: string ;
   description: string ;
   images: Prisma.JsonValue[] ;

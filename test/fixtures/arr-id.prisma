@@ -1,0 +1,34 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+}
+
+generator nestjsDto {
+  provider                        = "node -r ts-node/register/transpile-only src/cli.ts"
+  output                          = "../src/@generated/prisma-generator-nestjs-dto"
+  outputToNestJsResourceStructure = "false"
+  exportRelationModifierClasses   = "true"
+  createDtoPrefix                 = "Create"
+  updateDtoPrefix                 = "Update"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  fileNamingStyle                 = "camel"
+}
+
+model Product {
+  id          String   @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  anotherId   String   @db.Uuid
+  name        String   @db.VarChar(255)
+  description String   @db.VarChar(1024)
+  images      Json[]   @db.Json
+  highlighted Boolean? @default(false)
+  reviewCount Int?     @default(0)
+  attributes  Json?
+  score       Float?
+  decimal     Decimal?
+  categoryId  String   @db.Uuid
+  companyId   String   @db.Uuid
+
+  @@id([id, anotherId])
+}
