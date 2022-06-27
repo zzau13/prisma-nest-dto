@@ -3,6 +3,6 @@ import { describe, test } from 'vitest';
 import { testFixtures } from './fixtures';
 
 describe('fixtures', () => {
-  const BASIC = 'fixtures/nulls.prisma';
-  test(BASIC, testFixtures(BASIC));
+  const FIXTURES = 'fixtures/nulls.prisma';
+  test(FIXTURES, testFixtures(FIXTURES));
 });
