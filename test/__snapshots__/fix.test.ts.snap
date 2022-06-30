@@ -31,6 +31,8 @@ export class CreateProductDto {
   reviewCount?: number;
   attributes?: Prisma.InputJsonValue;
   score?: number;
+  categoryId: string;
+  companyId: string;
   category: CreateProductCategoryRelationInputDto;
   company: CreateProductCompanyRelationInputDto;
   createdAt?: Date;
