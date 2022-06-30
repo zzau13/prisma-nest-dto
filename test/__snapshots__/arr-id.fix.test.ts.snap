@@ -80,5 +80,66 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
   },
+  {
+    "content": "
+  export class ConnectItemDto {
+  itemId: string;
+  plantId: string;
+  orderId: string;
+  }
+  ",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-item.dto.ts",
+  },
+  {
+    "content": "
+import {Prisma} from '@prisma/client'
+
+
+export class CreateItemDto {
+  plantId: string;
+  orderId: string;
+  diner?: Prisma.Decimal;
+  productId: string;
+  quantity: Prisma.Decimal;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-item.dto.ts",
+  },
+  {
+    "content": "
+import {Prisma} from '@prisma/client'
+
+
+export class UpdateItemDto {
+  itemId: string ;
+  plantId: string ;
+  orderId: string ;
+  diner?: Prisma.Decimal  | null;
+  productId?: string ;
+  quantity?: Prisma.Decimal ;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-item.dto.ts",
+  },
+  {
+    "content": "
+import {Prisma} from '@prisma/client'
+import {IntersectionType} from '@nestjs/swagger'
+
+export class Item {
+  itemId: string ;
+  plantId: string ;
+  orderId: string ;
+  diner: Prisma.Decimal  | null;
+  productId: string ;
+  quantity: Prisma.Decimal ;
+}
+export class ItemRel {
+  
+}
+export class ItemFull extends IntersectionType(Item, ItemRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item.entity.ts",
+  },
 ]
 `;

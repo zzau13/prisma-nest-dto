@@ -32,3 +32,15 @@ model Product {
 
   @@id([id, anotherId])
 }
+
+model Item {
+  itemId    String   @default(dbgenerated("gen_random_uuid()")) @map("item_id") @db.Uuid
+  plantId   String   @map("plant_id") @db.VarChar(10)
+  orderId   String   @map("order_id") @db.Uuid
+  diner     Decimal? @db.Decimal(3, 0)
+  productId String   @map("product_id") @db.VarChar(40)
+  quantity  Decimal  @db.Decimal(13, 3)
+
+  @@id([plantId, orderId, itemId])
+  @@map("items")
+}
