@@ -9,7 +9,6 @@ import {
   isAnnotatedWith,
   isAnnotatedWithOneOf,
   isIdWithDefaultValue,
-  isReadOnly,
   isRelation,
   isRequiredWithDefaultValue,
   isUpdatedAt,
@@ -17,7 +16,6 @@ import {
 import {
   concatIntoArray,
   generateRelationInput,
-  getRelationScalars,
   makeImportsFromPrismaClient,
   mapDMMFToParsedField,
   zipImportStatementParams,
@@ -47,14 +45,9 @@ export const computeCreateDtoParams = ({
   const apiExtraModels: string[] = [];
   const extraClasses: string[] = [];
 
-  const relationScalarFields = getRelationScalars(model.fields);
-  const relationScalarFieldNames = Object.keys(relationScalarFields);
-
   const fields = model.fields.reduce((result, field) => {
-    const { name } = field;
     const overrides: Partial<DMMF.Field> = {};
 
-    if (isReadOnly(field)) return result;
     if (isRelation(field)) {
       if (!isAnnotatedWithOneOf(field, DTO_RELATION_MODIFIERS_ON_CREATE)) {
         return result;
@@ -87,7 +80,6 @@ export const computeCreateDtoParams = ({
       concatIntoArray(relationInputType.generatedClasses, extraClasses);
       concatIntoArray(relationInputType.apiExtraModels, apiExtraModels);
     }
-    if (relationScalarFieldNames.includes(name)) return result;
 
     // fields annotated with @DtoReadOnly are filtered out before this
     // so this safely allows to mark fields that are required in Prisma Schema
