@@ -1,4 +1,4 @@
-import { DTO_READ_ONLY } from './annotations';
+import { NO_SET } from './annotations';
 import type { DMMF } from '@prisma/generator-helper';
 
 export const isAnnotatedWith = (
@@ -67,8 +67,7 @@ export const isIdWithDefaultValue = (
   primaryKey: DMMF.PrimaryKey | null,
 ): boolean => isId(field, primaryKey) && hasDefaultValue(field);
 
-export const isReadOnly = (field: DMMF.Field): boolean =>
-  field.isReadOnly || isAnnotatedWith(field, DTO_READ_ONLY);
+export const isReadOnly = (field: DMMF.Field): boolean => field.isReadOnly;
 
 export const isUpdatedAt = (field: DMMF.Field): boolean => !!field.isUpdatedAt;
 

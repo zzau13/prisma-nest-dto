@@ -67,7 +67,8 @@ model Post {
 }
 ```
 
-- @DtoReadOnly - omits field in `CreateDTO` and `UpdateDTO`
+- @NoAdd - omits field in `CreateDTO`
+- @NoSet - omits field in `UpdateDTO`
 - @DtoEntityHidden - omits field in `Entity`
 - @DtoCreateOptional - adds field **optionally** to `CreateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
 - @DtoUpdateOptional- adds field **optionally** to `UpdateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
@@ -93,7 +94,7 @@ outputToNestJsResourceStructure = "true"
 
 model Question {
 id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-/// @DtoReadOnly
+/// @NoSet
 createdAt DateTime @default(now())
 /// @DtoRelationRequired
 createdBy User? @relation("CreatedQuestions", fields: [createdById], references: [id])
@@ -240,7 +241,7 @@ In some cases you can derive information regarding related instances from contex
 
 When generating a `Model`s `CreateDTO` class, field that meet any of the following conditions are omitted (**order matters**):
 
-- `isReadOnly` OR is annotated with `@DtoReadOnly` (_Note:_ this apparently includes relation scalar fields)
+- `isReadOnly` OR is annotated with `@NoSet` (_Note:_ this apparently includes relation scalar fields)
 - field represents a relation (`field.kind === 'object'`) and is not annotated with `@DtoRelationCanCreateOnCreate` or `@DtoRelationCanConnectOnCreate`
 - field is a [relation scalar](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/#annotated-relation-fields-and-relation-scalar-fields)
 - field is not annotated with `@DtoCreateOptional` AND
@@ -253,7 +254,7 @@ When generating a `Model`s `CreateDTO` class, field that meet any of the followi
 When generating a `Model`s `UpdateDTO` class, field that meet any of the following conditions are omitted (**order matters**):
 
 - field is annotated with `@DtoUpdateOptional`
-- `isReadOnly` OR is annotated with `@DtoReadOnly` (_Note:_ this apparently includes relation scalar fields)
+- `isReadOnly` OR is annotated with `@NoSet` (_Note:_ this apparently includes relation scalar fields)
 - `isId` (id fields are not supposed to be updated by the user)
 - field represents a relation (`field.kind === 'object'`) and is not annotated with `@DtoRelationCanCreateOnUpdate` or `@DtoRelationCanConnectOnUpdate`
 - field is a [relation scalar](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/#annotated-relation-fields-and-relation-scalar-fields)

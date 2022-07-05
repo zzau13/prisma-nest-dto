@@ -1,4 +1,5 @@
 import {
+  NO_ADD,
   DTO_CREATE_OPTIONAL,
   DTO_RELATION_CAN_CONNECT_ON_CREATE,
   DTO_RELATION_CAN_CRAEATE_ON_CREATE,
@@ -46,6 +47,7 @@ export const computeCreateDtoParams = ({
   const extraClasses: string[] = [];
 
   const fields = model.fields.reduce((result, field) => {
+    if (isAnnotatedWith(field, NO_ADD)) return result;
     const overrides: Partial<DMMF.Field> = {};
 
     if (isRelation(field)) {
@@ -81,11 +83,7 @@ export const computeCreateDtoParams = ({
       concatIntoArray(relationInputType.apiExtraModels, apiExtraModels);
     }
 
-    // fields annotated with @DtoReadOnly are filtered out before this
-    // so this safely allows to mark fields that are required in Prisma Schema
-    // as **not** required in CreateDTO
     const isDtoOptional = isAnnotatedWith(field, DTO_CREATE_OPTIONAL);
-
     if (!isDtoOptional) {
       if (isIdWithDefaultValue(field, model.primaryKey)) return result;
       if (isUpdatedAt(field)) return result;

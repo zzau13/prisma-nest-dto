@@ -3,6 +3,7 @@ import {
   DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
   DTO_RELATION_MODIFIERS_ON_UPDATE,
   DTO_UPDATE_OPTIONAL,
+  NO_SET,
 } from '../annotations';
 import {
   isAnnotatedWith,
@@ -49,13 +50,14 @@ export const computeUpdateDtoParams = ({
   const relationScalarFieldNames = Object.keys(relationScalarFields);
 
   const fields = model.fields.reduce((result, field) => {
+    if (isReadOnly(field) || isAnnotatedWith(field, NO_SET)) return result;
+
     const { name, isRequired } = field;
     const overrides: Partial<DMMF.Field> = {
       isNullable: !isRequired,
       isRequired: false,
     };
 
-    if (isReadOnly(field)) return result;
     if (isRelation(field)) {
       if (!isAnnotatedWithOneOf(field, DTO_RELATION_MODIFIERS_ON_UPDATE)) {
         return result;
@@ -79,7 +81,7 @@ export const computeUpdateDtoParams = ({
     }
     if (relationScalarFieldNames.includes(name)) return result;
 
-    // fields annotated with @DtoReadOnly are filtered out before this
+    // fields annotated with @NoSet are filtered out before this
     // so this safely allows to mark fields that are required in Prisma Schema
     // as **not** required in UpdateDTO
     const isDtoOptional = isAnnotatedWith(field, DTO_UPDATE_OPTIONAL);
