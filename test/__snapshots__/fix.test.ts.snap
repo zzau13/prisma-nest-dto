@@ -4,6 +4,7 @@ exports[`fixtures/basic/**/*.prisma 1`] = `
 [
   {
     "content": "
+
   export class ConnectProductDto {
   id: string;
   }
@@ -88,6 +89,7 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
   },
   {
     "content": "
+
   export class ConnectCategoryDto {
   id: string;
   }
@@ -133,6 +135,7 @@ export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
   },
   {
     "content": "
+
   export class ConnectCompanyDto {
   id: string;
   }
@@ -178,6 +181,7 @@ export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
   },
   {
     "content": "
+
   export class ConnectAnotherDto {
   id1: string;
   id2: string;

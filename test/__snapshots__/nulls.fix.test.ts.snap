@@ -4,6 +4,7 @@ exports[`fixtures/nulls.prisma 1`] = `
 [
   {
     "content": "
+
   export class ConnectProductDto {
   id: string;
   }
