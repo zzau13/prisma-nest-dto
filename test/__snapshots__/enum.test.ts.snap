@@ -1,0 +1,70 @@
+// Vitest Snapshot v1
+
+exports[`fixtures/enum.prisma 1`] = `
+[
+  {
+    "content": "
+import {ApiProperty} from '@nestjs/swagger'
+import {SettingPropType} from '@prisma/client'
+  export class ConnectSettingDto {
+  plantId: string;
+  key: string;
+  @ApiProperty({ enum: SettingPropType})
+type: SettingPropType;
+  }
+  ",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-setting.dto.ts",
+  },
+  {
+    "content": "
+import {SettingPropType} from '@prisma/client'
+import {ApiProperty} from '@nestjs/swagger'
+
+
+export class CreateSettingDto {
+  plantId: string;
+  key: string;
+  value: string;
+  @ApiProperty({ enum: SettingPropType})
+type: SettingPropType;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-setting.dto.ts",
+  },
+  {
+    "content": "
+import {SettingPropType} from '@prisma/client'
+import {ApiProperty} from '@nestjs/swagger'
+
+
+export class UpdateSettingDto {
+  plantId: string ;
+  key: string ;
+  value?: string ;
+  @ApiProperty({ enum: SettingPropType})
+type: SettingPropType ;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-setting.dto.ts",
+  },
+  {
+    "content": "
+import {SettingPropType} from '@prisma/client'
+import {IntersectionType,ApiProperty} from '@nestjs/swagger'
+
+export class Setting {
+  plantId: string ;
+  key: string ;
+  value: string ;
+  @ApiProperty({ enum: SettingPropType})
+type: SettingPropType ;
+}
+export class SettingRel {
+  
+}
+export class SettingFull extends IntersectionType(Setting, SettingRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting.entity.ts",
+  },
+]
+`;

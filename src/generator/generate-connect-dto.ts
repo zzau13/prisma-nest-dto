@@ -7,10 +7,12 @@ interface GenerateConnectDtoParam extends ConnectDtoParams {
 export const generateConnectDto = ({
   model,
   fields,
+  imports,
   templateHelpers: t,
 }: GenerateConnectDtoParam) => {
   const name = t.connectDtoName(model.name);
   const template = `
+${t.importStatements(imports)}
   export class ${name} {
 ${t.fieldsToDtoProps(
   fields.map((x) => ({ ...x, isRequired: true })),

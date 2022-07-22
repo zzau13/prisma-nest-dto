@@ -1,4 +1,4 @@
-import { expect } from 'vitest';
+import { expect, test } from 'vitest';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { globby } from 'globby';
@@ -20,9 +20,10 @@ const getFixtures = async (baseDir: string) => {
   );
 };
 
-export const testFixtures = (baseDir: string) => async () => {
-  const fixtures = await getFixtures(path.join(__dirname, baseDir));
-  fixtures.map(parseOptions).forEach((x) => {
-    expect(run(x)).toMatchSnapshot();
+export const testFixtures = (baseDir: string) =>
+  test(baseDir, async () => {
+    const fixtures = await getFixtures(path.join(__dirname, baseDir));
+    fixtures.map(parseOptions).forEach((x) => {
+      expect(run(x)).toMatchSnapshot();
+    });
   });
-};

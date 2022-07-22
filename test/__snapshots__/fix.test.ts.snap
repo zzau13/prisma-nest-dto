@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`fixtures > fixtures/basic/**/*.prisma 1`] = `
+exports[`fixtures/basic/**/*.prisma 1`] = `
 [
   {
     "content": "

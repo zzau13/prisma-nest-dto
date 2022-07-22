@@ -14,7 +14,14 @@ export const generateEntity = ({
   const name = t.entityName(model.name);
   return `
 ${t.importStatements(
-  imports.concat([{ from: '@nestjs/swagger', destruct: ['IntersectionType'] }]),
+  imports.concat([
+    {
+      from: '@nestjs/swagger',
+      destruct: ['IntersectionType'].concat(
+        fields.find((x) => x.kind === 'enum') ? ['ApiProperty'] : [],
+      ),
+    },
+  ]),
 )}
 ${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
 export class ${name} {

@@ -1,3 +1,3 @@
 import { testFixtures } from './fixtures';
 
-testFixtures('fixtures/nulls.prisma');
+testFixtures('fixtures/enum.prisma');

@@ -174,8 +174,11 @@ export const makeHelpers = ({
       '\n  ',
     )}`;
 
-  const fieldToEntityProp = (field: ParsedField) =>
-    `${field.name}${unless(field.isRequired, '?')}: ${fieldType(field)} ${when(
+  const fieldToEntityProp = (field: ParsedField, useInputTypes = false) =>
+    `${when(
+      field.kind === 'enum',
+      `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}})\n`,
+    )}${field.name}${unless(field.isRequired, '?')}: ${fieldType(field)} ${when(
       field.isNullable,
       ' | null',
     )};`;

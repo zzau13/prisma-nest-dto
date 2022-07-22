@@ -1,0 +1,34 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+}
+
+generator nestjsDto {
+  provider                        = "node -r ts-node/register/transpile-only src/cli.ts"
+  output                          = "../src/@generated/prisma-generator-nestjs-dto"
+  outputToNestJsResourceStructure = "false"
+  exportRelationModifierClasses   = "true"
+  createDtoPrefix                 = "Create"
+  updateDtoPrefix                 = "Update"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  fileNamingStyle                 = "camel"
+}
+
+model Setting {
+  plantId String          @map("plant_id") @db.VarChar(10)
+  key     String          @db.VarChar(31)
+  value   String          @db.VarChar(255)
+  type    SettingPropType
+
+  @@id([plantId, key, type])
+  @@map("setting")
+}
+
+enum SettingPropType {
+  font
+  color
+
+  @@map("setting_prop_type")
+}
