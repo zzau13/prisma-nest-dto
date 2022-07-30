@@ -18,7 +18,20 @@ generator nestjsDto {
 
 model Product {
   /// @IsUUID('4')
-  id String @id @db.Uuid
+  id          String   @id @db.Uuid
+  description String   @db.VarChar(1024)
+  images      Json[]   @db.Json
+  /// @IsBoolean()
+  highlighted Boolean? @default(false)
+  /// @IsPositive()
+  reviewCount Int?     @default(0)
+  /// @IsDecimal({ decimal_digits: 2 })
+  score       Float?
+  /// @IsUUID('4')
+  categoryId  String?  @db.Uuid
+  /// @IsUUID('4')
+  companyId   String   @db.Uuid
+
 
   @@map("products")
 }

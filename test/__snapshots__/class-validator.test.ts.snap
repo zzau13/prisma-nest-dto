@@ -14,36 +14,81 @@ id: string;
   },
   {
     "content": "
-import {IsUUID} from 'class-validator'
+import {Prisma} from '@prisma/client'
+import {IsUUID,IsBoolean,IsPositive,IsDecimal} from 'class-validator'
 
 
 export class CreateProductDto {
   @IsUUID('4')
 id: string;
+  description: string;
+  images: Prisma.InputJsonValue[];
+  @IsBoolean()
+highlighted?: boolean;
+  @IsPositive()
+reviewCount?: number;
+  @IsDecimal({
+  decimal_digits: 2
+})
+score?: number;
+  @IsUUID('4')
+categoryId?: string;
+  @IsUUID('4')
+companyId: string;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
   },
   {
     "content": "
-import {IsUUID} from 'class-validator'
+import {Prisma} from '@prisma/client'
+import {IsUUID,IsBoolean,IsPositive,IsDecimal} from 'class-validator'
 
 
 export class UpdateProductDto {
   @IsUUID('4')
 id: string ;
+  description?: string ;
+  images?: Prisma.JsonValue[] ;
+  @IsBoolean()
+highlighted?: boolean  | null;
+  @IsPositive()
+reviewCount?: number  | null;
+  @IsDecimal({
+  decimal_digits: 2
+})
+score?: number  | null;
+  @IsUUID('4')
+categoryId?: string  | null;
+  @IsUUID('4')
+companyId?: string ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
   },
   {
     "content": "
-import {IsUUID} from 'class-validator'
+import {Prisma} from '@prisma/client'
+import {IsUUID,IsBoolean,IsPositive,IsDecimal} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Product {
   @IsUUID('4')
 id: string ;
+  description: string ;
+  images: Prisma.JsonValue[] ;
+  @IsBoolean()
+highlighted: boolean  | null;
+  @IsPositive()
+reviewCount: number  | null;
+  @IsDecimal({
+  decimal_digits: 2
+})
+score: number  | null;
+  @IsUUID('4')
+categoryId: string  | null;
+  @IsUUID('4')
+companyId: string ;
 }
 export class ProductRel {
   
