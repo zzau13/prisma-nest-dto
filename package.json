@@ -62,7 +62,6 @@
     "class-validator": "^0.13.2",
     "make-dir": "^3.1.0",
     "slash": "^4.0.0",
-    "tar": "^6.1.11",
     "ts-toolbelt": "^9.6.0"
   },
   "devDependencies": {
