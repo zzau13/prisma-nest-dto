@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-nestjs",
-  "description": "Generates DTO and Entity classes from Prisma Schema for NestJS",
+  "description": "Generates DTO and Entity classes from Prisma Schema for NestJS with class-validator support",
   "version": "1.7.1",
   "license": "Apache-2.0",
   "authors": [
@@ -20,21 +20,21 @@
     "generator",
     "nestjs",
     "dto",
-    "typescript"
+    "typescript",
+    "class-validator"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "test:watch": "DATABASE_URL=postgresql://localhost:5432/prisma vitest test.ts",
     "test": "pnpm test:watch --run",
-    "release": "pnpm fix && pnpm test && pnpm build && dotenv release-it",
+    "release": "pnpm check && pnpm test && pnpm build && dotenv release-it",
     "fix": "pnpm lint && pnpm fmt",
     "check": "pnpm lint:check && pnpm fmt:check",
-    "lint": "eslint --cache --max-warnings 0 --fix '**/*.{ts,js}'",
+    "lint": "eslint --cache --fix '**/*.{ts,js}'",
     "fmt": "prettier --write '**/*.{md,prisma,json}'",
     "lint:check": "eslint --cache --max-warnings 0 '**/*.{ts,js}'",
     "fmt:check": "prettier --check '**/*.{md,prisma,json}'",
     "commitlint": "commitlint",
-    "generate": "prisma generate",
     "prepare": "husky install"
   },
   "repository": {
