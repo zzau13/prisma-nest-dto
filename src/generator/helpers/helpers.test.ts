@@ -1,7 +1,7 @@
 import { describe, it, test, expect } from 'vitest';
 import { mapDMMFToParsedField } from './helpers';
 import type { DMMF } from '@prisma/generator-helper';
-import { ParsedField } from './types';
+import { ParsedField } from '../types';
 
 describe('map DMMF.Field to ParsedField', () => {
   const field: DMMF.Field = {

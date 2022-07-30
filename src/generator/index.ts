@@ -4,10 +4,12 @@ import { logger } from '@prisma/sdk';
 
 import { makeHelpers } from './template-helpers';
 import { computeModelParams } from './transform';
-import { generateConnectDto } from './generate-connect-dto';
-import { generateCreateDto } from './generate-create-dto';
-import { generateUpdateDto } from './generate-update-dto';
-import { generateEntity } from './generate-entity';
+import {
+  generateConnectDto,
+  generateCreateDto,
+  generateUpdateDto,
+  generateEntity,
+} from './generate';
 import { DTO_IGNORE_MODEL } from './annotations';
 import { isAnnotatedWith } from './field-classifiers';
 import { NamingStyle, Model } from './types';

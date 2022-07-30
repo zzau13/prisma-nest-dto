@@ -1,5 +1,5 @@
-import type { TemplateHelpers } from './template-helpers';
-import type { EntityParams } from './types';
+import type { TemplateHelpers } from '../template-helpers';
+import type { EntityParams } from '../types';
 
 interface GenerateEntityParam extends EntityParams {
   templateHelpers: TemplateHelpers;

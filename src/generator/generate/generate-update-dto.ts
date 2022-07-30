@@ -1,11 +1,11 @@
-import type { TemplateHelpers } from './template-helpers';
-import type { CreateDtoParams } from './types';
+import type { TemplateHelpers } from '../template-helpers';
+import type { UpdateDtoParams } from '../types';
 
-interface GenerateCreateDtoParam extends CreateDtoParams {
+interface GenerateUpdateDtoParam extends UpdateDtoParams {
   exportRelationModifierClasses: boolean;
   templateHelpers: TemplateHelpers;
 }
-export const generateCreateDto = ({
+export const generateUpdateDto = ({
   model,
   fields,
   imports,
@@ -13,7 +13,8 @@ export const generateCreateDto = ({
   apiExtraModels,
   exportRelationModifierClasses,
   templateHelpers: t,
-}: GenerateCreateDtoParam) => `
+}: GenerateUpdateDtoParam) => {
+  return `
 ${t.importStatements(imports)}
 ${t.each(
   extraClasses,
@@ -21,7 +22,8 @@ ${t.each(
   '\n',
 )}
 ${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
-export class ${t.createDtoName(model.name)} {
-${t.fieldsToDtoProps(fields, true)}
+export class ${t.updateDtoName(model.name)} {
+${t.fieldsToEntityProps(fields)}
 }
 `;
+};

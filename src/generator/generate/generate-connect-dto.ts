@@ -1,5 +1,5 @@
-import type { TemplateHelpers } from './template-helpers';
-import type { ConnectDtoParams } from './types';
+import type { TemplateHelpers } from '../template-helpers';
+import type { ConnectDtoParams } from '../types';
 
 interface GenerateConnectDtoParam extends ConnectDtoParams {
   templateHelpers: TemplateHelpers;

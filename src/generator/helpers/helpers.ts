@@ -5,19 +5,19 @@ import {
   isId,
   isRelation,
   isUnique,
-} from './field-classifiers';
+} from '../field-classifiers';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type { TemplateHelpers } from './template-helpers';
+import type { TemplateHelpers } from '../template-helpers';
 import type {
   Decorator,
   ImportStatementParams,
   Model,
   ParsedField,
-} from './types';
-import { IsDecoValidator } from './annotations';
+} from '../types';
+import { IsDecoValidator } from '../annotations';
 
 export const uniq = <T = unknown>(input: T[]): T[] =>
   Array.from(new Set(input));
@@ -174,13 +174,11 @@ export const getRelationConnectInputFields = ({
     isUnique(relatedModelField),
   );
 
-  const foreignFields = new Set<DMMF.Field>([
+  return new Set<DMMF.Field>([
     ...foreignKeyFields,
     ...idFields,
     ...uniqueFields,
   ]);
-
-  return foreignFields;
 };
 
 export const getRelativePath = (from: string, to: string) => {
