@@ -3,6 +3,7 @@ import slash from 'slash';
 import { DTO_ENTITY_HIDDEN, DTO_RELATION_REQUIRED } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
 import {
+  getImportsDeco,
   getRelationScalars,
   getRelativePath,
   makeImportsFromPrismaClient,
@@ -24,7 +25,7 @@ interface ComputeEntityParamsParam {
   allModels: Model[];
   templateHelpers: TemplateHelpers;
 }
-export const computeEntityParams = ({
+export const transformEntity = ({
   model,
   allModels,
   templateHelpers,
@@ -115,6 +116,10 @@ export const computeEntityParams = ({
 
   if (apiExtraModels.length)
     imports.unshift({ from: '@nestjs/swagger', destruct: ['ApiExtraModels'] });
+
+  // TODO: duplicated
+  const importDeco = getImportsDeco(fields);
+  if (importDeco) imports.push(importDeco);
 
   const importPrismaClient = makeImportsFromPrismaClient(
     fields,

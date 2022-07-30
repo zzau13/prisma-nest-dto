@@ -7,8 +7,14 @@ export interface Model extends DMMF.Model {
   };
 }
 
-export interface ParsedField {
+export type Decorator = {
+  import: string;
+  code: string;
+};
+
+export type ParsedField = {
   kind: DMMF.FieldKind | 'relation-input';
+  decorators: Decorator[];
   name: string;
   type: string;
   documentation?: string;
@@ -20,7 +26,7 @@ export interface ParsedField {
    * **must not be `true` when `isRequired` is `true`**
    */
   isNullable?: boolean;
-}
+};
 
 export interface ImportStatementParams {
   from: string;

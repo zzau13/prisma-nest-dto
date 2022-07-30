@@ -13,7 +13,8 @@ export const generateUpdateDto = ({
   apiExtraModels,
   exportRelationModifierClasses,
   templateHelpers: t,
-}: GenerateUpdateDtoParam) => `
+}: GenerateUpdateDtoParam) => {
+  return `
 ${t.importStatements(imports)}
 ${t.each(
   extraClasses,
@@ -25,3 +26,4 @@ export class ${t.updateDtoName(model.name)} {
 ${t.fieldsToEntityProps(fields)}
 }
 `;
+};

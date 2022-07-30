@@ -1,8 +1,8 @@
 import { TemplateHelpers } from '../template-helpers';
-import { computeConnectDtoParams } from './compute-connect-dto-params';
-import { computeCreateDtoParams } from './compute-create-dto-params';
-import { computeUpdateDtoParams } from './compute-update-dto-params';
-import { computeEntityParams } from './compute-entity-params';
+import { transformConnect } from './transform-connect';
+import { transformCreate } from './transform-create';
+import { transformUpdate } from './transform-update';
+import { transformEntity } from './transform-entity';
 
 import type { Model, ModelParams } from '../types';
 
@@ -16,17 +16,17 @@ export const computeModelParams = ({
   allModels,
   templateHelpers,
 }: ComputeModelParamsParam): ModelParams => ({
-  connect: computeConnectDtoParams({ model, templateHelpers }),
-  create: computeCreateDtoParams({
+  connect: transformConnect({ model, templateHelpers }),
+  create: transformCreate({
     model,
     allModels, // ? should this be `allModels: models` instead
     templateHelpers,
   }),
 
-  update: computeUpdateDtoParams({
+  update: transformUpdate({
     model,
     allModels,
     templateHelpers,
   }),
-  entity: computeEntityParams({ model, allModels, templateHelpers }),
+  entity: transformEntity({ model, allModels, templateHelpers }),
 });

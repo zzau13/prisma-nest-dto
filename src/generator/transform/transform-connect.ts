@@ -1,11 +1,16 @@
 import { isId, isUnique } from '../field-classifiers';
-import { makeImportsFromPrismaClient, uniq } from '../helpers';
+import {
+  getImportsDeco,
+  makeImportsFromPrismaClient,
+  mapDMMFToParsedField,
+  uniq,
+} from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
 import { ImportStatementParams } from '../types';
 import { TemplateHelpers } from '../template-helpers';
 
-export const computeConnectDtoParams = ({
+export const transformConnect = ({
   model,
   templateHelpers,
 }: {
@@ -18,12 +23,18 @@ export const computeConnectDtoParams = ({
   const isUniqueFields = model.fields.filter((field) => isUnique(field));
 
   const imports: ImportStatementParams[] = [];
-  const fields = uniq([...idFields, ...isUniqueFields]);
+  const fields = uniq([...idFields, ...isUniqueFields]).map((x) =>
+    mapDMMFToParsedField(x),
+  );
   if (fields.find((x) => x.kind === 'enum')) {
     const destruct = [];
     destruct.push('ApiProperty');
     imports.unshift({ from: '@nestjs/swagger', destruct });
   }
+
+  // TODO: duplicated
+  const importDeco = getImportsDeco(fields);
+  if (importDeco) imports.push(importDeco);
 
   const importPrismaClient = makeImportsFromPrismaClient(
     fields,

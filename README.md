@@ -5,9 +5,9 @@
 - ~~Add extension.{entity,dto}.ts files for implement complex structures~~
 - ~~Add per model index and default reexport~~
 - ~~Refactor decimal.js to number and use hard cast from prisma client return type~~
-- Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast
+- ~~Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast~~
 - Simplify comment annotations and remove boilerplate
-- Add support for class-validator by comment, by name, (in future by @db annotations)
+- Add support for class-validator ~~by comment~~, by name, (in future by @db annotations)
 - Create various dto depending on index fields
 
 # Prisma Generator NestJS

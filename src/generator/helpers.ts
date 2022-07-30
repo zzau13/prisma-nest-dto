@@ -6,10 +6,18 @@ import {
   isRelation,
   isUnique,
 } from './field-classifiers';
+import { parseExpression } from '@babel/parser';
+import generate from '@babel/generator';
 
 import type { DMMF } from '@prisma/generator-helper';
 import type { TemplateHelpers } from './template-helpers';
-import type { ImportStatementParams, Model, ParsedField } from './types';
+import type {
+  Decorator,
+  ImportStatementParams,
+  Model,
+  ParsedField,
+} from './types';
+import { IsDecoValidator } from './annotations';
 
 export const uniq = <T = unknown>(input: T[]): T[] =>
   Array.from(new Set(input));
@@ -37,10 +45,57 @@ export const makeImportsFromPrismaClient = (
   };
 };
 
+function getDecorators(
+  documentation: DMMF.Field['documentation'],
+): Decorator[] {
+  if (documentation) {
+    const parsed = parseExpression(`${documentation} class {}`, {
+      plugins: ['decorators-legacy'],
+    });
+    if (parsed.type !== 'ClassExpression')
+      throw new Error('error parsing decorators');
+
+    const ret = [];
+    // TODO: Annotations
+    if (parsed.decorators)
+      for (const x of parsed.decorators)
+        if (
+          x.type === 'Decorator' &&
+          x.expression.type === 'CallExpression' &&
+          x.expression.callee.type === 'Identifier' &&
+          IsDecoValidator(x.expression.callee.name)
+        )
+          ret.push({
+            // TODO: types of babel
+            code: generate(x as never).code,
+            import: x.expression.callee.name,
+          });
+    return ret;
+  }
+
+  return [];
+}
+
+export const getImportsDeco = (
+  parsed: ParsedField[],
+): ImportStatementParams | undefined => {
+  const destruct = uniq(
+    parsed.flatMap((x) => x.decorators).flatMap((x) => x.import),
+  );
+
+  if (destruct.length)
+    return {
+      from: 'class-validator',
+      destruct,
+    };
+};
+
+// TODO: call one time
 export const mapDMMFToParsedField = (
   field: DMMF.Field,
   overrides: Partial<DMMF.Field> = {},
 ): ParsedField => ({
+  decorators: getDecorators(field.documentation),
   ...field,
   ...overrides,
 });
@@ -69,6 +124,7 @@ interface GetRelationConnectInputFieldsParam {
   field: DMMF.Field;
   allModels: DMMF.Model[];
 }
+// TODO: unused
 export const getRelationConnectInputFields = ({
   field,
   allModels,
@@ -226,6 +282,7 @@ export const generateRelationInput = ({
     ${t.fieldsToDtoProps(
       relationInputClassProps.map((inputField) => ({
         ...inputField,
+        decorators: [],
         kind: 'relation-input',
         isRequired: relationInputClassProps.length === 1,
         isList: field.isList,

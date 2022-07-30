@@ -1,0 +1,56 @@
+// Vitest Snapshot v1
+
+exports[`fixtures/class-validator.prisma 1`] = `
+[
+  {
+    "content": "
+import {IsUUID} from 'class-validator'
+  export class ConnectProductDto {
+  @IsUUID('4')
+id: string;
+  }
+  ",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
+  },
+  {
+    "content": "
+import {IsUUID} from 'class-validator'
+
+
+export class CreateProductDto {
+  @IsUUID('4')
+id: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
+  },
+  {
+    "content": "
+import {IsUUID} from 'class-validator'
+
+
+export class UpdateProductDto {
+  @IsUUID('4')
+id: string ;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
+  },
+  {
+    "content": "
+import {IsUUID} from 'class-validator'
+import {IntersectionType} from '@nestjs/swagger'
+
+export class Product {
+  @IsUUID('4')
+id: string ;
+}
+export class ProductRel {
+  
+}
+export class ProductFull extends IntersectionType(Product, ProductRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
+  },
+]
+`;

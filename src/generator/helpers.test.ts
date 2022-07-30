@@ -8,6 +8,7 @@ describe('map DMMF.Field to ParsedField', () => {
     name: 'a',
     kind: 'scalar',
     type: 'string',
+    documentation: '@IsUUID("4")',
     isRequired: false,
     isUnique: false,
     isUpdatedAt: false,
@@ -23,6 +24,8 @@ describe('map DMMF.Field to ParsedField', () => {
   it('overrides "name" property', () => {
     const parsedField = mapDMMFToParsedField(field, overrides);
     expect(parsedField.name).toBe(overrides.name);
+    expect(parsedField.decorators[0].import).toBe('IsUUID');
+    expect(parsedField.decorators[0].code).toBe('@IsUUID("4")');
   });
 
   test('preserves all other properties from "field"', () => {

@@ -3,7 +3,7 @@ import { camel, pascal, kebab, snake } from 'case';
 import { logger } from '@prisma/sdk';
 
 import { makeHelpers } from './template-helpers';
-import { computeModelParams } from './compute-model-params';
+import { computeModelParams } from './transform';
 import { generateConnectDto } from './generate-connect-dto';
 import { generateCreateDto } from './generate-create-dto';
 import { generateUpdateDto } from './generate-update-dto';
@@ -51,7 +51,7 @@ export const run = ({
       },
     }));
 
-  const modelFiles = filteredModels.map((model) => {
+  return filteredModels.flatMap((model) => {
     logger.info(`Processing Model ${model.name}`);
 
     const modelParams = computeModelParams({
@@ -115,6 +115,4 @@ export const run = ({
 
     return [connectDto, createDto, updateDto, entity];
   });
-
-  return [...modelFiles].flat();
 };

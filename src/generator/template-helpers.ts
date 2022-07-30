@@ -158,6 +158,9 @@ export const makeHelpers = ({
     `${when(
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}})\n`,
+    )}${when(
+      !!field.decorators.length,
+      field.decorators.map((x) => x.code).join('\n') + '\n',
     )}${field.name}${unless(
       field.isRequired && !forceOptional,
       '?',
@@ -174,14 +177,18 @@ export const makeHelpers = ({
       '\n  ',
     )}`;
 
-  const fieldToEntityProp = (field: ParsedField, useInputTypes = false) =>
-    `${when(
+  const fieldToEntityProp = (field: ParsedField, useInputTypes = false) => {
+    return `${when(
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}})\n`,
+    )}${when(
+      !!field.decorators.length,
+      field.decorators.map((x) => x.code).join('\n') + '\n',
     )}${field.name}${unless(field.isRequired, '?')}: ${fieldType(field)} ${when(
       field.isNullable,
       ' | null',
     )};`;
+  };
 
   const fieldsToEntityProps = (fields: ParsedField[]) =>
     `  ${each(fields, (field) => fieldToEntityProp(field), '\n  ')}`;
