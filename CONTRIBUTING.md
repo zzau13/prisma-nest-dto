@@ -1,6 +1,6 @@
 # Contributing to prisma-generator-nestjs-dto
 
-Thanks for contributing to prisma-generator-nestjs-dto!
+Thanks for contributing to prisma-generator-nestjs!
 
 ## License
 

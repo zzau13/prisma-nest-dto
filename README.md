@@ -9,6 +9,8 @@
 - Simplify comment annotations and remove boilerplate
 - Add support for class-validator ~~by comment~~, by name, (in future by @db annotations)
 - Create various dto depending on index fields
+- Clean Code and simplify structure
+- Add Documentation and clean README.md
 
 # Prisma Generator NestJS
 
