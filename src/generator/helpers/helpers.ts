@@ -19,6 +19,12 @@ import type {
 } from '../types';
 import { IsDecoValidator } from '../annotations';
 
+const validateNested = {
+  code: '@ValidateNested()',
+  import: 'ValidateNested',
+} as const;
+const decoRelated = [validateNested];
+
 export const uniq = <T = unknown>(input: T[]): T[] =>
   Array.from(new Set(input));
 export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
@@ -45,17 +51,15 @@ export const makeImportsFromPrismaClient = (
   };
 };
 
-function getDecorators(
-  documentation: DMMF.Field['documentation'],
-): Decorator[] {
-  if (documentation) {
-    const parsed = parseExpression(`${documentation} class {}`, {
+function getDecorators(field: DMMF.Field): Decorator[] {
+  const ret = [];
+  if (field.documentation) {
+    const parsed = parseExpression(`${field.documentation} class {}`, {
       plugins: ['decorators-legacy'],
     });
     if (parsed.type !== 'ClassExpression')
       throw new Error('error parsing decorators');
 
-    const ret = [];
     // TODO: Annotations
     if (parsed.decorators)
       for (const x of parsed.decorators)
@@ -70,10 +74,10 @@ function getDecorators(
             code: generate(x as never).code,
             import: x.expression.callee.name,
           });
-    return ret;
   }
+  if (field.kind === 'object') ret.push(validateNested);
 
-  return [];
+  return ret;
 }
 
 export const getImportsDeco = (
@@ -95,7 +99,7 @@ export const mapDMMFToParsedField = (
   field: DMMF.Field,
   overrides: Partial<DMMF.Field> = {},
 ): ParsedField => ({
-  decorators: getDecorators(field.documentation),
+  decorators: getDecorators(field),
   ...field,
   ...overrides,
 });
@@ -280,7 +284,7 @@ export const generateRelationInput = ({
     ${t.fieldsToDtoProps(
       relationInputClassProps.map((inputField) => ({
         ...inputField,
-        decorators: [],
+        decorators: decoRelated,
         kind: 'relation-input',
         isRequired: relationInputClassProps.length === 1,
         isList: field.isList,

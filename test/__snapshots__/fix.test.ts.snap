@@ -17,11 +17,14 @@ import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCategoryDto} from './connect-category.dto'
 import {ConnectCompanyDto} from './connect-company.dto'
+import {ValidateNested} from 'class-validator'
 export class CreateProductCategoryRelationInputDto {
-      connect: ConnectCategoryDto;
+      @ValidateNested()
+connect: ConnectCategoryDto;
   }
 export class CreateProductCompanyRelationInputDto {
-      connect: ConnectCompanyDto;
+      @ValidateNested()
+connect: ConnectCompanyDto;
   }
 @ApiExtraModels(ConnectCategoryDto,CreateProductCategoryRelationInputDto,ConnectCompanyDto,CreateProductCompanyRelationInputDto)
 export class CreateProductDto {
@@ -34,8 +37,10 @@ export class CreateProductDto {
   score?: number;
   categoryId: string;
   companyId: string;
-  category: CreateProductCategoryRelationInputDto;
-  company: CreateProductCompanyRelationInputDto;
+  @ValidateNested()
+category: CreateProductCategoryRelationInputDto;
+  @ValidateNested()
+company: CreateProductCompanyRelationInputDto;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -65,6 +70,7 @@ export class UpdateProductDto {
 import {Prisma} from '@prisma/client'
 import {Category} from './category.entity'
 import {Company} from './company.entity'
+import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Product {
@@ -80,8 +86,10 @@ export class Product {
   companyId: string ;
 }
 export class ProductRel {
-  category: Category ;
-  company: Company ;
+  @ValidateNested()
+category: Category ;
+  @ValidateNested()
+company: Company ;
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
@@ -121,13 +129,15 @@ export class UpdateCategoryDto {
   {
     "content": "
 import {Product} from './product.entity'
+import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Category {
   id: string ;
 }
 export class CategoryRel {
-  Product: Product[] ;
+  @ValidateNested()
+Product: Product[] ;
 }
 export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
 ",
@@ -167,13 +177,15 @@ export class UpdateCompanyDto {
   {
     "content": "
 import {Product} from './product.entity'
+import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Company {
   id: string ;
 }
 export class CompanyRel {
-  Product: Product[] ;
+  @ValidateNested()
+Product: Product[] ;
 }
 export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
 ",

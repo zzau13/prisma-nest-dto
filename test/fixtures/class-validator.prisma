@@ -32,6 +32,24 @@ model Product {
   /// @IsUUID('4')
   companyId   String   @db.Uuid
 
+  /// @DtoRelationRequired
+  /// @DtoRelationCanConnectOnCreate
+  category Category? @relation(fields: [categoryId], references: [id])
+
+  /// @DtoRelationRequired
+  /// @DtoRelationCanConnectOnUpdate
+  company Company @relation(fields: [companyId], references: [id])
+
 
   @@map("products")
+}
+
+model Category {
+  id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  product Product[]
+}
+
+model Company {
+  id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  product Product[]
 }
