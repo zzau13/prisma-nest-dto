@@ -11,7 +11,7 @@ specifiers:
   '@types/babel__generator': 7.6.4
   '@types/jest': 28.1.6
   '@types/node': 18.6.3
-  '@types/validator': 13.7.4
+  '@types/validator': 13.7.5
   '@typescript-eslint/eslint-plugin': 5.32.0
   '@typescript-eslint/parser': 5.32.0
   case: ^1.6.3
@@ -51,7 +51,7 @@ devDependencies:
   '@types/babel__generator': 7.6.4
   '@types/jest': 28.1.6
   '@types/node': 18.6.3
-  '@types/validator': 13.7.4
+  '@types/validator': 13.7.5
   '@typescript-eslint/eslint-plugin': 5.32.0_iosr3hrei2tubxveewluhu5lhy
   '@typescript-eslint/parser': 5.32.0_qugx7qdu5zevzvxaiqyxfiwquq
   dotenv-cli: 6.0.0
@@ -833,8 +833,8 @@ packages:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
     dev: false
 
-  /@types/validator/13.7.4:
-    resolution: {integrity: sha512-uAaSWegu2lymY18l+s5nmcXu3sFeeTOl1zhSGoYzcr6T3wz1M+3OcW4UjfPhIhHGd13tIMRDsEpR+d8w/MexwQ==}
+  /@types/validator/13.7.5:
+    resolution: {integrity: sha512-9rQHeAqz6Jw3gDhttkmWetoriW5FPbxylv/6h6mXtaj2NKRcOvOmvfcswVdLVpbuy10NrO486K3lCoLgoIhiIA==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.32.0_iosr3hrei2tubxveewluhu5lhy:
