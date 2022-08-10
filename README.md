@@ -11,6 +11,7 @@
 - Create various dto depending on index fields
 - Clean Code and simplify structure
 - Add Documentation and clean README.md
+- Coverage e2e
 
 # Prisma Generator NestJS
 
