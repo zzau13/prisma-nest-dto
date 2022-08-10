@@ -42,4 +42,9 @@ jobs:
         run: pnpm check
 
       - name: test
-        run: pnpm test
+        run: pnpm test -- --coverage
+
+      - name: Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
