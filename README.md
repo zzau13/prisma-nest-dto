@@ -13,7 +13,7 @@
 - Add Documentation and clean README.md
 - Coverage e2e
 
-# Prisma Generator NestJS
+# Prisma Generator NestJS [![npm version](https://badge.fury.io/js/prisma-generator-nestjs.svg)](https://www.npmjs.com/package/prisma-generator-nestjs) [![codecov](https://codecov.io/gh/botika/prisma-generator-nestjs-dto/branch/main/graph/badge.svg?token=HIJKP2ENHQ)](https://codecov.io/gh/botika/prisma-generator-nestjs-dto)
 
 ## What is it?
 
@@ -29,7 +29,7 @@ npm install --save-dev prisma-generator-nestjs
 
 ```prisma
 generator nestjsDto {
-  provider                        = "prisma-generator-nestjs-dto"
+  provider                        = "prisma-generator-nestjs"
   output                          = "../src/model"
   outputToNestJsResourceStructure = "true"
   exportRelationModifierClasses   = "true"
