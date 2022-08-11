@@ -12,6 +12,7 @@
 - Clean Code and simplify structure
 - Add Documentation and clean README.md
 - Coverage e2e
+- ~100% coverage
 
 # Prisma Generator NestJS [![npm version](https://badge.fury.io/js/prisma-generator-nestjs.svg)](https://www.npmjs.com/package/prisma-generator-nestjs) [![codecov](https://codecov.io/gh/botika/prisma-generator-nestjs-dto/branch/main/graph/badge.svg?token=HIJKP2ENHQ)](https://codecov.io/gh/botika/prisma-generator-nestjs-dto)
 
