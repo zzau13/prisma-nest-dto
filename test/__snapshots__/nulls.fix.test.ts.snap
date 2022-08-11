@@ -37,7 +37,6 @@ import {Prisma} from '@prisma/client'
 
 
 export class UpdateProductDto {
-  id: string ;
   name?: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;

@@ -5,9 +5,60 @@ exports[`fixtures/arr-id.prisma 1`] = `
   {
     "content": "
 
+  export class ConnectPlantDto {
+  plantId: string;
+  }
+  ",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-plant.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class CreatePlantDto {
+  
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-plant.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class UpdatePlantDto {
+  
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-plant.dto.ts",
+  },
+  {
+    "content": "
+import {Product} from './product.entity'
+import {Item} from './item.entity'
+import {ValidateNested} from 'class-validator'
+import {IntersectionType} from '@nestjs/swagger'
+
+export class Plant {
+  plantId: string ;
+}
+export class PlantRel {
+  @ValidateNested()
+products: Product[] ;
+  @ValidateNested()
+items: Item[] ;
+}
+export class PlantFull extends IntersectionType(Plant, PlantRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant.entity.ts",
+  },
+  {
+    "content": "
+
   export class ConnectProductDto {
   id: string;
-  anotherId: string;
+  plantId: string;
   }
   ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
@@ -18,7 +69,7 @@ import {Prisma} from '@prisma/client'
 
 
 export class CreateProductDto {
-  anotherId: string;
+  plantId: string;
   name: string;
   description: string;
   images: Prisma.InputJsonValue[];
@@ -39,8 +90,6 @@ import {Prisma} from '@prisma/client'
 
 
 export class UpdateProductDto {
-  id: string ;
-  anotherId: string ;
   name?: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;
@@ -58,11 +107,13 @@ export class UpdateProductDto {
   {
     "content": "
 import {Prisma} from '@prisma/client'
+import {Plant} from './plant.entity'
+import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Product {
   id: string ;
-  anotherId: string ;
+  plantId: string ;
   name: string ;
   description: string ;
   images: Prisma.JsonValue[] ;
@@ -75,7 +126,8 @@ export class Product {
   companyId: string ;
 }
 export class ProductRel {
-  
+  @ValidateNested()
+plant: Plant ;
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
@@ -113,9 +165,6 @@ import {Prisma} from '@prisma/client'
 
 
 export class UpdateItemDto {
-  itemId: string ;
-  plantId: string ;
-  orderId: string ;
   diner?: Prisma.Decimal  | null;
   productId?: string ;
   quantity?: Prisma.Decimal ;
@@ -126,6 +175,8 @@ export class UpdateItemDto {
   {
     "content": "
 import {Prisma} from '@prisma/client'
+import {Plant} from './plant.entity'
+import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 
 export class Item {
@@ -137,7 +188,8 @@ export class Item {
   quantity: Prisma.Decimal ;
 }
 export class ItemRel {
-  
+  @ValidateNested()
+plant: Plant ;
 }
 export class ItemFull extends IntersectionType(Item, ItemRel) {}
 ",

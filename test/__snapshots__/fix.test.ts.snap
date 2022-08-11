@@ -53,7 +53,6 @@ import {Prisma} from '@prisma/client'
 
 
 export class UpdateProductDto {
-  id: string ;
   name?: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;
@@ -121,7 +120,7 @@ export class CreateCategoryDto {
 
 
 export class UpdateCategoryDto {
-  id: string ;
+  
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-category.dto.ts",
@@ -169,7 +168,7 @@ export class CreateCompanyDto {
 
 
 export class UpdateCompanyDto {
-  id: string ;
+  
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-company.dto.ts",
@@ -218,8 +217,7 @@ export class CreateAnotherDto {
 
 
 export class UpdateAnotherDto {
-  id1: string ;
-  id2: string ;
+  
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-another.dto.ts",

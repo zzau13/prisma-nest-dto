@@ -16,9 +16,16 @@ generator nestjsDto {
   fileNamingStyle                 = "camel"
 }
 
+model Plant {
+  plantId String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  products Product[] @relation("ProductsToPlant")
+  items    Item[]    @relation("ItemsToPlant")
+}
+
 model Product {
   id          String   @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  anotherId   String   @db.Uuid
+  plantId     String   @db.Uuid
   name        String   @db.VarChar(255)
   description String   @db.VarChar(1024)
   images      Json[]   @db.Json
@@ -30,7 +37,9 @@ model Product {
   categoryId  String   @db.Uuid
   companyId   String   @db.Uuid
 
-  @@id([id, anotherId])
+  plant Plant @relation("ProductsToPlant", fields: [plantId], references: [plantId], onDelete: NoAction)
+
+  @@id([id, plantId])
 }
 
 model Item {
@@ -40,6 +49,8 @@ model Item {
   diner     Decimal? @db.Decimal(3, 0)
   productId String   @map("product_id") @db.VarChar(40)
   quantity  Decimal  @db.Decimal(13, 3)
+
+  plant Plant @relation("ItemsToPlant", fields: [plantId], references: [plantId], onDelete: NoAction)
 
   @@id([plantId, orderId, itemId])
   @@map("items")

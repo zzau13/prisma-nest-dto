@@ -51,7 +51,12 @@ export const transformUpdate = ({
   const relationScalarFieldNames = Object.keys(relationScalarFields);
 
   const fields = model.fields.reduce((result, field) => {
-    if (isReadOnly(field) || isAnnotatedWith(field, NO_SET)) return result;
+    if (
+      isId(field, model.primaryKey) ||
+      isReadOnly(field) ||
+      isAnnotatedWith(field, NO_SET)
+    )
+      return result;
 
     const { name, isRequired } = field;
     const overrides: Partial<DMMF.Field> = {

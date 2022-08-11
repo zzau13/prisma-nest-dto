@@ -33,16 +33,11 @@ type: SettingPropType;
   },
   {
     "content": "
-import {SettingPropType} from '@prisma/client'
-import {ApiProperty} from '@nestjs/swagger'
+
 
 
 export class UpdateSettingDto {
-  plantId: string ;
-  key: string ;
   value?: string ;
-  @ApiProperty({ enum: SettingPropType})
-type: SettingPropType ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-setting.dto.ts",

@@ -51,15 +51,13 @@ category: CreateProductCategoryRelationInputDto;
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCompanyDto} from './connect-company.dto'
-import {IsUUID,IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
+import {IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
 export class UpdateProductCompanyRelationInputDto {
       @ValidateNested()
 connect: ConnectCompanyDto;
   }
 @ApiExtraModels(ConnectCompanyDto,UpdateProductCompanyRelationInputDto)
 export class UpdateProductDto {
-  @IsUUID('4')
-id: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;
   @IsBoolean()
@@ -138,7 +136,7 @@ export class CreateCategoryDto {
 
 
 export class UpdateCategoryDto {
-  id: string ;
+  
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-category.dto.ts",
@@ -186,7 +184,7 @@ export class CreateCompanyDto {
 
 
 export class UpdateCompanyDto {
-  id: string ;
+  
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-company.dto.ts",
