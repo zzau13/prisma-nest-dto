@@ -1,5 +1,5 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
-import { parseEnvValue } from '@prisma/sdk';
+import { parseEnvValue } from '@prisma/internals';
 import { NamingStyle } from './generator/types';
 
 export const stringToBoolean = (input: string, defaultValue = false) => {

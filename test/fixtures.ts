@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { globby } from 'globby';
-import { getConfig, getDMMF } from '@prisma/sdk';
+import { getConfig, getDMMF } from '@prisma/internals';
 
 import { run } from '../src/generator';
 import { parseOptions } from '../src/options';
