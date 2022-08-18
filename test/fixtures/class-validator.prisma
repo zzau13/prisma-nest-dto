@@ -40,7 +40,6 @@ model Product {
   /// @DtoRelationCanConnectOnUpdate
   company Company @relation(fields: [companyId], references: [id])
 
-
   @@map("products")
 }
 
