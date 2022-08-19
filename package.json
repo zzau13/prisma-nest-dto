@@ -88,7 +88,7 @@
     "prisma": "4.2.1",
     "release-it": "15.3.0",
     "typescript": "4.7.4",
-    "vitest": "0.22.0"
+    "vitest": "0.22.1"
   },
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",
