@@ -12,6 +12,7 @@
 - Add support for class-validator ~~by comment~~, by name, (in future by @db annotations)
 - Create various dto depending on index fields
 - Clean Code and simplify structure
+- Prettify and complete documentation
 - Coverage e2e
 - ~100% coverage
 
@@ -21,5 +22,6 @@
 
 ## License
 
-All files are released under the [Apache License 2.0](https://github.com/vegardit/prisma-generator-nestjs-dto/blob/master/LICENSE).
-This project is a fork from [https://github.com/vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
+All files are released under the [Apache License 2.0](./LICENSE)
+
+Fork from [https://github.com/vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
