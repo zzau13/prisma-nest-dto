@@ -16,17 +16,17 @@ export const computeModelParams = ({
   allModels,
   templateHelpers,
 }: ComputeModelParamsParam): ModelParams => ({
-  connect: transformConnect({ model, templateHelpers }),
+  connect: transformConnect({ model, help: templateHelpers }),
   create: transformCreate({
     model,
     allModels, // ? should this be `allModels: models` instead
-    templateHelpers,
+    help: templateHelpers,
   }),
 
   update: transformUpdate({
     model,
     allModels,
-    templateHelpers,
+    help: templateHelpers,
   }),
-  entity: transformEntity({ model, allModels, templateHelpers }),
+  entity: transformEntity({ model, allModels, help: templateHelpers }),
 });

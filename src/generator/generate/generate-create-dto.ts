@@ -15,8 +15,7 @@ export const generateCreateDto = ({
   templateHelpers: t,
 }: GenerateCreateDtoParam) => `
 ${t.importStatements(imports)}
-${t.each(
-  extraClasses,
+${extraClasses.each(
   exportRelationModifierClasses ? (content) => `export ${content}` : t.echo,
   '\n',
 )}

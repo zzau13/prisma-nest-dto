@@ -48,11 +48,15 @@ export const unless = (
   elseTemplate = '',
 ) => (!condition ? thenTemplate : elseTemplate);
 
-export const each = <T = unknown>(
-  arr: Array<T>,
-  fn: (item: T) => string,
-  joinWith = '',
-) => arr.map(fn).join(joinWith);
+declare global {
+  interface Array<T> {
+    each(fn: (item: T) => string, joinWith: string): string;
+  }
+}
+
+Array.prototype.each = function (fn, joinWith = '') {
+  return this.map(fn).join(joinWith);
+};
 
 export const importStatement = (input: ImportStatementParams) => {
   const { from, destruct = [], default: defaultExport } = input;
@@ -82,19 +86,8 @@ export const importStatement = (input: ImportStatementParams) => {
 };
 
 export const importStatements = (items: ImportStatementParams[]) =>
-  `${each(items, importStatement, '\n')}`;
+  `${items.each(importStatement, '\n')}`;
 
-interface MakeHelpersParam {
-  connectDtoPrefix: string;
-  createDtoPrefix: string;
-  updateDtoPrefix: string;
-  dtoSuffix: string;
-  entityPrefix: string;
-  entitySuffix: string;
-  transformClassNameCase?: (item: string) => string;
-  transformFileNameCase?: (item: string) => string;
-  decimalAsNumber: boolean;
-}
 export const makeHelpers = ({
   connectDtoPrefix,
   createDtoPrefix,
@@ -105,7 +98,19 @@ export const makeHelpers = ({
   transformClassNameCase = echo,
   transformFileNameCase = echo,
   decimalAsNumber,
-}: MakeHelpersParam) => {
+  mode = 'openapi',
+}: {
+  connectDtoPrefix: string;
+  createDtoPrefix: string;
+  updateDtoPrefix: string;
+  dtoSuffix: string;
+  entityPrefix: string;
+  entitySuffix: string;
+  transformClassNameCase?: (item: string) => string;
+  transformFileNameCase?: (item: string) => string;
+  decimalAsNumber: boolean;
+  mode?: 'openapi' | 'graphql';
+}) => {
   const className = (name: string, prefix = '', suffix = '') =>
     `${prefix}${transformClassNameCase(name)}${suffix}`;
   const fileName = (
@@ -171,8 +176,7 @@ export const makeHelpers = ({
     useInputTypes = false,
     forceOptional = false,
   ) =>
-    `  ${each(
-      fields,
+    `  ${fields.each(
       (field) => fieldToDtoProp(field, useInputTypes, forceOptional),
       '\n  ',
     )}`;
@@ -191,11 +195,16 @@ export const makeHelpers = ({
   };
 
   const fieldsToEntityProps = (fields: ParsedField[]) =>
-    `  ${each(fields, (field) => fieldToEntityProp(field), '\n  ')}`;
+    `  ${fields.each((field) => fieldToEntityProp(field), '\n  ')}`;
 
   const apiExtraModels = (names: string[]) =>
     `@ApiExtraModels(${names.map(entityName)})`;
 
+  /*'@nestjs/graphql'*/
+  let imports = '';
+  if (mode === 'openapi') imports = '@nestjs/swagger';
+  else throw new Error('unimplemented graphql support');
+  const nestImport = () => imports;
   return {
     config: {
       connectDtoPrefix,
@@ -204,33 +213,32 @@ export const makeHelpers = ({
       dtoSuffix,
       entityPrefix,
       entitySuffix,
-    },
+    } as const,
     apiExtraModels,
-    entityName,
-    connectDtoName,
-    createDtoName,
-    updateDtoName,
     connectDtoFilename,
+    connectDtoName,
     createDtoFilename,
-    updateDtoFilename,
-    entityFilename,
-    each,
+    createDtoName,
     echo,
-    fieldsToDtoProps,
+    entityFilename,
+    entityName,
     fieldToDtoProp,
     fieldToEntityProp,
-    fieldsToEntityProps,
     fieldType,
-    for: each,
+    fieldsToDtoProps,
+    fieldsToEntityProps,
     if: when,
     importStatement,
     importStatements,
+    nestImport,
+    scalarToTS,
     transformClassNameCase,
     transformFileNameCase,
     unless,
+    updateDtoFilename,
+    updateDtoName,
     when,
-    scalarToTS,
-  };
+  } as const;
 };
 
 export type TemplateHelpers = ReturnType<typeof makeHelpers>;

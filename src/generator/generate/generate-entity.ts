@@ -16,7 +16,7 @@ export const generateEntity = ({
 ${t.importStatements(
   imports.concat([
     {
-      from: '@nestjs/swagger',
+      from: t.nestImport(),
       destruct: ['IntersectionType'].concat(
         fields.find((x) => x.kind === 'enum') ? ['ApiProperty'] : [],
       ),

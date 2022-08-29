@@ -6,12 +6,12 @@
 - ~~Add per model index and default reexport~~
 - ~~Refactor decimal.js to number and use hard cast from prisma client return type~~
 - ~~Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast~~
+- Add https://docs.nestjs.com/graphql/mapped-types support with config
 - Simplify comment annotations and remove boilerplate
 - Add support for class-validator ~~by comment~~, by name, (in future by @db annotations)
 - Create various dto depending on index fields
 - Clean Code and simplify structure
 - Add Documentation and clean README.md
-- Add https://docs.nestjs.com/graphql/mapped-types support with config
 - Coverage e2e
 - ~100% coverage
 
@@ -42,6 +42,7 @@ generator nestjsDto {
   entitySuffix                    = ""
   fileNamingStyle                 = "kebak"
   decimalAsNumber                 = "false"
+  mode                            = "openapi"
 }
 ```
 

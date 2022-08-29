@@ -20,16 +20,15 @@ import type {
 } from '../types';
 import type { TemplateHelpers } from '../template-helpers';
 
-interface ComputeEntityParamsParam {
-  model: Model;
-  allModels: Model[];
-  templateHelpers: TemplateHelpers;
-}
 export const transformEntity = ({
   model,
   allModels,
-  templateHelpers,
-}: ComputeEntityParamsParam): EntityParams => {
+  help,
+}: {
+  model: Model;
+  allModels: Model[];
+  help: TemplateHelpers;
+}): EntityParams => {
   const imports: ImportStatementParams[] = [];
   const apiExtraModels: string[] = [];
 
@@ -67,12 +66,12 @@ export const transformEntity = ({
             `related model '${field.type}' for '${model.name}.${field.name}' not found`,
           );
 
-        const importName = templateHelpers.entityName(field.type);
+        const importName = help.entityName(field.type);
         const importFrom = slash(
           `${getRelativePath(
             model.output.entity,
             modelToImportFrom.output.entity,
-          )}${path.sep}${templateHelpers.entityFilename(field.type)}`,
+          )}${path.sep}${help.entityFilename(field.type)}`,
         );
 
         // don't double-import the same thing
@@ -115,16 +114,13 @@ export const transformEntity = ({
   }, [] as ParsedField[]);
 
   if (apiExtraModels.length)
-    imports.unshift({ from: '@nestjs/swagger', destruct: ['ApiExtraModels'] });
+    imports.unshift({ from: help.nestImport(), destruct: ['ApiExtraModels'] });
 
   // TODO: duplicated
   const importDeco = getImportsDeco(fields);
   if (importDeco) imports.push(importDeco);
 
-  const importPrismaClient = makeImportsFromPrismaClient(
-    fields,
-    templateHelpers,
-  );
+  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
   if (importPrismaClient) imports.unshift(importPrismaClient);
 
   return {

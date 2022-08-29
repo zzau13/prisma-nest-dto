@@ -26,6 +26,7 @@ export const parseOptions = ({
     entityPrefix = '',
     entitySuffix = '',
     fileNamingStyle = 'kebab',
+    mode = 'openapi',
   } = config;
 
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
@@ -52,6 +53,9 @@ export const parseOptions = ({
   }
 
   return {
+    mode: (mode !== 'openapi' && mode !== 'graphql' ? 'openapi' : mode) as
+      | 'openapi'
+      | 'graphql',
     connectDtoPrefix,
     createDtoPrefix,
     decimalAsNumber,

@@ -32,16 +32,15 @@ import type {
   ParsedField,
 } from '../types';
 
-interface ComputeUpdateDtoParamsParam {
-  model: Model;
-  allModels: Model[];
-  templateHelpers: TemplateHelpers;
-}
 export const transformUpdate = ({
   model,
   allModels,
-  templateHelpers,
-}: ComputeUpdateDtoParamsParam): UpdateDtoParams => {
+  help,
+}: {
+  model: Model;
+  allModels: Model[];
+  help: TemplateHelpers;
+}): UpdateDtoParams => {
   let hasEnum = false;
   const imports: ImportStatementParams[] = [];
   const extraClasses: string[] = [];
@@ -72,8 +71,8 @@ export const transformUpdate = ({
         field,
         model,
         allModels,
-        templateHelpers,
-        preAndSuffixClassName: templateHelpers.updateDtoName,
+        templateHelpers: help,
+        preAndSuffixClassName: help.updateDtoName,
         canCreateAnnotation: DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
         canConnectAnnotation: DTO_RELATION_CAN_CONNECT_ON_UPDATE,
       });
@@ -106,17 +105,14 @@ export const transformUpdate = ({
     const destruct = [];
     if (apiExtraModels.length) destruct.push('ApiExtraModels');
     if (hasEnum) destruct.push('ApiProperty');
-    imports.unshift({ from: '@nestjs/swagger', destruct });
+    imports.unshift({ from: help.nestImport(), destruct });
   }
 
   // TODO: duplicated
   const importDeco = getImportsDeco(fields);
   if (importDeco) imports.push(importDeco);
 
-  const importPrismaClient = makeImportsFromPrismaClient(
-    fields,
-    templateHelpers,
-  );
+  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
   if (importPrismaClient) imports.unshift(importPrismaClient);
 
   return {

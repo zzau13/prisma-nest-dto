@@ -16,8 +16,7 @@ export const generateUpdateDto = ({
 }: GenerateUpdateDtoParam) => {
   return `
 ${t.importStatements(imports)}
-${t.each(
-  extraClasses,
+${extraClasses.each(
   exportRelationModifierClasses ? (content) => `export ${content}` : t.echo,
   '\n',
 )}

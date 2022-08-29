@@ -12,10 +12,10 @@ import { TemplateHelpers } from '../template-helpers';
 
 export const transformConnect = ({
   model,
-  templateHelpers,
+  help,
 }: {
   model: DMMF.Model;
-  templateHelpers: TemplateHelpers;
+  help: TemplateHelpers;
 }) => {
   const idFields = model.fields.filter((field) =>
     isId(field, model.primaryKey),
@@ -29,17 +29,14 @@ export const transformConnect = ({
   if (fields.find((x) => x.kind === 'enum')) {
     const destruct = [];
     destruct.push('ApiProperty');
-    imports.unshift({ from: '@nestjs/swagger', destruct });
+    imports.unshift({ from: help.nestImport(), destruct });
   }
 
   // TODO: duplicated
   const importDeco = getImportsDeco(fields);
   if (importDeco) imports.push(importDeco);
 
-  const importPrismaClient = makeImportsFromPrismaClient(
-    fields,
-    templateHelpers,
-  );
+  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
   if (importPrismaClient) imports.push(importPrismaClient);
 
   return { model, fields, imports };
