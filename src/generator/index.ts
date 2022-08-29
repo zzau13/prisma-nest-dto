@@ -14,10 +14,10 @@ import { DTO_IGNORE_MODEL } from './annotations';
 import { isAnnotatedWith } from './field-classifiers';
 import { Model } from './types';
 
-import { parseOptions } from '../options';
+import { Options } from '../options';
 
 const transformers: Record<
-  ReturnType<typeof parseOptions>['fileNamingStyle'],
+  Options['fileNamingStyle'],
   (str: string) => string
 > = {
   camel,
@@ -33,7 +33,7 @@ export const run = ({
   outputToNestJsResourceStructure,
   fileNamingStyle,
   ...preAndSuffixes
-}: ReturnType<typeof parseOptions>) => {
+}: Options) => {
   const transformFileNameCase = transformers[fileNamingStyle];
   const templateHelpers = makeHelpers({
     transformFileNameCase,

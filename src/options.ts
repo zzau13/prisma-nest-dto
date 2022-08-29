@@ -1,7 +1,7 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
 import { parseEnvValue } from '@prisma/internals';
 
-export const stringToBoolean = (input: string, defaultValue = false) => {
+const stringToBoolean = (input: string, defaultValue = false) => {
   if (input === 'true') {
     return true;
   }
@@ -11,6 +11,8 @@ export const stringToBoolean = (input: string, defaultValue = false) => {
 
   return defaultValue;
 };
+
+export type Options = ReturnType<typeof parseOptions>;
 
 export const parseOptions = ({
   generator: { config, output },
@@ -40,9 +42,14 @@ export const parseOptions = ({
   );
 
   type NamingStyle = 'snake' | 'camel' | 'pascal' | 'kebab';
-  const supportedFileNamingStyles = ['kebab', 'camel', 'pascal', 'snake'];
+  const supportedFileNamingStyles: NamingStyle[] = [
+    'kebab',
+    'camel',
+    'pascal',
+    'snake',
+  ];
   const isSupportedFileNamingStyle = (style: string): style is NamingStyle =>
-    supportedFileNamingStyles.includes(style);
+    supportedFileNamingStyles.includes(style as NamingStyle);
 
   if (!isSupportedFileNamingStyle(fileNamingStyle)) {
     throw new Error(
@@ -52,9 +59,10 @@ export const parseOptions = ({
       )}.`,
     );
   }
-  const modes = ['openapi', 'graphql'];
-  const isMode = (mode: string): mode is 'openapi' | 'graphql' =>
-    modes.includes(mode);
+
+  type Mode = 'openapi' | 'graphql';
+  const modes: Mode[] = ['openapi', 'graphql'];
+  const isMode = (mode: string): mode is Mode => modes.includes(mode as Mode);
   if (!isMode(mode))
     throw new Error(
       `${mode} is not a valid mode. Valid options ar ${modes.each(
@@ -64,7 +72,6 @@ export const parseOptions = ({
     );
 
   return {
-    mode,
     connectDtoPrefix,
     createDtoPrefix,
     decimalAsNumber,
@@ -74,6 +81,7 @@ export const parseOptions = ({
     entitySuffix,
     exportRelationModifierClasses,
     fileNamingStyle,
+    mode,
     output: parsedOutput,
     outputToNestJsResourceStructure,
     updateDtoPrefix,
