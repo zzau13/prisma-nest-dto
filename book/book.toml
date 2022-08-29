@@ -1,0 +1,6 @@
+[book]
+authors = ["Juan Aguilar Santillana"]
+language = "en"
+multilingual = false
+src = "src"
+title = "prisma generator nestjs"
