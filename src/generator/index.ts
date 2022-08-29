@@ -12,11 +12,14 @@ import {
 } from './generate';
 import { DTO_IGNORE_MODEL } from './annotations';
 import { isAnnotatedWith } from './field-classifiers';
-import { NamingStyle, Model } from './types';
+import { Model } from './types';
 
 import { parseOptions } from '../options';
 
-const transformers: Record<NamingStyle, (str: string) => string> = {
+const transformers: Record<
+  ReturnType<typeof parseOptions>['fileNamingStyle'],
+  (str: string) => string
+> = {
   camel,
   kebab,
   pascal,

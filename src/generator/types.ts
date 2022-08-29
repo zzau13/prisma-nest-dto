@@ -74,5 +74,3 @@ export interface ModelParams {
   update: UpdateDtoParams;
   entity: EntityParams;
 }
-
-export type NamingStyle = 'snake' | 'camel' | 'pascal' | 'kebab';

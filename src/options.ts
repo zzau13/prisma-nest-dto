@@ -1,6 +1,5 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
 import { parseEnvValue } from '@prisma/internals';
-import { NamingStyle } from './generator/types';
 
 export const stringToBoolean = (input: string, defaultValue = false) => {
   if (input === 'true') {
@@ -40,22 +39,32 @@ export const parseOptions = ({
     false,
   );
 
+  type NamingStyle = 'snake' | 'camel' | 'pascal' | 'kebab';
   const supportedFileNamingStyles = ['kebab', 'camel', 'pascal', 'snake'];
   const isSupportedFileNamingStyle = (style: string): style is NamingStyle =>
     supportedFileNamingStyles.includes(style);
 
   if (!isSupportedFileNamingStyle(fileNamingStyle)) {
     throw new Error(
-      `'${fileNamingStyle}' is not a valid file naming style. Valid options are ${supportedFileNamingStyles
-        .map((s) => `'${s}'`)
-        .join(', ')}.`,
+      `'${fileNamingStyle}' is not a valid file naming style. Valid options are ${supportedFileNamingStyles.each(
+        (s) => `'${s}'`,
+        ', ',
+      )}.`,
     );
   }
+  const modes = ['openapi', 'graphql'];
+  const isMode = (mode: string): mode is 'openapi' | 'graphql' =>
+    modes.includes(mode);
+  if (!isMode(mode))
+    throw new Error(
+      `${mode} is not a valid mode. Valid options ar ${modes.each(
+        (s) => `'${s}'`,
+        ', ',
+      )}`,
+    );
 
   return {
-    mode: (mode !== 'openapi' && mode !== 'graphql' ? 'openapi' : mode) as
-      | 'openapi'
-      | 'graphql',
+    mode,
     connectDtoPrefix,
     createDtoPrefix,
     decimalAsNumber,
