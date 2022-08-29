@@ -41,6 +41,9 @@ jobs:
       - name: check
         run: pnpm check
 
+      - name: build
+        run: pnpm build
+
       - name: test
         run: pnpm test -- --coverage
 
