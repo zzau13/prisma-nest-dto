@@ -11,6 +11,7 @@
 - Create various dto depending on index fields
 - Clean Code and simplify structure
 - Add Documentation and clean README.md
+- Add https://docs.nestjs.com/graphql/mapped-types support with config
 - Coverage e2e
 - ~100% coverage
 
