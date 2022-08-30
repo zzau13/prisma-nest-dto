@@ -20,10 +20,23 @@ const getFixtures = async (baseDir: string) => {
   );
 };
 
-export const testFixtures = (baseDir: string) =>
-  test(baseDir, async () => {
-    const fixtures = await getFixtures(path.join(__dirname, baseDir));
+export const testFixtures = (pattern: string) =>
+  test(pattern, async () => {
+    const fixtures = await getFixtures(path.join(__dirname, pattern));
     fixtures.map(parseOptions).forEach((x) => {
       expect(run(x)).toMatchSnapshot();
+    });
+  });
+
+export const failFixtures = (pattern: string) =>
+  test(pattern, async () => {
+    const fixtures = await getFixtures(path.join(__dirname, pattern));
+    fixtures.forEach((opt) => {
+      expect(
+        (async () => {
+          const x = parseOptions(opt);
+          run(x);
+        })(),
+      ).rejects.toBeDefined();
     });
   });
