@@ -245,7 +245,9 @@ export const makeHelpers = ({
 
       const importPrismaClient = makeImportsFromPrismaClient(fields);
       if (importPrismaClient) imports.unshift(importPrismaClient);
-      return zipImportStatementParams(imports);
+      return zipImportStatementParams(imports).sort(
+        ({ from: a }, { from: b }) => b.localeCompare(a),
+      );
     },
     config: {
       connectDtoPrefix,

@@ -101,6 +101,12 @@ export function transformEntity({
     return [...result, { ...parseDMMF(field), ...overrides }];
   }, [] as ParsedField[]);
 
+  imports.push({
+    from: help.nestImport(),
+    destruct: ['IntersectionType'].concat(
+      fields.find((x) => x.kind === 'enum') ? ['ApiProperty'] : [],
+    ),
+  });
   return {
     model,
     fields,

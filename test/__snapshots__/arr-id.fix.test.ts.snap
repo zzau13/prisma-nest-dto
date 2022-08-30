@@ -35,10 +35,10 @@ export class UpdatePlantDto {
   },
   {
     "content": "
-import {Product} from './product.entity'
-import {Item} from './item.entity'
 import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
+import {Product} from './product.entity'
+import {Item} from './item.entity'
 
 export class Plant {
   plantId: string ;
@@ -106,10 +106,10 @@ export class UpdateProductDto {
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
-import {Plant} from './plant.entity'
 import {ValidateNested} from 'class-validator'
+import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
+import {Plant} from './plant.entity'
 
 export class Product {
   id: string ;
@@ -174,10 +174,10 @@ export class UpdateItemDto {
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
-import {Plant} from './plant.entity'
 import {ValidateNested} from 'class-validator'
+import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
+import {Plant} from './plant.entity'
 
 export class Item {
   itemId: string ;

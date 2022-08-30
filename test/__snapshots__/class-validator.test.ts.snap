@@ -14,10 +14,10 @@ id: string;
   },
   {
     "content": "
+import {IsUUID,IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCategoryDto} from './connect-category.dto'
-import {IsUUID,IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
 export class CreateProductCategoryRelationInputDto {
       @ValidateNested()
 connect: ConnectCategoryDto;
@@ -48,10 +48,10 @@ category: CreateProductCategoryRelationInputDto;
   },
   {
     "content": "
+import {IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCompanyDto} from './connect-company.dto'
-import {IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
 export class UpdateProductCompanyRelationInputDto {
       @ValidateNested()
 connect: ConnectCompanyDto;
@@ -76,11 +76,11 @@ company?: UpdateProductCompanyRelationInputDto ;
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
-import {Category} from './category.entity'
-import {Company} from './company.entity'
 import {IsUUID,IsBoolean,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
+import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
+import {Company} from './company.entity'
+import {Category} from './category.entity'
 
 export class Product {
   @IsUUID('4')
@@ -143,9 +143,9 @@ export class UpdateCategoryDto {
   },
   {
     "content": "
-import {Product} from './product.entity'
 import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
+import {Product} from './product.entity'
 
 export class Category {
   id: string ;
@@ -191,9 +191,9 @@ export class UpdateCompanyDto {
   },
   {
     "content": "
-import {Product} from './product.entity'
 import {ValidateNested} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
+import {Product} from './product.entity'
 
 export class Company {
   id: string ;
