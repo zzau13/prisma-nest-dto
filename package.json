@@ -45,7 +45,7 @@
     "prisma-generator-nestjs": "dist/cli.js"
   },
   "engines": {
-    "node": ">=16.15"
+    "node": ">=14.20"
   },
   "files": [
     "dist"
