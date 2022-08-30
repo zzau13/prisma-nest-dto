@@ -28,7 +28,7 @@ specifiers:
   make-dir: ^3.1.0
   prettier: 2.7.1
   prettier-plugin-prisma: 4.2.0
-  prisma: 4.2.1
+  prisma: 4.3.0
   release-it: 15.4.0
   slash: ^3.0.0
   tar: ^6.1.11
@@ -69,7 +69,7 @@ devDependencies:
   lint-staged: 13.0.3
   prettier: 2.7.1
   prettier-plugin-prisma: 4.2.0_prettier@2.7.1
-  prisma: 4.2.1
+  prisma: 4.3.0
   release-it: 15.4.0
   typescript: 4.8.2
   vitest: 0.22.1
@@ -646,6 +646,12 @@ packages:
   /@prisma/engines/4.2.1:
     resolution: {integrity: sha512-0KqBwREUOjBiHwITsQzw2DWfLHjntvbqzGRawj4sBMnIiL5CXwyDUKeHOwXzKMtNr1rEjxEsypM14g0CzLRK3g==}
     requiresBuild: true
+    dev: false
+
+  /@prisma/engines/4.3.0:
+    resolution: {integrity: sha512-JAyU7+QEpLkVtgVMYBSPQt9sUcgFqA/MdD4mK7yx+ZyDfHQlP+nT1rmqFPZ3MofR0mAha7nr3rx0ZNN46gLp9Q==}
+    requiresBuild: true
+    dev: true
 
   /@prisma/fetch-engine/4.2.1:
     resolution: {integrity: sha512-O72UNvkiZOBx1fo9LF9BbFOINfJtqy72ska6qwRexa46Fxls2wQHmZAJ2sC2tw5wkm4XO8Nb20rw1qSz6EP1oA==}
@@ -4540,13 +4546,13 @@ packages:
       react-is: 18.2.0
     dev: true
 
-  /prisma/4.2.1:
-    resolution: {integrity: sha512-HuYqnTDgH8atjPGtYmY0Ql9XrrJnfW7daG1PtAJRW0E6gJxc50lY3vrIDn0yjMR3TvRlypjTcspQX8DT+xD4Sg==}
+  /prisma/4.3.0:
+    resolution: {integrity: sha512-Ii588H5IsbSun5BwpNQwrayrHKecFEZ6wDoJ7nr2IsqlMblmkA1dextGBObsG9tg+aIVhTrNa7OAbhbvEfqhdQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.2.1
+      '@prisma/engines': 4.3.0
     dev: true
 
   /process-nextick-args/2.0.1:
