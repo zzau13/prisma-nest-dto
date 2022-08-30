@@ -14,5 +14,4 @@ generator nestjsDto {
   entityPrefix                    = ""
   entitySuffix                    = ""
   fileNamingStyle                 = "foo"
-  mode                            = "bar"
 }
