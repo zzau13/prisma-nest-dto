@@ -62,13 +62,9 @@ export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
 };
 
 // TODO: call one time
-export const mapDMMFToParsedField = (
-  field: DMMF.Field,
-  overrides: Partial<DMMF.Field> = {},
-): ParsedField => ({
+export const parseDMMF = (field: DMMF.Field): ParsedField => ({
   decorators: getDecorators(field),
   ...field,
-  ...overrides,
 });
 
 export const getRelationScalars = (

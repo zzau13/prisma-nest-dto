@@ -1,10 +1,6 @@
 import type { Help } from '../help';
-import type { UpdateDtoParams } from '../types';
+import { transformUpdate } from '../transform/transform-update';
 
-interface GenerateUpdateDtoParam extends UpdateDtoParams {
-  exportRelationModifierClasses: boolean;
-  templateHelpers: Help;
-}
 export const generateUpdateDto = ({
   model,
   fields,
@@ -12,17 +8,18 @@ export const generateUpdateDto = ({
   extraClasses,
   apiExtraModels,
   exportRelationModifierClasses,
-  templateHelpers: t,
-}: GenerateUpdateDtoParam) => {
-  return `
-${t.importStatements(imports)}
+  help,
+}: ReturnType<typeof transformUpdate> & {
+  exportRelationModifierClasses: boolean;
+  help: Help;
+}) => `
+${help.importStatements(imports)}
 ${extraClasses.each(
-  exportRelationModifierClasses ? (content) => `export ${content}` : t.echo,
+  exportRelationModifierClasses ? (content) => `export ${content}` : help.echo,
   '\n',
 )}
-${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
-export class ${t.updateDtoName(model.name)} {
-${t.fieldsToEntityProps(fields)}
+${help.if(apiExtraModels.length, help.apiExtraModels(apiExtraModels))}
+export class ${help.updateDtoName(model.name)} {
+${help.fieldsToEntityProps(fields)}
 }
 `;
-};

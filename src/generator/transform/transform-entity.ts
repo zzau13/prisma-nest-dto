@@ -2,15 +2,10 @@ import path from 'node:path';
 import slash from 'slash';
 import { DTO_ENTITY_HIDDEN, DTO_RELATION_REQUIRED } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
-import {
-  getRelationScalars,
-  getRelativePath,
-  mapDMMFToParsedField,
-  zipImportStatementParams,
-} from '../helpers';
+import { getRelationScalars, getRelativePath, parseDMMF } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type { Model, EntityParams, Imports, ParsedField } from '../types';
+import type { Model, Imports, ParsedField } from '../types';
 import type { Help } from '../help';
 
 export function transformEntity({
@@ -21,7 +16,7 @@ export function transformEntity({
   model: Model;
   allModels: Model[];
   help: Help;
-}): EntityParams {
+}) {
   const imports: Imports[] = [];
   const apiExtraModels: string[] = [];
 
@@ -103,18 +98,13 @@ export function transformEntity({
       overrides.isNullable = !isAnyRelationRequired;
     }
 
-    return [...result, mapDMMFToParsedField(field, overrides)];
+    return [...result, { ...parseDMMF(field), ...overrides }];
   }, [] as ParsedField[]);
-
-  if (apiExtraModels.length)
-    imports.unshift({ from: help.nestImport(), destruct: ['ApiExtraModels'] });
-
-  help.addImports(fields, imports);
 
   return {
     model,
     fields,
-    imports: zipImportStatementParams(imports),
+    imports: help.addImports(fields, imports, apiExtraModels),
     apiExtraModels,
   };
 }

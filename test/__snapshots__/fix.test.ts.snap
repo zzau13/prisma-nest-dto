@@ -5,10 +5,10 @@ exports[`fixtures/basic/**/*.prisma 1`] = `
   {
     "content": "
 
-  export class ConnectProductDto {
+export class ConnectProductDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
   },
   {
@@ -97,10 +97,10 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
   {
     "content": "
 
-  export class ConnectCategoryDto {
+export class ConnectCategoryDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-category.dto.ts",
   },
   {
@@ -145,10 +145,10 @@ export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
   {
     "content": "
 
-  export class ConnectCompanyDto {
+export class ConnectCompanyDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-company.dto.ts",
   },
   {
@@ -193,11 +193,11 @@ export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
   {
     "content": "
 
-  export class ConnectAnotherDto {
+export class ConnectAnotherDto {
   id1: string;
   id2: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-another.dto.ts",
   },
   {

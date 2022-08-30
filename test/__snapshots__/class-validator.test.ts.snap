@@ -5,11 +5,11 @@ exports[`fixtures/class-validator.prisma 1`] = `
   {
     "content": "
 import {IsUUID} from 'class-validator'
-  export class ConnectProductDto {
+export class ConnectProductDto {
   @IsUUID('4')
 id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
   },
   {
@@ -113,10 +113,10 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
   {
     "content": "
 
-  export class ConnectCategoryDto {
+export class ConnectCategoryDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-category.dto.ts",
   },
   {
@@ -161,10 +161,10 @@ export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
   {
     "content": "
 
-  export class ConnectCompanyDto {
+export class ConnectCompanyDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-company.dto.ts",
   },
   {

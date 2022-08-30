@@ -17,13 +17,12 @@ import {
   concatIntoArray,
   generateRelationInput,
   getRelationScalars,
-  mapDMMFToParsedField,
-  zipImportStatementParams,
+  parseDMMF,
 } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
 import type { Help } from '../help';
-import type { Model, UpdateDtoParams, Imports, ParsedField } from '../types';
+import type { Model, Imports, ParsedField } from '../types';
 
 export function transformUpdate({
   model,
@@ -33,8 +32,7 @@ export function transformUpdate({
   model: Model;
   allModels: Model[];
   help: Help;
-}): UpdateDtoParams {
-  let hasEnum = false;
+}) {
   const imports: Imports[] = [];
   const extraClasses: string[] = [];
   const apiExtraModels: string[] = [];
@@ -90,23 +88,15 @@ export function transformUpdate({
 
     if (isUpdatedAt(field)) return result;
 
-    if (field.kind === 'enum') hasEnum = true;
-    return [...result, mapDMMFToParsedField(field, overrides)];
+    result.push({ ...parseDMMF(field), ...overrides });
+
+    return result;
   }, [] as ParsedField[]);
-
-  if (apiExtraModels.length || hasEnum) {
-    const destruct = [];
-    if (apiExtraModels.length) destruct.push('ApiExtraModels');
-    if (hasEnum) destruct.push('ApiProperty');
-    imports.unshift({ from: help.nestImport(), destruct });
-  }
-
-  help.addImports(fields, imports);
 
   return {
     model,
     fields,
-    imports: zipImportStatementParams(imports),
+    imports: help.addImports(fields, imports, apiExtraModels),
     extraClasses,
     apiExtraModels,
   };

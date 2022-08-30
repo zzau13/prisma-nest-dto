@@ -6,13 +6,13 @@ exports[`fixtures/enum.prisma 1`] = `
     "content": "
 import {SettingPropType} from '@prisma/client'
 import {ApiProperty} from '@nestjs/swagger'
-  export class ConnectSettingDto {
+export class ConnectSettingDto {
   plantId: string;
   key: string;
   @ApiProperty({ enum: SettingPropType})
 type: SettingPropType;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-setting.dto.ts",
   },
   {
@@ -45,7 +45,7 @@ export class UpdateSettingDto {
   {
     "content": "
 import {SettingPropType} from '@prisma/client'
-import {IntersectionType,ApiProperty} from '@nestjs/swagger'
+import {ApiProperty,IntersectionType} from '@nestjs/swagger'
 
 export class Setting {
   plantId: string ;

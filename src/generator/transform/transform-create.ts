@@ -14,16 +14,11 @@ import {
   isRequiredWithDefaultValue,
   isUpdatedAt,
 } from '../field-classifiers';
-import {
-  concatIntoArray,
-  generateRelationInput,
-  mapDMMFToParsedField,
-  zipImportStatementParams,
-} from '../helpers';
+import { concatIntoArray, generateRelationInput, parseDMMF } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
 import type { Help } from '../help';
-import type { Model, CreateDtoParams, Imports, ParsedField } from '../types';
+import type { Model, Imports, ParsedField } from '../types';
 
 export function transformCreate({
   model,
@@ -33,8 +28,7 @@ export function transformCreate({
   model: Model;
   allModels: Model[];
   help: Help;
-}): CreateDtoParams {
-  let hasEnum = false;
+}) {
   const imports: Imports[] = [];
   const apiExtraModels: string[] = [];
   const extraClasses: string[] = [];
@@ -85,24 +79,13 @@ export function transformCreate({
 
     if (isRequiredWithDefaultValue(field)) overrides.isRequired = false;
 
-    if (field.kind === 'enum') hasEnum = true;
-
-    return [...result, mapDMMFToParsedField(field, overrides)];
+    return [...result, { ...parseDMMF(field), ...overrides }];
   }, [] as ParsedField[]);
-
-  if (apiExtraModels.length || hasEnum) {
-    const destruct = [];
-    if (apiExtraModels.length) destruct.push('ApiExtraModels');
-    if (hasEnum) destruct.push('ApiProperty');
-    imports.unshift({ from: help.nestImport(), destruct });
-  }
-
-  help.addImports(fields, imports);
 
   return {
     model,
     fields,
-    imports: zipImportStatementParams(imports),
+    imports: help.addImports(fields, imports, apiExtraModels),
     extraClasses,
     apiExtraModels,
   };

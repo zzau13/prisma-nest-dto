@@ -4,29 +4,28 @@ import { transformCreate } from './transform-create';
 import { transformUpdate } from './transform-update';
 import { transformEntity } from './transform-entity';
 
-import type { Model, ModelParams } from '../types';
+import type { Model } from '../types';
 
-interface ComputeModelParamsParam {
-  model: Model;
-  allModels: Model[];
-  templateHelpers: Help;
-}
 export const computeModelParams = ({
   model,
   allModels,
-  templateHelpers,
-}: ComputeModelParamsParam): ModelParams => ({
-  connect: transformConnect({ model, help: templateHelpers }),
+  help,
+}: {
+  model: Model;
+  allModels: Model[];
+  help: Help;
+}) => ({
+  connect: transformConnect({ model, help }),
   create: transformCreate({
     model,
     allModels, // ? should this be `allModels: models` instead
-    help: templateHelpers,
+    help,
   }),
 
   update: transformUpdate({
     model,
     allModels,
-    help: templateHelpers,
+    help,
   }),
-  entity: transformEntity({ model, allModels, help: templateHelpers }),
+  entity: transformEntity({ model, allModels, help }),
 });

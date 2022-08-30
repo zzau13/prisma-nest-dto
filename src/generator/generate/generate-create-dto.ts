@@ -1,10 +1,6 @@
 import type { Help } from '../help';
-import type { CreateDtoParams } from '../types';
+import { transformCreate } from '../transform/transform-create';
 
-interface GenerateCreateDtoParam extends CreateDtoParams {
-  exportRelationModifierClasses: boolean;
-  templateHelpers: Help;
-}
 export const generateCreateDto = ({
   model,
   fields,
@@ -12,15 +8,18 @@ export const generateCreateDto = ({
   extraClasses,
   apiExtraModels,
   exportRelationModifierClasses,
-  templateHelpers: t,
-}: GenerateCreateDtoParam) => `
-${t.importStatements(imports)}
+  help,
+}: ReturnType<typeof transformCreate> & {
+  exportRelationModifierClasses: boolean;
+  help: Help;
+}) => `
+${help.importStatements(imports)}
 ${extraClasses.each(
-  exportRelationModifierClasses ? (content) => `export ${content}` : t.echo,
+  exportRelationModifierClasses ? (content) => `export ${content}` : help.echo,
   '\n',
 )}
-${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
-export class ${t.createDtoName(model.name)} {
-${t.fieldsToDtoProps(fields, true)}
+${help.if(apiExtraModels.length, help.apiExtraModels(apiExtraModels))}
+export class ${help.createDtoName(model.name)} {
+${help.fieldsToDtoProps(fields, true)}
 }
 `;

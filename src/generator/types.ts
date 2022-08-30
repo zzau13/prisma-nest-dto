@@ -44,33 +44,3 @@ export interface Imports {
    */
   destruct?: (string | Record<string, string>)[];
 }
-
-export type DtoParams = Readonly<{
-  model: DMMF.Model;
-  fields: ParsedField[];
-  // should include all Enums, ExtraModels, ConnectDTOs and CreateDTOs for related models
-  imports: Imports[];
-}>;
-
-export type ConnectDtoParams = DtoParams;
-
-export interface CreateDtoParams extends DtoParams {
-  extraClasses: string[];
-  apiExtraModels: string[];
-}
-
-export interface UpdateDtoParams extends DtoParams {
-  extraClasses: string[];
-  apiExtraModels: string[];
-}
-
-export interface EntityParams extends DtoParams {
-  apiExtraModels: string[];
-}
-
-export interface ModelParams {
-  connect: ConnectDtoParams;
-  create: CreateDtoParams;
-  update: UpdateDtoParams;
-  entity: EntityParams;
-}

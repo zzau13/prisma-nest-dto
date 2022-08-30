@@ -5,10 +5,10 @@ exports[`fixtures/arr-id.prisma 1`] = `
   {
     "content": "
 
-  export class ConnectPlantDto {
+export class ConnectPlantDto {
   plantId: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-plant.dto.ts",
   },
   {
@@ -56,11 +56,11 @@ export class PlantFull extends IntersectionType(Plant, PlantRel) {}
   {
     "content": "
 
-  export class ConnectProductDto {
+export class ConnectProductDto {
   id: string;
   plantId: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
   },
   {
@@ -136,12 +136,12 @@ export class ProductFull extends IntersectionType(Product, ProductRel) {}
   {
     "content": "
 
-  export class ConnectItemDto {
+export class ConnectItemDto {
   itemId: string;
   plantId: string;
   orderId: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-item.dto.ts",
   },
   {

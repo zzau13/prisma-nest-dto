@@ -1,34 +1,34 @@
 import type { Help } from '../help';
-import type { EntityParams } from '../types';
+import { transformEntity } from '../transform/transform-entity';
+import { zipImportStatementParams } from '../helpers';
 
-interface GenerateEntityParam extends EntityParams {
-  templateHelpers: Help;
-}
 export const generateEntity = ({
   model,
   fields,
   imports,
   apiExtraModels,
-  templateHelpers: t,
-}: GenerateEntityParam) => {
-  const name = t.entityName(model.name);
+  help,
+}: ReturnType<typeof transformEntity> & { help: Help }) => {
+  const name = help.entityName(model.name);
   return `
-${t.importStatements(
-  imports.concat([
-    {
-      from: t.nestImport(),
-      destruct: ['IntersectionType'].concat(
-        fields.find((x) => x.kind === 'enum') ? ['ApiProperty'] : [],
-      ),
-    },
-  ]),
+${help.importStatements(
+  zipImportStatementParams(
+    imports.concat([
+      {
+        from: help.nestImport(),
+        destruct: ['IntersectionType'].concat(
+          fields.find((x) => x.kind === 'enum') ? ['ApiProperty'] : [],
+        ),
+      },
+    ]),
+  ),
 )}
-${t.if(apiExtraModels.length, t.apiExtraModels(apiExtraModels))}
+${help.if(apiExtraModels.length, help.apiExtraModels(apiExtraModels))}
 export class ${name} {
-${t.fieldsToEntityProps(fields.filter((x) => x.isRequired))}
+${help.fieldsToEntityProps(fields.filter((x) => x.isRequired))}
 }
 export class ${name}Rel {
-${t.fieldsToEntityProps(
+${help.fieldsToEntityProps(
   fields.filter((x) => !x.isRequired).map((x) => ({ ...x, isRequired: true })),
 )}
 }

@@ -35,7 +35,7 @@ export const run = ({
   ...preAndSuffixes
 }: Options) => {
   const transformFileNameCase = transformers[fileNamingStyle];
-  const templateHelpers = makeHelpers({
+  const help = makeHelpers({
     transformFileNameCase,
     transformClassNameCase: pascal,
     ...preAndSuffixes,
@@ -62,18 +62,18 @@ export const run = ({
     const modelParams = computeModelParams({
       model,
       allModels: filteredModels,
-      templateHelpers,
+      help: help,
     });
 
     // generate connect-model.dto.ts
     const connectDto = {
       fileName: path.join(
         model.output.dto,
-        templateHelpers.connectDtoFilename(model.name, true),
+        help.connectDtoFilename(model.name, true),
       ),
       content: generateConnectDto({
         ...modelParams.connect,
-        templateHelpers,
+        help,
       }),
     };
 
@@ -81,12 +81,12 @@ export const run = ({
     const createDto = {
       fileName: path.join(
         model.output.dto,
-        templateHelpers.createDtoFilename(model.name, true),
+        help.createDtoFilename(model.name, true),
       ),
       content: generateCreateDto({
         ...modelParams.create,
         exportRelationModifierClasses,
-        templateHelpers,
+        help: help,
       }),
     };
     // TODO generate create-model.struct.ts
@@ -95,12 +95,12 @@ export const run = ({
     const updateDto = {
       fileName: path.join(
         model.output.dto,
-        templateHelpers.updateDtoFilename(model.name, true),
+        help.updateDtoFilename(model.name, true),
       ),
       content: generateUpdateDto({
         ...modelParams.update,
         exportRelationModifierClasses,
-        templateHelpers,
+        help: help,
       }),
     };
     // TODO generate update-model.struct.ts
@@ -109,11 +109,11 @@ export const run = ({
     const entity = {
       fileName: path.join(
         model.output.entity,
-        templateHelpers.entityFilename(model.name, true),
+        help.entityFilename(model.name, true),
       ),
       content: generateEntity({
         ...modelParams.entity,
-        templateHelpers,
+        help,
       }),
     };
     // TODO generate model.struct.ts

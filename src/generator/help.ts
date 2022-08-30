@@ -1,5 +1,5 @@
 import { Imports, ParsedField } from './types';
-import { getImportsDeco, uniq } from './helpers';
+import { getImportsDeco, uniq, zipImportStatementParams } from './helpers';
 
 const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
   ({
@@ -59,7 +59,7 @@ Array.prototype.each = function (fn, joinWith = '') {
   return this.map(fn).join(joinWith);
 };
 
-export const importStatement = (input: Imports) => {
+const importStatement = (input: Imports) => {
   const { from, destruct = [], default: defaultExport } = input;
   const fragments = ['import'];
   if (defaultExport) {
@@ -86,7 +86,7 @@ export const importStatement = (input: Imports) => {
   return fragments.join(' ');
 };
 
-export const importStatements = (items: Imports[]) =>
+const importStatements = (items: Imports[]) =>
   `${items.each(importStatement, '\n')}`;
 
 export const makeHelpers = ({
@@ -206,31 +206,46 @@ export const makeHelpers = ({
   if (mode === 'openapi') imports = '@nestjs/swagger';
   else throw new Error('unimplemented graphql support');
   const nestImport = () => imports;
+  const makeImportsFromPrismaClient = (
+    fields: ParsedField[],
+  ): Imports | null => {
+    const enumsToImport = uniq(
+      fields.filter(({ kind }) => kind === 'enum').map(({ type }) => type),
+    );
+    const importPrisma = fields
+      .filter(({ kind }) => kind === 'scalar')
+      .some(({ type }) => scalarToTS(type).includes('Prisma'));
+
+    if (!(enumsToImport.length || importPrisma)) {
+      return null;
+    }
+
+    return {
+      from: '@prisma/client',
+      destruct: importPrisma ? ['Prisma', ...enumsToImport] : enumsToImport,
+    };
+  };
 
   return {
-    makeImportsFromPrismaClient: (fields: ParsedField[]): Imports | null => {
-      const enumsToImport = uniq(
-        fields.filter(({ kind }) => kind === 'enum').map(({ type }) => type),
-      );
-      const importPrisma = fields
-        .filter(({ kind }) => kind === 'scalar')
-        .some(({ type }) => scalarToTS(type).includes('Prisma'));
-
-      if (!(enumsToImport.length || importPrisma)) {
-        return null;
+    addImports(
+      fields: ParsedField[],
+      imports: Imports[] = [],
+      extraModels: string[] = [],
+    ) {
+      const hasEnum = !!fields.find((x) => x.kind === 'enum');
+      if (extraModels.length || hasEnum) {
+        const destruct = [];
+        if (extraModels.length) destruct.push('ApiExtraModels');
+        if (hasEnum) destruct.push('ApiProperty');
+        imports.unshift({ from: this.nestImport(), destruct });
       }
 
-      return {
-        from: '@prisma/client',
-        destruct: importPrisma ? ['Prisma', ...enumsToImport] : enumsToImport,
-      };
-    },
-    addImports(fields: ParsedField[], imports: Imports[]) {
       const importDeco = getImportsDeco(fields);
       if (importDeco) imports.push(importDeco);
 
-      const importPrismaClient = this.makeImportsFromPrismaClient(fields);
+      const importPrismaClient = makeImportsFromPrismaClient(fields);
       if (importPrismaClient) imports.unshift(importPrismaClient);
+      return zipImportStatementParams(imports);
     },
     config: {
       connectDtoPrefix,
@@ -254,7 +269,6 @@ export const makeHelpers = ({
     fieldsToDtoProps,
     fieldsToEntityProps,
     if: when,
-    importStatement,
     importStatements,
     nestImport,
     scalarToTS,

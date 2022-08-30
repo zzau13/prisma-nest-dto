@@ -5,10 +5,10 @@ exports[`fixtures/nulls.prisma 1`] = `
   {
     "content": "
 
-  export class ConnectProductDto {
+export class ConnectProductDto {
   id: string;
-  }
-  ",
+}
+",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
   },
   {
