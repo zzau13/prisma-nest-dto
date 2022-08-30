@@ -1,4 +1,5 @@
-import { ImportStatementParams, ParsedField } from './types';
+import { Imports, ParsedField } from './types';
+import { getImportsDeco, uniq } from './helpers';
 
 const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
   ({
@@ -58,7 +59,7 @@ Array.prototype.each = function (fn, joinWith = '') {
   return this.map(fn).join(joinWith);
 };
 
-export const importStatement = (input: ImportStatementParams) => {
+export const importStatement = (input: Imports) => {
   const { from, destruct = [], default: defaultExport } = input;
   const fragments = ['import'];
   if (defaultExport) {
@@ -85,7 +86,7 @@ export const importStatement = (input: ImportStatementParams) => {
   return fragments.join(' ');
 };
 
-export const importStatements = (items: ImportStatementParams[]) =>
+export const importStatements = (items: Imports[]) =>
   `${items.each(importStatement, '\n')}`;
 
 export const makeHelpers = ({
@@ -205,7 +206,32 @@ export const makeHelpers = ({
   if (mode === 'openapi') imports = '@nestjs/swagger';
   else throw new Error('unimplemented graphql support');
   const nestImport = () => imports;
+
   return {
+    makeImportsFromPrismaClient: (fields: ParsedField[]): Imports | null => {
+      const enumsToImport = uniq(
+        fields.filter(({ kind }) => kind === 'enum').map(({ type }) => type),
+      );
+      const importPrisma = fields
+        .filter(({ kind }) => kind === 'scalar')
+        .some(({ type }) => scalarToTS(type).includes('Prisma'));
+
+      if (!(enumsToImport.length || importPrisma)) {
+        return null;
+      }
+
+      return {
+        from: '@prisma/client',
+        destruct: importPrisma ? ['Prisma', ...enumsToImport] : enumsToImport,
+      };
+    },
+    addImports(fields: ParsedField[], imports: Imports[]) {
+      const importDeco = getImportsDeco(fields);
+      if (importDeco) imports.push(importDeco);
+
+      const importPrismaClient = this.makeImportsFromPrismaClient(fields);
+      if (importPrismaClient) imports.unshift(importPrismaClient);
+    },
     config: {
       connectDtoPrefix,
       createDtoPrefix,
@@ -241,4 +267,4 @@ export const makeHelpers = ({
   } as const;
 };
 
-export type TemplateHelpers = ReturnType<typeof makeHelpers>;
+export type Help = ReturnType<typeof makeHelpers>;

@@ -1,8 +1,8 @@
-import type { TemplateHelpers } from '../template-helpers';
+import type { Help } from '../help';
 import type { EntityParams } from '../types';
 
 interface GenerateEntityParam extends EntityParams {
-  templateHelpers: TemplateHelpers;
+  templateHelpers: Help;
 }
 export const generateEntity = ({
   model,

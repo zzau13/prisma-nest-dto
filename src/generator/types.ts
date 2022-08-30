@@ -28,7 +28,7 @@ export type ParsedField = {
   isNullable?: boolean;
 };
 
-export interface ImportStatementParams {
+export interface Imports {
   from: string;
   /**
    * imports default export from `from`.
@@ -49,7 +49,7 @@ export type DtoParams = Readonly<{
   model: DMMF.Model;
   fields: ParsedField[];
   // should include all Enums, ExtraModels, ConnectDTOs and CreateDTOs for related models
-  imports: ImportStatementParams[];
+  imports: Imports[];
 }>;
 
 export type ConnectDtoParams = DtoParams;

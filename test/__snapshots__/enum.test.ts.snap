@@ -4,8 +4,8 @@ exports[`fixtures/enum.prisma 1`] = `
 [
   {
     "content": "
-import {ApiProperty} from '@nestjs/swagger'
 import {SettingPropType} from '@prisma/client'
+import {ApiProperty} from '@nestjs/swagger'
   export class ConnectSettingDto {
   plantId: string;
   key: string;

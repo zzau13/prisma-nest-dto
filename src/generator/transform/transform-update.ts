@@ -16,33 +16,26 @@ import {
 import {
   concatIntoArray,
   generateRelationInput,
-  getImportsDeco,
   getRelationScalars,
-  makeImportsFromPrismaClient,
   mapDMMFToParsedField,
   zipImportStatementParams,
 } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type { TemplateHelpers } from '../template-helpers';
-import type {
-  Model,
-  UpdateDtoParams,
-  ImportStatementParams,
-  ParsedField,
-} from '../types';
+import type { Help } from '../help';
+import type { Model, UpdateDtoParams, Imports, ParsedField } from '../types';
 
-export const transformUpdate = ({
+export function transformUpdate({
   model,
   allModels,
   help,
 }: {
   model: Model;
   allModels: Model[];
-  help: TemplateHelpers;
-}): UpdateDtoParams => {
+  help: Help;
+}): UpdateDtoParams {
   let hasEnum = false;
-  const imports: ImportStatementParams[] = [];
+  const imports: Imports[] = [];
   const extraClasses: string[] = [];
   const apiExtraModels: string[] = [];
 
@@ -108,12 +101,7 @@ export const transformUpdate = ({
     imports.unshift({ from: help.nestImport(), destruct });
   }
 
-  // TODO: duplicated
-  const importDeco = getImportsDeco(fields);
-  if (importDeco) imports.push(importDeco);
-
-  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
-  if (importPrismaClient) imports.unshift(importPrismaClient);
+  help.addImports(fields, imports);
 
   return {
     model,
@@ -122,4 +110,4 @@ export const transformUpdate = ({
     extraClasses,
     apiExtraModels,
   };
-};
+}

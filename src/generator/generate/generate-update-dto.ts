@@ -1,9 +1,9 @@
-import type { TemplateHelpers } from '../template-helpers';
+import type { Help } from '../help';
 import type { UpdateDtoParams } from '../types';
 
 interface GenerateUpdateDtoParam extends UpdateDtoParams {
   exportRelationModifierClasses: boolean;
-  templateHelpers: TemplateHelpers;
+  templateHelpers: Help;
 }
 export const generateUpdateDto = ({
   model,

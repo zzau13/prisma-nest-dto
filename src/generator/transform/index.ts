@@ -1,4 +1,4 @@
-import { TemplateHelpers } from '../template-helpers';
+import { Help } from '../help';
 import { transformConnect } from './transform-connect';
 import { transformCreate } from './transform-create';
 import { transformUpdate } from './transform-update';
@@ -9,7 +9,7 @@ import type { Model, ModelParams } from '../types';
 interface ComputeModelParamsParam {
   model: Model;
   allModels: Model[];
-  templateHelpers: TemplateHelpers;
+  templateHelpers: Help;
 }
 export const computeModelParams = ({
   model,

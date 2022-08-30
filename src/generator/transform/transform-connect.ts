@@ -1,28 +1,25 @@
-import { isId, isUnique } from '../field-classifiers';
-import {
-  getImportsDeco,
-  makeImportsFromPrismaClient,
-  mapDMMFToParsedField,
-  uniq,
-} from '../helpers';
-
 import type { DMMF } from '@prisma/generator-helper';
-import { ImportStatementParams } from '../types';
-import { TemplateHelpers } from '../template-helpers';
 
-export const transformConnect = ({
+import { isId, isUnique } from '../field-classifiers';
+import { mapDMMFToParsedField, uniq } from '../helpers';
+
+import { Imports } from '../types';
+import { Help } from '../help';
+
+export function transformConnect({
   model,
   help,
 }: {
   model: DMMF.Model;
-  help: TemplateHelpers;
-}) => {
+  help: Help;
+}) {
   const idFields = model.fields.filter((field) =>
     isId(field, model.primaryKey),
   );
   const isUniqueFields = model.fields.filter((field) => isUnique(field));
 
-  const imports: ImportStatementParams[] = [];
+  // Imports
+  const imports: Imports[] = [];
   const fields = uniq([...idFields, ...isUniqueFields]).map((x) =>
     mapDMMFToParsedField(x),
   );
@@ -32,12 +29,7 @@ export const transformConnect = ({
     imports.unshift({ from: help.nestImport(), destruct });
   }
 
-  // TODO: duplicated
-  const importDeco = getImportsDeco(fields);
-  if (importDeco) imports.push(importDeco);
-
-  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
-  if (importPrismaClient) imports.push(importPrismaClient);
+  help.addImports(fields, imports);
 
   return { model, fields, imports };
-};
+}

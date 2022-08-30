@@ -2,7 +2,7 @@ import path from 'node:path';
 import { camel, pascal, kebab, snake } from 'case';
 import { logger } from '@prisma/internals';
 
-import { makeHelpers } from './template-helpers';
+import { makeHelpers } from './help';
 import { computeModelParams } from './transform';
 import {
   generateConnectDto,

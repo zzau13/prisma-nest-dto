@@ -3,33 +3,26 @@ import slash from 'slash';
 import { DTO_ENTITY_HIDDEN, DTO_RELATION_REQUIRED } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
 import {
-  getImportsDeco,
   getRelationScalars,
   getRelativePath,
-  makeImportsFromPrismaClient,
   mapDMMFToParsedField,
   zipImportStatementParams,
 } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type {
-  Model,
-  EntityParams,
-  ImportStatementParams,
-  ParsedField,
-} from '../types';
-import type { TemplateHelpers } from '../template-helpers';
+import type { Model, EntityParams, Imports, ParsedField } from '../types';
+import type { Help } from '../help';
 
-export const transformEntity = ({
+export function transformEntity({
   model,
   allModels,
   help,
 }: {
   model: Model;
   allModels: Model[];
-  help: TemplateHelpers;
-}): EntityParams => {
-  const imports: ImportStatementParams[] = [];
+  help: Help;
+}): EntityParams {
+  const imports: Imports[] = [];
   const apiExtraModels: string[] = [];
 
   const relationScalarFields = getRelationScalars(model.fields);
@@ -116,12 +109,7 @@ export const transformEntity = ({
   if (apiExtraModels.length)
     imports.unshift({ from: help.nestImport(), destruct: ['ApiExtraModels'] });
 
-  // TODO: duplicated
-  const importDeco = getImportsDeco(fields);
-  if (importDeco) imports.push(importDeco);
-
-  const importPrismaClient = makeImportsFromPrismaClient(fields, help);
-  if (importPrismaClient) imports.unshift(importPrismaClient);
+  help.addImports(fields, imports);
 
   return {
     model,
@@ -129,4 +117,4 @@ export const transformEntity = ({
     imports: zipImportStatementParams(imports),
     apiExtraModels,
   };
-};
+}

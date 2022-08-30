@@ -1,22 +1,12 @@
 import path from 'node:path';
 import slash from 'slash';
-import {
-  isAnnotatedWith,
-  isId,
-  isRelation,
-  isUnique,
-} from '../field-classifiers';
+import { isAnnotatedWith } from '../field-classifiers';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type { TemplateHelpers } from '../template-helpers';
-import type {
-  Decorator,
-  ImportStatementParams,
-  Model,
-  ParsedField,
-} from '../types';
+import type { Help } from '../help';
+import type { Decorator, Imports, Model, ParsedField } from '../types';
 import { IsDecoValidator } from '../annotations';
 
 const validateNested = {
@@ -30,28 +20,7 @@ export const uniq = <T = unknown>(input: T[]): T[] =>
 export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
   source.forEach((item) => target.push(item));
 
-export const makeImportsFromPrismaClient = (
-  fields: ParsedField[],
-  { scalarToTS }: TemplateHelpers,
-): ImportStatementParams | null => {
-  const enumsToImport = uniq(
-    fields.filter(({ kind }) => kind === 'enum').map(({ type }) => type),
-  );
-  const importPrisma = fields
-    .filter(({ kind }) => kind === 'scalar')
-    .some(({ type }) => scalarToTS(type).includes('Prisma'));
-
-  if (!(enumsToImport.length || importPrisma)) {
-    return null;
-  }
-
-  return {
-    from: '@prisma/client',
-    destruct: importPrisma ? ['Prisma', ...enumsToImport] : enumsToImport,
-  };
-};
-
-function getDecorators(field: DMMF.Field): Decorator[] {
+export function getDecorators(field: DMMF.Field): Decorator[] {
   const ret = [];
   if (field.documentation) {
     const parsed = parseExpression(`${field.documentation} class {}`, {
@@ -80,9 +49,7 @@ function getDecorators(field: DMMF.Field): Decorator[] {
   return ret;
 }
 
-export const getImportsDeco = (
-  parsed: ParsedField[],
-): ImportStatementParams | undefined => {
+export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
   const destruct = uniq(
     parsed.flatMap((x) => x.decorators).flatMap((x) => x.import),
   );
@@ -124,67 +91,6 @@ export const getRelationScalars = (
   );
 };
 
-interface GetRelationConnectInputFieldsParam {
-  field: DMMF.Field;
-  allModels: DMMF.Model[];
-}
-// TODO: unused
-export const getRelationConnectInputFields = ({
-  field,
-  allModels,
-}: GetRelationConnectInputFieldsParam): Set<DMMF.Field> => {
-  const { name, type, relationToFields = [] } = field;
-
-  if (!isRelation(field)) {
-    throw new Error(
-      `Can not resolve RelationConnectInputFields for field '${name}'. Not a relation field.`,
-    );
-  }
-
-  const relatedModel = allModels.find(
-    ({ name: modelName }) => modelName === type,
-  );
-
-  if (!relatedModel) {
-    throw new Error(
-      `Can not resolve RelationConnectInputFields for field '${name}'. Related model '${type}' unknown.`,
-    );
-  }
-
-  if (!relationToFields.length) {
-    throw new Error(
-      `Can not resolve RelationConnectInputFields for field '${name}'. Foreign keys are unknown.`,
-    );
-  }
-
-  const foreignKeyFields = relationToFields.map((relationToFieldName) => {
-    const relatedField = relatedModel.fields.find(
-      (relatedModelField) => relatedModelField.name === relationToFieldName,
-    );
-
-    if (!relatedField)
-      throw new Error(
-        `Can not find foreign key field '${relationToFieldName}' on model '${relatedModel.name}'`,
-      );
-
-    return relatedField;
-  });
-
-  const idFields = relatedModel.fields.filter((relatedModelField) =>
-    isId(relatedModelField, relatedModel.primaryKey),
-  );
-
-  const uniqueFields = relatedModel.fields.filter((relatedModelField) =>
-    isUnique(relatedModelField),
-  );
-
-  return new Set<DMMF.Field>([
-    ...foreignKeyFields,
-    ...idFields,
-    ...uniqueFields,
-  ]);
-};
-
 export const getRelativePath = (from: string, to: string) => {
   const result = slash(path.relative(from, to));
   return result || '.';
@@ -194,10 +100,8 @@ interface GenerateRelationInputParam {
   field: DMMF.Field;
   model: Model;
   allModels: Model[];
-  templateHelpers: TemplateHelpers;
-  preAndSuffixClassName:
-    | TemplateHelpers['createDtoName']
-    | TemplateHelpers['updateDtoName'];
+  templateHelpers: Help;
+  preAndSuffixClassName: Help['createDtoName'] | Help['updateDtoName'];
   canCreateAnnotation: RegExp;
   canConnectAnnotation: RegExp;
 }
@@ -212,7 +116,7 @@ export const generateRelationInput = ({
 }: GenerateRelationInputParam) => {
   const relationInputClassProps: Array<Pick<ParsedField, 'name' | 'type'>> = [];
 
-  const imports: ImportStatementParams[] = [];
+  const imports: Imports[] = [];
   const apiExtraModels: string[] = [];
   const generatedClasses: string[] = [];
 
@@ -304,9 +208,9 @@ export const generateRelationInput = ({
 };
 
 export const mergeImportStatements = (
-  first: ImportStatementParams,
-  second: ImportStatementParams,
-): ImportStatementParams => {
+  first: Imports,
+  second: Imports,
+): Imports => {
   if (first.from !== second.from) {
     throw new Error(
       `Can not merge import statements; 'from' parameter is different`,
@@ -343,9 +247,7 @@ export const mergeImportStatements = (
   };
 };
 
-export const zipImportStatementParams = (
-  items: ImportStatementParams[],
-): ImportStatementParams[] => {
+export const zipImportStatementParams = (items: Imports[]): Imports[] => {
   const itemsByFrom = items.reduce((result, item) => {
     const { from } = item;
     const { [from]: existingItem } = result;
@@ -353,7 +255,7 @@ export const zipImportStatementParams = (
       return { ...result, [from]: item };
     }
     return { ...result, [from]: mergeImportStatements(existingItem, item) };
-  }, {} as Record<ImportStatementParams['from'], ImportStatementParams>);
+  }, {} as Record<Imports['from'], Imports>);
 
   return Object.values(itemsByFrom);
 };

@@ -1,8 +1,8 @@
-import type { TemplateHelpers } from '../template-helpers';
+import type { Help } from '../help';
 import type { ConnectDtoParams } from '../types';
 
 interface GenerateConnectDtoParam extends ConnectDtoParams {
-  templateHelpers: TemplateHelpers;
+  templateHelpers: Help;
 }
 export const generateConnectDto = ({
   model,
