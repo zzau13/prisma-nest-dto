@@ -1,12 +1,6 @@
 import { DMMF } from '@prisma/generator-helper';
 
-import {
-  DTO_RELATION_CAN_CONNECT_ON_UPDATE,
-  DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
-  DTO_RELATION_MODIFIERS_ON_UPDATE,
-  DTO_UPDATE_OPTIONAL,
-  NO_SET,
-} from '../annotations';
+import { Ann, DTO_RELATION_MODIFIERS_ON_UPDATE } from '../annotations';
 import {
   isAnnotatedWith,
   isAnnotatedWithOneOf,
@@ -19,10 +13,10 @@ import {
   concatIntoArray,
   generateRelationInput,
   getRelationScalars,
-  parseDMMF,
   Help,
+  Model,
 } from '../help';
-import type { Model, Imports, ParsedField } from '../types';
+import type { Imports, ParsedField } from '../types';
 
 export function transformUpdate({
   model,
@@ -44,7 +38,7 @@ export function transformUpdate({
     if (
       isId(field, model.primaryKey) ||
       isReadOnly(field) ||
-      isAnnotatedWith(field, NO_SET)
+      isAnnotatedWith(field, Ann.NO_SET)
     )
       return result;
 
@@ -64,8 +58,8 @@ export function transformUpdate({
         allModels,
         templateHelpers: help,
         preAndSuffixClassName: help.updateDtoName,
-        canCreateAnnotation: DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
-        canConnectAnnotation: DTO_RELATION_CAN_CONNECT_ON_UPDATE,
+        canCreateAnnotation: Ann.DTO_RELATION_CAN_CREATE_ON_UPDATE,
+        canConnectAnnotation: Ann.DTO_RELATION_CAN_CONNECT_ON_UPDATE,
       });
 
       overrides.type = relationInputType.type;
@@ -80,7 +74,7 @@ export function transformUpdate({
     // fields annotated with @NoSet are filtered out before this
     // so this safely allows to mark fields that are required in Prisma Schema
     // as **not** required in UpdateDTO
-    const isDtoOptional = isAnnotatedWith(field, DTO_UPDATE_OPTIONAL);
+    const isDtoOptional = isAnnotatedWith(field, Ann.DTO_UPDATE_OPTIONAL);
 
     // TODO
     if (isDtoOptional) return result;
@@ -88,7 +82,7 @@ export function transformUpdate({
 
     if (isUpdatedAt(field)) return result;
 
-    result.push({ ...parseDMMF(field), ...overrides });
+    result.push({ ...field, ...overrides });
 
     return result;
   }, [] as ParsedField[]);

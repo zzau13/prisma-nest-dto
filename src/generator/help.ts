@@ -6,12 +6,13 @@ import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
 
 import { isAnnotatedWith } from './field-classifiers';
-import type { Decorator, Imports, Model, ParsedField } from './types';
-import { DTO_IGNORE_MODEL, IsDecoValidator } from './annotations';
+import type { Imports, ParsedField } from './types';
+import { Ann, IsDecoValidator } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
 
 const validateNested = {
+  name: 'ValidateNested',
   code: '@ValidateNested()',
   import: 'ValidateNested',
 } as const;
@@ -23,10 +24,10 @@ export const uniq = <T = unknown>(input: T[]): T[] =>
 export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
   source.forEach((item) => target.push(item));
 
-export function getDecorators(field: DMMF.Field): Decorator[] {
+export function annotate(doc?: string) {
   const ret = [];
-  if (field.documentation) {
-    const parsed = parseExpression(`${field.documentation} class {}`, {
+  if (doc) {
+    const parsed = parseExpression(`${doc} class {}`, {
       plugins: ['decorators-legacy'],
     });
     if (parsed.type !== 'ClassExpression')
@@ -42,13 +43,16 @@ export function getDecorators(field: DMMF.Field): Decorator[] {
           IsDecoValidator(x.expression.callee.name)
         )
           ret.push({
-            // TODO: types of babel
-            code: generate(x as never).code,
+            name: x.expression.callee.name,
+            code: generate(x).code,
             import: x.expression.callee.name,
           });
+        else if (x.expression.type === 'Identifier')
+          ret.push({
+            name: x.expression.name,
+          });
+        else throw new Error(`not valid decorator ${generate(x)}`);
   }
-  if (field.kind === 'object') ret.push(validateNested);
-
   return ret;
 }
 
@@ -62,14 +66,22 @@ export const transformers: Record<
   snake,
 };
 
+export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
   models: DMMF.Model[],
   { outputToNestJsResourceStructure, output, fileNamingStyle }: Options,
 ) =>
   models
-    .filter((model) => !isAnnotatedWith(model, DTO_IGNORE_MODEL))
+    .map((model) => ({ ...model, annotations: annotate(model.documentation) }))
+    .filter((x) => !isAnnotatedWith(x, Ann.IGNORE))
     .map((model) => ({
       ...model,
+      fields: model.fields.map((x) => ({
+        ...x,
+        annotations: annotate(x.documentation).concat(
+          x.kind === 'object' ? decoRelated : [],
+        ),
+      })),
       output: {
         dto: outputToNestJsResourceStructure
           ? path.join(output, transformers[fileNamingStyle](model.name), 'dto')
@@ -86,7 +98,10 @@ export const getModels = (
 
 export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
   const destruct = uniq(
-    parsed.flatMap((x) => x.decorators).flatMap((x) => x.import),
+    parsed
+      .flatMap((x) => x.annotations)
+      .filter((x) => x.import)
+      .flatMap((x) => x.import as string),
   );
 
   if (destruct.length)
@@ -95,12 +110,6 @@ export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
       destruct,
     };
 };
-
-// TODO: call one time
-export const parseDMMF = (field: DMMF.Field): ParsedField => ({
-  decorators: getDecorators(field),
-  ...field,
-});
 
 export const getRelationScalars = (
   fields: DMMF.Field[],
@@ -127,15 +136,6 @@ export const getRelativePath = (from: string, to: string) => {
   return result || '.';
 };
 
-interface GenerateRelationInputParam {
-  field: DMMF.Field;
-  model: Model;
-  allModels: Model[];
-  templateHelpers: Help;
-  preAndSuffixClassName: Help['createDtoName'] | Help['updateDtoName'];
-  canCreateAnnotation: RegExp;
-  canConnectAnnotation: RegExp;
-}
 export const generateRelationInput = ({
   field,
   model,
@@ -144,7 +144,15 @@ export const generateRelationInput = ({
   preAndSuffixClassName,
   canCreateAnnotation,
   canConnectAnnotation,
-}: GenerateRelationInputParam) => {
+}: {
+  field: ParsedField;
+  model: Model;
+  allModels: Model[];
+  templateHelpers: Help;
+  preAndSuffixClassName: Help['createDtoName'] | Help['updateDtoName'];
+  canCreateAnnotation: Ann;
+  canConnectAnnotation: Ann;
+}) => {
   const relationInputClassProps: Array<Pick<ParsedField, 'name' | 'type'>> = [];
 
   const imports: Imports[] = [];
@@ -219,7 +227,7 @@ export const generateRelationInput = ({
     ${t.fieldsToDtoProps(
       relationInputClassProps.map((inputField) => ({
         ...inputField,
-        decorators: decoRelated,
+        annotations: decoRelated,
         kind: 'relation-input',
         isRequired: relationInputClassProps.length === 1,
         isList: field.isList,
@@ -290,6 +298,7 @@ export const zipImportStatementParams = (items: Imports[]): Imports[] => {
 
   return Object.values(itemsByFrom);
 };
+
 const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
   ({
     String: 'string',
@@ -440,17 +449,19 @@ export const makeHelpers = ({
     field: ParsedField,
     useInputTypes = false,
     forceOptional = false,
-  ) =>
-    `${when(
+  ) => {
+    const annotations = field.annotations
+      .filter((x) => x.code)
+      .map((x) => x.code)
+      .join('\n');
+    return `${when(
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}})\n`,
-    )}${when(
-      !!field.decorators.length,
-      field.decorators.map((x) => x.code).join('\n') + '\n',
-    )}${field.name}${unless(
+    )}${when(annotations, annotations + '\n')}${field.name}${unless(
       field.isRequired && !forceOptional,
       '?',
     )}: ${fieldType(field, useInputTypes)};`;
+  };
 
   const fieldsToDtoProps = (
     fields: ParsedField[],
@@ -463,16 +474,17 @@ export const makeHelpers = ({
     )}`;
 
   const fieldToEntityProp = (field: ParsedField, useInputTypes = false) => {
+    const annotations = field.annotations
+      .filter((x) => x.code)
+      .map((x) => x.code)
+      .join('\n');
     return `${when(
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}})\n`,
-    )}${when(
-      !!field.decorators.length,
-      field.decorators.map((x) => x.code).join('\n') + '\n',
-    )}${field.name}${unless(field.isRequired, '?')}: ${fieldType(field)} ${when(
-      field.isNullable,
-      ' | null',
-    )};`;
+    )}${when(annotations, annotations + '\n')}${field.name}${unless(
+      field.isRequired,
+      '?',
+    )}: ${fieldType(field)} ${when(field.isNullable, ' | null')};`;
   };
 
   const fieldsToEntityProps = (fields: ParsedField[]) =>

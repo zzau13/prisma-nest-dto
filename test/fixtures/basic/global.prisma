@@ -36,13 +36,13 @@ model Product {
   /// @DtoRelationCanConnectOnCreate
   company Company @relation(fields: [companyId], references: [id])
 
-  /// @DtoEntityHidden
-  /// @DtoCreateOptional
+  /// @NoEntity
+  /// @OptAdd
   /// @DtoUpdateOptional
   createdAt DateTime @default(now()) @db.Timestamptz(6)
 
-  /// @DtoEntityHidden
-  /// @DtoCreateOptional
+  /// @NoEntity
+  /// @OptAdd
   /// @DtoUpdateOptional
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 

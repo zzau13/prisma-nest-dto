@@ -2,10 +2,10 @@ import path from 'node:path';
 import slash from 'slash';
 import type { DMMF } from '@prisma/generator-helper';
 
-import { DTO_ENTITY_HIDDEN, DTO_RELATION_REQUIRED } from '../annotations';
+import { Ann } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
-import type { Model, Imports, ParsedField } from '../types';
-import { Help, getRelationScalars, getRelativePath, parseDMMF } from '../help';
+import type { Imports, ParsedField } from '../types';
+import { Help, Model, getRelationScalars, getRelativePath } from '../help';
 
 export function transformEntity({
   model,
@@ -29,7 +29,7 @@ export function transformEntity({
       isNullable: !field.isRequired,
     };
 
-    if (isAnnotatedWith(field, DTO_ENTITY_HIDDEN)) return result;
+    if (isAnnotatedWith(field, Ann.NO_ENTITY)) return result;
 
     // relation fields are never required in an entity.
     // they can however be `selected` and thus might optionally be present in the
@@ -40,7 +40,7 @@ export function transformEntity({
         ? false
         : field.isRequired
         ? false
-        : !isAnnotatedWith(field, DTO_RELATION_REQUIRED);
+        : !isAnnotatedWith(field, Ann.DTO_RELATION_REQUIRED);
 
       // don't try to import the class we're preparing params for
       if (field.type !== model.name) {
@@ -89,7 +89,7 @@ export function transformEntity({
 
         return (
           isRequired(relationField) ||
-          isAnnotatedWith(relationField, DTO_RELATION_REQUIRED)
+          isAnnotatedWith(relationField, Ann.DTO_RELATION_REQUIRED)
         );
       });
 
@@ -97,7 +97,7 @@ export function transformEntity({
       overrides.isNullable = !isAnyRelationRequired;
     }
 
-    return [...result, { ...parseDMMF(field), ...overrides }];
+    return [...result, { ...field, ...overrides }];
   }, [] as ParsedField[]);
 
   imports.push({

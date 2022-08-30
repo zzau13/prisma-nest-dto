@@ -1,18 +1,14 @@
 import type { DMMF } from '@prisma/generator-helper';
+import { Annotation } from './types';
+import { Ann } from './annotations';
 
-export const isAnnotatedWith = (
-  instance: DMMF.Field | DMMF.Model,
-  annotation: RegExp,
-): boolean => {
-  const { documentation = '' } = instance;
-  return annotation.test(documentation);
-};
+export const isAnnotatedWith = ({ annotations }: Annotation, annotation: Ann) =>
+  !!annotations.find(({ name }) => annotation === name);
 
 export const isAnnotatedWithOneOf = (
-  instance: DMMF.Field | DMMF.Model,
-  annotations: RegExp[],
-): boolean =>
-  annotations.some((annotation) => isAnnotatedWith(instance, annotation));
+  annotation: Annotation,
+  annotations: Ann[],
+) => annotations.some((x) => isAnnotatedWith(annotation, x));
 
 // Field properties
 // isGenerated, !meaning unknown - assuming this means that the field itself is generated, not the value

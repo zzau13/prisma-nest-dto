@@ -1,20 +1,9 @@
 import { DMMF } from '@prisma/generator-helper';
+import { annotate } from './help';
 
-export interface Model extends DMMF.Model {
-  output: {
-    dto: string;
-    entity: string;
-  };
-}
-
-export type Decorator = {
-  import: string;
-  code: string;
-};
-
+export type Annotation = { annotations: ReturnType<typeof annotate> };
 export type ParsedField = {
   kind: DMMF.FieldKind | 'relation-input';
-  decorators: Decorator[];
   name: string;
   type: string;
   documentation?: string;
@@ -26,7 +15,7 @@ export type ParsedField = {
    * **must not be `true` when `isRequired` is `true`**
    */
   isNullable?: boolean;
-};
+} & Annotation;
 
 export interface Imports {
   from: string;

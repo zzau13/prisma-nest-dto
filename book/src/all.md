@@ -50,7 +50,7 @@ Annotations provide additional information to help this generator understand you
 
 ```prisma
 model Post {
-  /// @DtoCreateOptional
+  /// @OptAdd
   /// @DtoUpdateHidden
   createdAt DateTime @default(now())
 }
@@ -59,7 +59,7 @@ model Post {
 - @NoAdd - omits field in `CreateDTO`
 - @NoSet - omits field in `UpdateDTO`
 - @DtoEntityHidden - omits field in `Entity`
-- @DtoCreateOptional - adds field **optionally** to `CreateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
+- @OptAdd - adds field **optionally** to `CreateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
 - @DtoUpdateOptional- adds field **optionally** to `UpdateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
 - @DtoRelationRequired - marks relation **required** in `Entity` although it's optional in PrismaSchema - useful when you don't want (SQL) `ON DELETE CASCADE` behavior - but your logical data schema sees this relation as required  
   (**Note**: becomes obsolete once [referentialActions](https://github.com/prisma/prisma/issues/7816) are released and stable)
@@ -97,7 +97,7 @@ model Question {
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId String?   @db.Uuid
 
-  /// @DtoCreateOptional
+  /// @OptAdd
   /// @DtoRelationCanCreateOnCreate
   /// @DtoRelationCanConnectOnCreate
   /// @DtoRelationCanCreateOnUpdate
@@ -230,7 +230,7 @@ When generating a `Model`s `CreateDTO` class, field that meet any of the followi
 - `isReadOnly` OR is annotated with `@NoSet` (_Note:_ this apparently includes relation scalar fields)
 - field represents a relation (`field.kind === 'object'`) and is not annotated with `@DtoRelationCanCreateOnCreate` or `@DtoRelationCanConnectOnCreate`
 - field is a [relation scalar](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/#annotated-relation-fields-and-relation-scalar-fields)
-- field is not annotated with `@DtoCreateOptional` AND
+- field is not annotated with `@OptAdd` AND
   - `isId && hasDefaultValue` (id fields are not supposed to be provided by the user)
   - `isUpdatedAt` ([Prisma](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#updatedat) will inject value)
   - `isRequired && hasDefaultValue` (for schema-required fields that fallback to a default value when empty. Think: `createdAt` timestamps with `@default(now())` (see [now()](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#now)))

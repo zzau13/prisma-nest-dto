@@ -1,11 +1,4 @@
-import {
-  NO_ADD,
-  DTO_CREATE_OPTIONAL,
-  DTO_RELATION_CAN_CONNECT_ON_CREATE,
-  DTO_RELATION_CAN_CRAEATE_ON_CREATE,
-  DTO_RELATION_MODIFIERS_ON_CREATE,
-  DTO_RELATION_REQUIRED,
-} from '../annotations';
+import { Ann, DTO_RELATION_MODIFIERS_ON_CREATE } from '../annotations';
 import {
   isAnnotatedWith,
   isAnnotatedWithOneOf,
@@ -16,13 +9,8 @@ import {
 } from '../field-classifiers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import {
-  Help,
-  concatIntoArray,
-  generateRelationInput,
-  parseDMMF,
-} from '../help';
-import type { Model, Imports, ParsedField } from '../types';
+import { Model, Help, concatIntoArray, generateRelationInput } from '../help';
+import type { Imports, ParsedField } from '../types';
 
 export function transformCreate({
   model,
@@ -38,7 +26,7 @@ export function transformCreate({
   const extraClasses: string[] = [];
 
   const fields = model.fields.reduce((result, field) => {
-    if (isAnnotatedWith(field, NO_ADD)) return result;
+    if (isAnnotatedWith(field, Ann.NO_ADD)) return result;
     const overrides: Partial<DMMF.Field> = {};
 
     if (isRelation(field)) {
@@ -51,13 +39,13 @@ export function transformCreate({
         allModels,
         templateHelpers: help,
         preAndSuffixClassName: help.createDtoName,
-        canCreateAnnotation: DTO_RELATION_CAN_CRAEATE_ON_CREATE,
-        canConnectAnnotation: DTO_RELATION_CAN_CONNECT_ON_CREATE,
+        canCreateAnnotation: Ann.DTO_RELATION_CAN_CREATE_ON_CREATE,
+        canConnectAnnotation: Ann.DTO_RELATION_CAN_CONNECT_ON_CREATE,
       });
 
       const isDtoRelationRequired = isAnnotatedWith(
         field,
-        DTO_RELATION_REQUIRED,
+        Ann.DTO_RELATION_REQUIRED,
       );
       if (isDtoRelationRequired) overrides.isRequired = true;
 
@@ -74,7 +62,7 @@ export function transformCreate({
       concatIntoArray(relationInputType.apiExtraModels, apiExtraModels);
     }
 
-    const isDtoOptional = isAnnotatedWith(field, DTO_CREATE_OPTIONAL);
+    const isDtoOptional = isAnnotatedWith(field, Ann.OPT_ADD);
     if (!isDtoOptional) {
       if (isIdWithDefaultValue(field, model.primaryKey)) return result;
       if (isUpdatedAt(field)) return result;
@@ -83,7 +71,7 @@ export function transformCreate({
 
     if (isRequiredWithDefaultValue(field)) overrides.isRequired = false;
 
-    return [...result, { ...parseDMMF(field), ...overrides }];
+    return [...result, { ...field, ...overrides }];
   }, [] as ParsedField[]);
 
   return {
