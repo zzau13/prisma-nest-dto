@@ -1,69 +1,29 @@
 import path from 'node:path';
-import { camel, pascal, kebab, snake } from 'case';
 import { logger } from '@prisma/internals';
 
-import { makeHelpers } from './help';
-import { computeModelParams } from './transform';
+import { getModels, makeHelpers } from './help';
+import {
+  transformEntity,
+  transformCreate,
+  transformUpdate,
+  transformConnect,
+} from './transform';
 import {
   generateConnectDto,
   generateCreateDto,
   generateUpdateDto,
   generateEntity,
 } from './generate';
-import { DTO_IGNORE_MODEL } from './annotations';
-import { isAnnotatedWith } from './field-classifiers';
-import { Model } from './types';
 
 import { Options } from '../options';
 
-const transformers: Record<
-  Options['fileNamingStyle'],
-  (str: string) => string
-> = {
-  camel,
-  kebab,
-  pascal,
-  snake,
-};
+export const run = (options: Options) => {
+  const { dmmf, exportRelationModifierClasses } = options;
+  const help = makeHelpers(options);
+  const allModels = getModels(dmmf.datamodel.models, options);
 
-export const run = ({
-  output,
-  dmmf,
-  exportRelationModifierClasses,
-  outputToNestJsResourceStructure,
-  fileNamingStyle,
-  ...preAndSuffixes
-}: Options) => {
-  const transformFileNameCase = transformers[fileNamingStyle];
-  const help = makeHelpers({
-    transformFileNameCase,
-    transformClassNameCase: pascal,
-    ...preAndSuffixes,
-  });
-  const allModels = dmmf.datamodel.models;
-
-  const filteredModels: Model[] = allModels
-    .filter((model) => !isAnnotatedWith(model, DTO_IGNORE_MODEL))
-    .map((model) => ({
-      ...model,
-      output: {
-        dto: outputToNestJsResourceStructure
-          ? path.join(output, transformFileNameCase(model.name), 'dto')
-          : output,
-        entity: outputToNestJsResourceStructure
-          ? path.join(output, transformFileNameCase(model.name), 'entities')
-          : output,
-      },
-    }));
-
-  return filteredModels.flatMap((model) => {
+  return allModels.flatMap((model) => {
     logger.info(`Processing Model ${model.name}`);
-
-    const modelParams = computeModelParams({
-      model,
-      allModels: filteredModels,
-      help: help,
-    });
 
     // generate connect-model.dto.ts
     const connectDto = {
@@ -72,7 +32,7 @@ export const run = ({
         help.connectDtoFilename(model.name, true),
       ),
       content: generateConnectDto({
-        ...modelParams.connect,
+        ...transformConnect({ model, help }),
         help,
       }),
     };
@@ -84,7 +44,7 @@ export const run = ({
         help.createDtoFilename(model.name, true),
       ),
       content: generateCreateDto({
-        ...modelParams.create,
+        ...transformCreate({ model, allModels, help }),
         exportRelationModifierClasses,
         help: help,
       }),
@@ -98,7 +58,7 @@ export const run = ({
         help.updateDtoFilename(model.name, true),
       ),
       content: generateUpdateDto({
-        ...modelParams.update,
+        ...transformUpdate({ model, allModels, help }),
         exportRelationModifierClasses,
         help: help,
       }),
@@ -112,7 +72,7 @@ export const run = ({
         help.entityFilename(model.name, true),
       ),
       content: generateEntity({
-        ...modelParams.entity,
+        ...transformEntity({ model, allModels, help }),
         help,
       }),
     };

@@ -7,7 +7,9 @@ import generate from '@babel/generator';
 
 import { isAnnotatedWith } from './field-classifiers';
 import type { Decorator, Imports, Model, ParsedField } from './types';
-import { IsDecoValidator } from './annotations';
+import { DTO_IGNORE_MODEL, IsDecoValidator } from './annotations';
+import { Options } from '../options';
+import { camel, kebab, pascal, snake } from 'case';
 
 const validateNested = {
   code: '@ValidateNested()',
@@ -49,6 +51,38 @@ export function getDecorators(field: DMMF.Field): Decorator[] {
 
   return ret;
 }
+
+export const transformers: Record<
+  Options['fileNamingStyle'],
+  (str: string) => string
+> = {
+  camel,
+  kebab,
+  pascal,
+  snake,
+};
+
+export const getModels = (
+  models: DMMF.Model[],
+  { outputToNestJsResourceStructure, output, fileNamingStyle }: Options,
+) =>
+  models
+    .filter((model) => !isAnnotatedWith(model, DTO_IGNORE_MODEL))
+    .map((model) => ({
+      ...model,
+      output: {
+        dto: outputToNestJsResourceStructure
+          ? path.join(output, transformers[fileNamingStyle](model.name), 'dto')
+          : output,
+        entity: outputToNestJsResourceStructure
+          ? path.join(
+              output,
+              transformers[fileNamingStyle](model.name),
+              'entities',
+            )
+          : output,
+      },
+    }));
 
 export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
   const destruct = uniq(
@@ -351,22 +385,13 @@ export const makeHelpers = ({
   dtoSuffix,
   entityPrefix,
   entitySuffix,
-  transformClassNameCase = echo,
-  transformFileNameCase = echo,
   decimalAsNumber,
-  mode = 'openapi',
-}: {
-  connectDtoPrefix: string;
-  createDtoPrefix: string;
-  updateDtoPrefix: string;
-  dtoSuffix: string;
-  entityPrefix: string;
-  entitySuffix: string;
-  transformClassNameCase?: (item: string) => string;
-  transformFileNameCase?: (item: string) => string;
-  decimalAsNumber: boolean;
-  mode?: 'openapi' | 'graphql';
-}) => {
+  mode,
+  fileNamingStyle,
+}: Options) => {
+  const transformFileNameCase = transformers[fileNamingStyle];
+  const transformClassNameCase = pascal;
+
   const className = (name: string, prefix = '', suffix = '') =>
     `${prefix}${transformClassNameCase(name)}${suffix}`;
   const fileName = (
