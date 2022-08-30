@@ -14,10 +14,14 @@ import {
   isRequiredWithDefaultValue,
   isUpdatedAt,
 } from '../field-classifiers';
-import { concatIntoArray, generateRelationInput, parseDMMF } from '../helpers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import type { Help } from '../help';
+import {
+  Help,
+  concatIntoArray,
+  generateRelationInput,
+  parseDMMF,
+} from '../help';
 import type { Model, Imports, ParsedField } from '../types';
 
 export function transformCreate({

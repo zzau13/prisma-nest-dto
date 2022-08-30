@@ -1,9 +1,7 @@
 import type { DMMF } from '@prisma/generator-helper';
 
 import { isId, isUnique } from '../field-classifiers';
-import { parseDMMF } from '../helpers';
-
-import { Help } from '../help';
+import { parseDMMF, Help } from '../help';
 
 export function transformConnect({
   model,

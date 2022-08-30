@@ -1,3 +1,5 @@
+import { DMMF } from '@prisma/generator-helper';
+
 import {
   DTO_RELATION_CAN_CONNECT_ON_UPDATE,
   DTO_RELATION_CAN_CRAEATE_ON_UPDATE,
@@ -18,10 +20,8 @@ import {
   generateRelationInput,
   getRelationScalars,
   parseDMMF,
-} from '../helpers';
-
-import type { DMMF } from '@prisma/generator-helper';
-import type { Help } from '../help';
+  Help,
+} from '../help';
 import type { Model, Imports, ParsedField } from '../types';
 
 export function transformUpdate({
