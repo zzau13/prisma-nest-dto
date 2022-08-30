@@ -17,51 +17,38 @@ generator nestjsDto {
 }
 
 model Product {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String   @db.VarChar(255)
+  /// @IsFoo('4')
+  id          String   @id @db.Uuid
   description String   @db.VarChar(1024)
   images      Json[]   @db.Json
+  /// @IsBoolean()
   highlighted Boolean? @default(false)
+  /// @IsPositive()
   reviewCount Int?     @default(0)
-  attributes  Json?
+  /// @IsDecimal({ decimal_digits: 2 })
   score       Float?
-  categoryId  String   @db.Uuid
+  /// @IsUUID('4')
+  categoryId  String?  @db.Uuid
+  /// @IsUUID('4')
   companyId   String   @db.Uuid
 
   /// @DtoRelationRequired
   /// @DtoRelationCanConnectOnCreate
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
 
   /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnCreate
+  /// @DtoRelationCanConnectOnUpdate
   company Company @relation(fields: [companyId], references: [id])
-
-  /// @NoEntity
-  /// @OptAdd
-  /// @OptSet
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-
-  /// @NoEntity
-  /// @OptAdd
-  /// @OptSet
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   @@map("products")
 }
 
 model Category {
   id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  Product Product[]
+  product Product[]
 }
 
 model Company {
   id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  Product Product[]
-}
-
-model Another {
-  id1 String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id2 String @db.Uuid
-
-  @@id([id1, id2])
+  product Product[]
 }

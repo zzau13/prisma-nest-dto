@@ -7,7 +7,7 @@ import generate from '@babel/generator';
 
 import { isAnnotatedWith } from './field-classifiers';
 import type { Imports, ParsedField } from './types';
-import { Ann, IsDecoValidator } from './annotations';
+import { Ann, IsAnn, IsDecoValidator } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
 
@@ -47,11 +47,11 @@ export function annotate(doc?: string) {
             code: generate(x).code,
             import: x.expression.callee.name,
           });
-        else if (x.expression.type === 'Identifier')
+        else if (x.expression.type === 'Identifier' && IsAnn(x.expression.name))
           ret.push({
             name: x.expression.name,
           });
-        else throw new Error(`not valid decorator ${generate(x)}`);
+        else throw new Error(`not valid decorator ${generate(x).code}`);
   }
   return ret;
 }

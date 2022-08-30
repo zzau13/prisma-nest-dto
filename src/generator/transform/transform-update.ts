@@ -74,7 +74,7 @@ export function transformUpdate({
     // fields annotated with @NoSet are filtered out before this
     // so this safely allows to mark fields that are required in Prisma Schema
     // as **not** required in UpdateDTO
-    const isDtoOptional = isAnnotatedWith(field, Ann.DTO_UPDATE_OPTIONAL);
+    const isDtoOptional = isAnnotatedWith(field, Ann.OPT_SET);
 
     // TODO
     if (isDtoOptional) return result;

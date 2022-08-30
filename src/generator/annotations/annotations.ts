@@ -6,21 +6,16 @@ export enum Ann {
   NO_ADD = 'NoAdd',
   NO_ENTITY = 'NoEntity',
   OPT_ADD = 'OptAdd',
-  DTO_UPDATE_OPTIONAL = 'DtoUpdateOptional',
+  OPT_SET = 'OptSet',
   DTO_RELATION_REQUIRED = 'DtoRelationRequired',
   DTO_RELATION_CAN_CREATE_ON_CREATE = 'DtoRelationCanCreateOnCreate',
   DTO_RELATION_CAN_CONNECT_ON_CREATE = 'DtoRelationCanConnectOnCreate',
   DTO_RELATION_CAN_CREATE_ON_UPDATE = 'DtoRelationCanCreateOnUpdate',
   DTO_RELATION_CAN_CONNECT_ON_UPDATE = 'DtoRelationCanConnectOnUpdate',
 }
+export const IsAnn = (s: string): s is Ann =>
+  Object.values(Ann).includes(s as Ann);
 
-// TODO: unused
-export const DTO_RELATION_MODIFIERS = [
-  Ann.DTO_RELATION_CAN_CREATE_ON_CREATE,
-  Ann.DTO_RELATION_CAN_CONNECT_ON_CREATE,
-  Ann.DTO_RELATION_CAN_CREATE_ON_UPDATE,
-  Ann.DTO_RELATION_CAN_CONNECT_ON_UPDATE,
-];
 export const DTO_RELATION_MODIFIERS_ON_CREATE = [
   Ann.DTO_RELATION_CAN_CREATE_ON_CREATE,
   Ann.DTO_RELATION_CAN_CONNECT_ON_CREATE,

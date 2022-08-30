@@ -36,7 +36,7 @@ model Product {
   /// @DtoRelationCanConnectOnCreate
   company Company @relation(fields: [companyId], references: [id])
 
-  /// @NoEntity
+  /// @NoFoo
   /// @OptAdd
   /// @OptSet
   createdAt DateTime @default(now()) @db.Timestamptz(6)

@@ -60,7 +60,7 @@ model Post {
 - @NoSet - omits field in `UpdateDTO`
 - @DtoEntityHidden - omits field in `Entity`
 - @OptAdd - adds field **optionally** to `CreateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
-- @DtoUpdateOptional- adds field **optionally** to `UpdateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
+- @OptSet- adds field **optionally** to `UpdateDTO` - useful for fields that would otherwise be omitted (e.g. `@id`, `@updatedAt`)
 - @DtoRelationRequired - marks relation **required** in `Entity` although it's optional in PrismaSchema - useful when you don't want (SQL) `ON DELETE CASCADE` behavior - but your logical data schema sees this relation as required  
   (**Note**: becomes obsolete once [referentialActions](https://github.com/prisma/prisma/issues/7816) are released and stable)
 - @DtoRelationCanCreateOnCreate - adds [create](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#create-a-related-record) option on a relation field in the generated `CreateDTO` - useful when you want to allow to create related model instances
@@ -239,12 +239,12 @@ When generating a `Model`s `CreateDTO` class, field that meet any of the followi
 
 When generating a `Model`s `UpdateDTO` class, field that meet any of the following conditions are omitted (**order matters**):
 
-- field is annotated with `@DtoUpdateOptional`
+- field is annotated with `@OptSet`
 - `isReadOnly` OR is annotated with `@NoSet` (_Note:_ this apparently includes relation scalar fields)
 - `isId` (id fields are not supposed to be updated by the user)
 - field represents a relation (`field.kind === 'object'`) and is not annotated with `@DtoRelationCanCreateOnUpdate` or `@DtoRelationCanConnectOnUpdate`
 - field is a [relation scalar](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/#annotated-relation-fields-and-relation-scalar-fields)
-- field is not annotated with `@DtoUpdateOptional` AND
+- field is not annotated with `@OptSet` AND
   - `isId` (id fields are not supposed to be updated by the user)
   - `isUpdatedAt` ([Prisma](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#updatedat) will inject value)
   - `isRequired && hasDefaultValue` (for schema-required fields that fallback to a default value when empty. Think: `createdAt` timestamps with `@default(now())` (see [now()](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#now)))
