@@ -7,6 +7,6 @@
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "src/@generated"
+    "vite.config.ts"
   ]
 }
