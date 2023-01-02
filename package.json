@@ -68,7 +68,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
-    "@release-it/conventional-changelog": "5.1.0",
+    "@release-it/conventional-changelog": "5.1.1",
     "@types/babel__generator": "7.6.4",
     "@types/chai": "4.3.4",
     "@types/jest": "29.2.5",
