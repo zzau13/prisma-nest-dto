@@ -9,7 +9,7 @@ specifiers:
   '@prisma/internals': ^4.3.1
   '@release-it/conventional-changelog': 5.1.0
   '@types/babel__generator': 7.6.4
-  '@types/chai': 4.3.3
+  '@types/chai': 4.3.4
   '@types/jest': 29.2.5
   '@types/node': 18.7.22
   '@types/validator': 13.7.10
@@ -53,7 +53,7 @@ devDependencies:
   '@commitlint/config-conventional': 17.1.0
   '@release-it/conventional-changelog': 5.1.0_release-it@15.5.0
   '@types/babel__generator': 7.6.4
-  '@types/chai': 4.3.3
+  '@types/chai': 4.3.4
   '@types/jest': 29.2.5
   '@types/node': 18.7.22
   '@types/validator': 13.7.10
@@ -836,11 +836,11 @@ packages:
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
     dependencies:
-      '@types/chai': 4.3.3
+      '@types/chai': 4.3.4
     dev: true
 
-  /@types/chai/4.3.3:
-    resolution: {integrity: sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==}
+  /@types/chai/4.3.4:
+    resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
     dev: true
 
   /@types/cross-spawn/6.0.2:
@@ -5654,7 +5654,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/chai': 4.3.3
+      '@types/chai': 4.3.4
       '@types/chai-subset': 1.3.3
       '@types/node': 18.7.22
       chai: 4.3.6
