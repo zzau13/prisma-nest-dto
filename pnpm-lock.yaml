@@ -12,7 +12,7 @@ specifiers:
   '@types/chai': 4.3.3
   '@types/jest': 29.2.5
   '@types/node': 18.7.22
-  '@types/validator': 13.7.7
+  '@types/validator': 13.7.10
   '@typescript-eslint/eslint-plugin': 5.44.0
   '@typescript-eslint/parser': 5.44.0
   '@vitest/coverage-c8': 0.23.4
@@ -56,7 +56,7 @@ devDependencies:
   '@types/chai': 4.3.3
   '@types/jest': 29.2.5
   '@types/node': 18.7.22
-  '@types/validator': 13.7.7
+  '@types/validator': 13.7.10
   '@typescript-eslint/eslint-plugin': 5.44.0_dlzdwrn5hi7dukp2m55pcm4jye
   '@typescript-eslint/parser': 5.44.0_7ilbxdl5iguzcjriqqcg2m5cku
   '@vitest/coverage-c8': 0.23.4
@@ -920,8 +920,8 @@ packages:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
     dev: true
 
-  /@types/validator/13.7.7:
-    resolution: {integrity: sha512-jiEw2kTUJ8Jsh4A1K4b5Pkjj9Xz6FktLLOQ36ZVLRkmxFbpTvAV2VRoKMojz8UlZxNg/2dZqzpigH4JYn1bkQg==}
+  /@types/validator/13.7.10:
+    resolution: {integrity: sha512-t1yxFAR2n0+VO6hd/FJ9F2uezAZVWHLmpmlJzm1eX03+H7+HsuTAp7L8QJs+2pQCfWkP1+EXsGK9Z9v7o/qPVQ==}
     dev: true
 
   /@types/yargs-parser/21.0.0:
