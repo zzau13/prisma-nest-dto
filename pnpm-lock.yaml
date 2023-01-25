@@ -10,7 +10,7 @@ specifiers:
   '@release-it/conventional-changelog': 5.1.1
   '@types/babel__generator': 7.6.4
   '@types/chai': 4.3.4
-  '@types/jest': 29.2.6
+  '@types/jest': 29.4.0
   '@types/node': 18.11.18
   '@types/validator': 13.7.11
   '@typescript-eslint/eslint-plugin': 5.49.0
@@ -52,7 +52,7 @@ devDependencies:
   '@release-it/conventional-changelog': 5.1.1_release-it@15.6.0
   '@types/babel__generator': 7.6.4
   '@types/chai': 4.3.4
-  '@types/jest': 29.2.6
+  '@types/jest': 29.4.0
   '@types/node': 18.11.18
   '@types/validator': 13.7.11
   '@typescript-eslint/eslint-plugin': 5.49.0_iu322prlnwsygkcra5kbpy22si
@@ -1053,8 +1053,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest/29.2.6:
-    resolution: {integrity: sha512-XEUC/Tgw3uMh6Ho8GkUtQ2lPhY5Fmgyp3TdlkTJs1W9VgNxs+Ow/x3Elh8lHQKqCbZL0AubQuqWjHVT033Hhrw==}
+  /@types/jest/29.4.0:
+    resolution: {integrity: sha512-VaywcGQ9tPorCX/Jkkni7RWGFfI11whqzs8dvxF41P17Z+z872thvEvlIbznjPJ02kl1HMX3LmLOonsj2n7HeQ==}
     dependencies:
       expect: 29.3.1
       pretty-format: 29.3.1
