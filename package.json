@@ -1,7 +1,7 @@
 {
   "name": "prisma-generator-nestjs",
   "description": "Generates DTO and Entity classes from Prisma Schema for NestJS with class-validator support",
-  "version": "1.8.10",
+  "version": "1.8.11",
   "license": "Apache-2.0",
   "authors": [
     {
