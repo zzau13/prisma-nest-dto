@@ -1,6 +1,4 @@
 import path from 'node:path';
-// TODO: remove
-import slash from 'slash';
 import type { DMMF } from '@prisma/generator-helper';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
@@ -10,6 +8,17 @@ import type { Imports, ParsedField } from './types';
 import { Ann, IsAnn, IsDecoValidator } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
+
+function slash(path: string) {
+  const isExtendedLengthPath = /^\\\\\?\\/.test(path);
+  const hasNonAscii = /[^\u0000-\u0080]+/.test(path); // eslint-disable-line no-control-regex
+
+  if (isExtendedLengthPath || hasNonAscii) {
+    return path;
+  }
+
+  return path.replace(/\\/g, '/');
+}
 
 const validateNested = {
   name: 'ValidateNested',
