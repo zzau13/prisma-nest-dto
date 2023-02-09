@@ -12,7 +12,7 @@ import { Config } from '../config';
 import { regulars } from './regulars';
 import { logger } from '@prisma/internals';
 
-function slash(path: string) {
+export function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);
   const hasNonAscii = /[^\u0000-\u0080]+/.test(path); // eslint-disable-line no-control-regex
 
