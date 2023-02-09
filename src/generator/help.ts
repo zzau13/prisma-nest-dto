@@ -8,6 +8,9 @@ import type { Imports, ParsedField } from './types';
 import { Ann, IsAnn, IsDecoValidator } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
+import { Config } from '../config';
+import { regulars } from './regulars';
+import { logger } from '@prisma/internals';
 
 function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);
@@ -42,6 +45,8 @@ export function annotate(doc?: string) {
     if (parsed.type !== 'ClassExpression')
       throw new Error('error parsing decorators');
 
+    const has = new Set();
+
     // TODO: Annotations
     if (parsed.decorators)
       for (const x of parsed.decorators)
@@ -50,17 +55,30 @@ export function annotate(doc?: string) {
           x.expression.type === 'CallExpression' &&
           x.expression.callee.type === 'Identifier' &&
           IsDecoValidator(x.expression.callee.name)
-        )
-          ret.push({
-            name: x.expression.callee.name,
-            code: generate(x).code,
-            import: x.expression.callee.name,
-          });
-        else if (x.expression.type === 'Identifier' && IsAnn(x.expression.name))
-          ret.push({
-            name: x.expression.name,
-          });
-        else throw new Error(`not valid decorator ${generate(x).code}`);
+        ) {
+          const name = x.expression.callee.name;
+          if (!has.has(name)) {
+            has.add(name);
+            ret.push({
+              name,
+              code: generate(x).code,
+              import: x.expression.callee.name,
+            });
+          } else {
+            logger.warn(`Duplicated decorator @${name}`);
+          }
+        } else if (
+          x.expression.type === 'Identifier' &&
+          IsAnn(x.expression.name)
+        ) {
+          const name = x.expression.name;
+          if (!has.has(name)) {
+            has.add(name);
+            ret.push({ name });
+          } else {
+            logger.warn(`Duplicated decorator @${name}`);
+          }
+        } else throw new Error(`not valid decorator ${generate(x).code}`);
   }
   return ret;
 }
@@ -79,6 +97,7 @@ export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
   models: DMMF.Model[],
   { outputToNestJsResourceStructure, output, fileNamingStyle }: Options,
+  config: Config,
 ) =>
   models
     .map((model) => ({ ...model, annotations: annotate(model.documentation) }))
@@ -87,7 +106,7 @@ export const getModels = (
       ...model,
       fields: model.fields.map((x) => ({
         ...x,
-        annotations: annotate(x.documentation).concat(
+        annotations: annotate(regulars(x, config.regulars)).concat(
           x.kind === 'object' ? decoRelated : [],
         ),
       })),

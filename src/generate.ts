@@ -5,6 +5,7 @@ import { GeneratorOptions } from '@prisma/generator-helper';
 
 import { run } from './generator';
 import { parseOptions } from './options';
+import { getConfigFile } from './config';
 
 export const completeFiles = (results: ReturnType<typeof run>) => {
   const indexCollections: Record<string, ReturnType<typeof run>[number]> = {};
@@ -52,10 +53,11 @@ const writeFiles = (files: ReturnType<typeof completeFiles>) =>
     }),
   );
 
-export const generate = (options: GeneratorOptions) => {
+export async function generate(options: GeneratorOptions) {
   const parsedOptions = parseOptions(options);
-  const results = run(parsedOptions);
+  const config = await getConfigFile(parsedOptions.fileConfig);
+  const results = run(parsedOptions, config);
   const final = completeFiles(results);
 
-  return writeFiles(final);
-};
+  return await writeFiles(final);
+}

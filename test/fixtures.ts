@@ -6,6 +6,7 @@ import { getConfig, getDMMF } from '@prisma/internals';
 
 import { run } from '../src/generator';
 import { parseOptions } from '../src/options';
+import { defConfig } from '../src';
 
 const getFixtures = async (baseDir: string) => {
   const files = await globby(baseDir);
@@ -20,22 +21,29 @@ const getFixtures = async (baseDir: string) => {
   );
 };
 
-export const testFixtures = (pattern: string) =>
+// TODO: coverage config
+export const testFixtures = (
+  pattern: string,
+  cfg?: ReturnType<typeof defConfig>,
+) =>
   test(pattern, async () => {
     const fixtures = await getFixtures(path.join(__dirname, pattern));
     fixtures.map(parseOptions).forEach((x) => {
-      expect(run(x)).toMatchSnapshot();
+      expect(run(x, defConfig(cfg ?? {}))).toMatchSnapshot();
     });
   });
 
-export const failFixtures = (pattern: string) =>
+export const failFixtures = (
+  pattern: string,
+  cfg?: ReturnType<typeof defConfig>,
+) =>
   test(pattern, async () => {
     const fixtures = await getFixtures(path.join(__dirname, pattern));
     fixtures.forEach((opt) => {
       expect(
         (async () => {
           const x = parseOptions(opt);
-          run(x);
+          run(x, defConfig(cfg ?? {}));
         })(),
       ).rejects.toBeDefined();
     });

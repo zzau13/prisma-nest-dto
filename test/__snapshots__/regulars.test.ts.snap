@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`fixtures/basic/**/*.prisma 1`] = `
+exports[`fixtures/regulars.prisma 1`] = `
 [
   {
     "content": "
@@ -13,7 +13,7 @@ export class ConnectProductDto {
   },
   {
     "content": "
-import {ValidateNested} from 'class-validator'
+import {IsEmail,IsString,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCompanyDto} from './connect-company.dto'
@@ -37,6 +37,9 @@ export class CreateProductDto {
   score?: number;
   categoryId: string;
   companyId: string;
+  @IsEmail()
+@IsString()
+companyEmail: string;
   @ValidateNested()
 category: CreateProductCategoryRelationInputDto;
   @ValidateNested()
@@ -49,6 +52,7 @@ company: CreateProductCompanyRelationInputDto;
   },
   {
     "content": "
+import {IsEmail,IsString} from 'class-validator'
 import {Prisma} from '@prisma/client'
 
 
@@ -60,13 +64,16 @@ export class UpdateProductDto {
   reviewCount?: number  | null;
   attributes?: Prisma.JsonValue  | null;
   score?: number  | null;
+  @IsEmail()
+@IsString()
+companyEmail?: string ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
   },
   {
     "content": "
-import {ValidateNested} from 'class-validator'
+import {IsEmail,IsString,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
 import {Company} from './company.entity'
@@ -83,6 +90,9 @@ export class Product {
   score: number  | null;
   categoryId: string ;
   companyId: string ;
+  @IsEmail()
+@IsString()
+companyEmail: string ;
 }
 export class ProductRel {
   @ValidateNested()

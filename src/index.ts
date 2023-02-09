@@ -8,3 +8,5 @@ generatorHandler({
   }),
   onGenerate: generate,
 });
+
+export { defConfig } from './config';

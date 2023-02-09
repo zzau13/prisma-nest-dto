@@ -1,5 +1,6 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
 import { parseEnvValue } from '@prisma/internals';
+import { FILE } from './config';
 
 const stringToBoolean = (input: string, defaultValue = false) => {
   if (input === 'true') {
@@ -28,6 +29,7 @@ export const parseOptions = ({
     entitySuffix = '',
     fileNamingStyle = 'kebab',
     mode = 'openapi',
+    fileConfig = FILE,
   } = config;
 
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
@@ -80,6 +82,7 @@ export const parseOptions = ({
     entityPrefix,
     entitySuffix,
     exportRelationModifierClasses,
+    fileConfig,
     fileNamingStyle,
     mode,
     output: parsedOutput,

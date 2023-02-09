@@ -16,11 +16,12 @@ import {
 } from './generate';
 
 import { Options } from '../options';
+import { Config } from '../config';
 
-export const run = (options: Options) => {
+export const run = (options: Options, config: Config) => {
   const { dmmf, exportRelationModifierClasses } = options;
   const help = makeHelpers(options);
-  const allModels = getModels(dmmf.datamodel.models, options);
+  const allModels = getModels(dmmf.datamodel.models, options, config);
 
   return allModels.flatMap((model) => {
     logger.info(`Processing Model ${model.name}`);
