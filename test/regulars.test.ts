@@ -1,6 +1,17 @@
 import { testFixtures } from './fixtures';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const config = require('../nest-dto.js');
-
-testFixtures('fixtures/regulars.prisma', config);
+testFixtures('fixtures/regulars.prisma', {
+  // Priority by first schema and order, take the first
+  regulars: [
+    {
+      models: /^User$/,
+      fields: [{ regex: /password$/, decorators: '@Length(16)' }],
+    },
+    {
+      fields: [
+        { regex: /password$/, decorators: '@Length(8)' },
+        { regex: /mail$/, decorators: '@IsEmail() @IsString()' },
+      ],
+    },
+  ],
+});
