@@ -102,27 +102,36 @@ export const getModels = (
   models
     .map((model) => ({ ...model, annotations: annotate(model.documentation) }))
     .filter((x) => !isAnnotatedWith(x, Ann.IGNORE))
-    .map((model) => ({
-      ...model,
-      fields: model.fields.map((x) => ({
-        ...x,
-        annotations: annotate(regulars(x, config.regulars)).concat(
-          x.kind === 'object' ? decoRelated : [],
-        ),
-      })),
-      output: {
-        dto: outputToNestJsResourceStructure
-          ? path.join(output, transformers[fileNamingStyle](model.name), 'dto')
-          : output,
-        entity: outputToNestJsResourceStructure
-          ? path.join(
-              output,
-              transformers[fileNamingStyle](model.name),
-              'entities',
-            )
-          : output,
-      },
-    }));
+    .map((model) => {
+      const fields = config.regulars
+        .filter((x) => x.models === undefined || x.models.test(model.name))
+        .flatMap((x) => x.fields);
+      return {
+        ...model,
+        fields: model.fields.map((x) => ({
+          ...x,
+          annotations: annotate(regulars(x, fields)).concat(
+            x.kind === 'object' ? decoRelated : [],
+          ),
+        })),
+        output: {
+          dto: outputToNestJsResourceStructure
+            ? path.join(
+                output,
+                transformers[fileNamingStyle](model.name),
+                'dto',
+              )
+            : output,
+          entity: outputToNestJsResourceStructure
+            ? path.join(
+                output,
+                transformers[fileNamingStyle](model.name),
+                'entities',
+              )
+            : output,
+        },
+      };
+    });
 
 export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
   const destruct = uniq(

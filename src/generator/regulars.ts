@@ -4,7 +4,10 @@ import { Config } from '../config';
 import { isRelation } from './field-classifiers';
 
 // TODO: by parent name
-export function regulars(field: DMMF.Field, regulars: Config['regulars']) {
+export function regulars(
+  field: DMMF.Field,
+  regulars: Config['regulars'][number]['fields'],
+) {
   let doc = field.documentation ?? '';
   const relation = isRelation(field);
   for (const regular of regulars)

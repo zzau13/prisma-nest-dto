@@ -3,7 +3,10 @@ import { stat } from 'node:fs/promises';
 
 export const FILE = 'nest-dto.js';
 const config = {
-  regulars: [] as { regex: RegExp; decorators: string; relations?: boolean }[],
+  regulars: [] as {
+    models?: RegExp;
+    fields: { regex: RegExp; decorators: string; relations?: boolean }[];
+  }[],
 };
 
 export type Config = Readonly<typeof config>;

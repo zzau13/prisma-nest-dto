@@ -13,7 +13,7 @@ export class ConnectProductDto {
   },
   {
     "content": "
-import {IsEmail,IsString,ValidateNested} from 'class-validator'
+import {Length,IsEmail,IsString,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCompanyDto} from './connect-company.dto'
@@ -37,6 +37,8 @@ export class CreateProductDto {
   score?: number;
   categoryId: string;
   companyId: string;
+  @Length(8)
+password: string;
   @IsEmail()
 @IsString()
 companyEmail: string;
@@ -52,7 +54,7 @@ company: CreateProductCompanyRelationInputDto;
   },
   {
     "content": "
-import {IsEmail,IsString} from 'class-validator'
+import {Length,IsEmail,IsString} from 'class-validator'
 import {Prisma} from '@prisma/client'
 
 
@@ -64,6 +66,8 @@ export class UpdateProductDto {
   reviewCount?: number  | null;
   attributes?: Prisma.JsonValue  | null;
   score?: number  | null;
+  @Length(8)
+password?: string ;
   @IsEmail()
 @IsString()
 companyEmail?: string ;
@@ -73,7 +77,7 @@ companyEmail?: string ;
   },
   {
     "content": "
-import {IsEmail,IsString,ValidateNested} from 'class-validator'
+import {Length,IsEmail,IsString,ValidateNested} from 'class-validator'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
 import {Company} from './company.entity'
@@ -90,6 +94,8 @@ export class Product {
   score: number  | null;
   categoryId: string ;
   companyId: string ;
+  @Length(8)
+password: string ;
   @IsEmail()
 @IsString()
 companyEmail: string ;
@@ -103,6 +109,65 @@ company: Company ;
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
+  },
+  {
+    "content": "
+
+export class ConnectUserDto {
+  id: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-user.dto.ts",
+  },
+  {
+    "content": "
+import {Length,IsEmail,IsString} from 'class-validator'
+
+
+export class CreateUserDto {
+  @Length(16)
+password: string;
+  @IsEmail()
+@IsString()
+mail: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-user.dto.ts",
+  },
+  {
+    "content": "
+import {Length,IsEmail,IsString} from 'class-validator'
+
+
+export class UpdateUserDto {
+  @Length(16)
+password?: string ;
+  @IsEmail()
+@IsString()
+mail?: string ;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-user.dto.ts",
+  },
+  {
+    "content": "
+import {Length,IsEmail,IsString} from 'class-validator'
+import {IntersectionType} from '@nestjs/swagger'
+
+export class User {
+  id: string ;
+  @Length(16)
+password: string ;
+  @IsEmail()
+@IsString()
+mail: string ;
+}
+export class UserRel {
+  
+}
+export class UserFull extends IntersectionType(User, UserRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user.entity.ts",
   },
   {
     "content": "

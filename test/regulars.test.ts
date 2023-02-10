@@ -1,10 +1,6 @@
 import { testFixtures } from './fixtures';
 
-testFixtures('fixtures/regulars.prisma', {
-  regulars: [
-    {
-      regex: /mail$/,
-      decorators: '@IsEmail() @IsString()',
-    },
-  ],
-});
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const config = require('../nest-dto.js');
+
+testFixtures('fixtures/regulars.prisma', config);

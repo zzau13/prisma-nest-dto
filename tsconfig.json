@@ -8,7 +8,8 @@
     "outDir": "dist",
     "removeComments": true,
     "strict": true,
-    "target": "ES2015"
+    "target": "ES2015",
+    "allowJs": true
   },
   "exclude": ["node_modules", "coverage", "dist"]
 }
