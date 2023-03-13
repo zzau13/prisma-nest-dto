@@ -70,7 +70,7 @@
     "@release-it/conventional-changelog": "5.1.1",
     "@types/babel__generator": "7.6.4",
     "@types/chai": "4.3.4",
-    "@types/jest": "29.4.0",
+    "@types/jest": "29.4.1",
     "@types/node": "18.15.1",
     "@types/validator": "13.7.13",
     "@typescript-eslint/eslint-plugin": "5.54.1",
