@@ -1,4 +1,4 @@
-# Chapter 1
+# TODO: Please help me
 
 ## What is it?
 
@@ -26,6 +26,7 @@ generator nestjsDto {
   fileNamingStyle                 = "kebak"
   decimalAsNumber                 = "false"
   mode                            = "openapi"
+  fileConfig                      = "nest-dto.js"
 }
 ```
 

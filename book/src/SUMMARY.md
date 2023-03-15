@@ -1,3 +1,4 @@
 # Summary
 
-- [All](./all.md)
+- [Readme](./all.md)
+- [Config file](./config.md)
