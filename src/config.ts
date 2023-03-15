@@ -2,16 +2,16 @@ import { extname, isAbsolute, join } from 'node:path';
 import { stat } from 'node:fs/promises';
 
 export const FILE = 'nest-dto.js';
-const config = {
+const CONFIG = {
   regulars: [] as {
     models?: RegExp;
     fields: { regex: RegExp; decorators: string; relations?: boolean }[];
   }[],
 };
 
-export type Config = Readonly<typeof config>;
+export type Config = Readonly<typeof CONFIG>;
 export const defConfig = (cfg: Partial<Config>): Config => ({
-  ...config,
+  ...CONFIG,
   ...cfg,
 });
 
@@ -38,11 +38,10 @@ export async function getConfigFile(file = FILE): Promise<Config> {
       })
   ) {
     case Stat.File:
-      const config = await import(path);
-      return config;
+      return await import(path);
     case Stat.NotFile:
       return throwBad();
     case Stat.NotDefined:
-      return config;
+      return CONFIG;
   }
 }
