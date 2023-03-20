@@ -75,7 +75,7 @@
     "@types/validator": "13.7.14",
     "@typescript-eslint/eslint-plugin": "5.55.0",
     "@typescript-eslint/parser": "5.55.0",
-    "@vitest/coverage-c8": "0.29.3",
+    "@vitest/coverage-c8": "0.29.5",
     "dotenv-cli": "7.1.0",
     "eslint": "8.36.0",
     "eslint-config-prettier": "8.7.0",
@@ -88,7 +88,7 @@
     "prisma": "4.11.0",
     "release-it": "15.9.0",
     "typescript": "5.0.2",
-    "vitest": "0.29.3"
+    "vitest": "0.29.5"
   },
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",
