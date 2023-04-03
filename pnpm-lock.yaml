@@ -35,7 +35,7 @@ devDependencies:
     version: 17.4.4
   '@release-it/conventional-changelog':
     specifier: 5.1.1
-    version: 5.1.1(release-it@15.10.0)
+    version: 5.1.1(release-it@15.10.1)
   '@types/babel__generator':
     specifier: 7.6.4
     version: 7.6.4
@@ -91,8 +91,8 @@ devDependencies:
     specifier: 4.12.0
     version: 4.12.0
   release-it:
-    specifier: 15.10.0
-    version: 15.10.0
+    specifier: 15.10.1
+    version: 15.10.1
   typescript:
     specifier: 5.0.3
     version: 5.0.3
@@ -1019,7 +1019,7 @@ packages:
   /@prisma/prisma-fmt-wasm@4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7:
     resolution: {integrity: sha512-jh9ajkGl3Lw9uTKEwlNBSh79a1v6C1JducqxakgkQyLev6kG1xxkuc2rDGrIDxUdpCOuuPRjuSCHhjnv7qLLgQ==}
 
-  /@release-it/conventional-changelog@5.1.1(release-it@15.10.0):
+  /@release-it/conventional-changelog@5.1.1(release-it@15.10.1):
     resolution: {integrity: sha512-QtbDBe36dQfzexAfDYrbLPvd5Cb5bMWmLcjcGhCOWBss7fe1/gCjoxDULVz+7N7G5Nu2UMeBwHcUp/w8RDh5VQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -1028,7 +1028,7 @@ packages:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      release-it: 15.10.0
+      release-it: 15.10.1
       semver: 7.3.8
     dev: true
 
@@ -5090,8 +5090,8 @@ packages:
       rc: 1.2.8
     dev: true
 
-  /release-it@15.10.0:
-    resolution: {integrity: sha512-cXY7cZyXjZ/e8TPUjzM7AHvnOKzNmj2NwNT3gREmZIdnDRmuX3DSnS3S3SLbVF8S3SmM88WfHVifGxFaFjNthQ==}
+  /release-it@15.10.1:
+    resolution: {integrity: sha512-Wkk4aFHSo27vQwHIlcEy77lJwnQlh4UDQckc53gh5tKo7F22mAUEAe8SYQZJcFh7icdkf0OV70onhB1dDmeClA==}
     engines: {node: '>=14.9'}
     hasBin: true
     dependencies:
