@@ -27,6 +27,7 @@ generator nestjsDto {
   decimalAsNumber                 = "false"
   mode                            = "openapi"
   fileConfig                      = "nest-dto.js"
+  importPath                      = "@prisma/client"
 }
 ```
 

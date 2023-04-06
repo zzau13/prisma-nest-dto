@@ -30,6 +30,7 @@ export const parseOptions = ({
     fileNamingStyle = 'kebab',
     mode = 'openapi',
     fileConfig = FILE,
+    importPath = '@prisma/client',
   } = config;
 
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
@@ -83,6 +84,7 @@ export const parseOptions = ({
     entitySuffix,
     exportRelationModifierClasses,
     fileConfig,
+    importPath,
     fileNamingStyle,
     mode,
     output: parsedOutput,

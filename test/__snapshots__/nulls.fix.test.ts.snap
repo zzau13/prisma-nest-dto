@@ -13,7 +13,7 @@ export class ConnectProductDto {
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@app/prisma'
 
 
 export class CreateProductDto {
@@ -33,7 +33,7 @@ export class CreateProductDto {
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
+import {Prisma} from '@app/prisma'
 
 
 export class UpdateProductDto {
@@ -53,8 +53,8 @@ export class UpdateProductDto {
   },
   {
     "content": "
-import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
+import {Prisma} from '@app/prisma'
 
 export class Product {
   id: string ;

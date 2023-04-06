@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type { DMMF } from '@prisma/generator-helper';
+import { logger } from '@prisma/internals';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
 
@@ -10,7 +11,6 @@ import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
 import { Config } from '../config';
 import { regulars } from './regulars';
-import { logger } from '@prisma/internals';
 
 export function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);
@@ -434,6 +434,7 @@ export const makeHelpers = ({
   decimalAsNumber,
   mode,
   fileNamingStyle,
+  importPath,
 }: Options) => {
   const transformFileNameCase = transformers[fileNamingStyle];
   const transformClassNameCase = pascal;
@@ -550,7 +551,7 @@ export const makeHelpers = ({
     }
 
     return {
-      from: '@prisma/client',
+      from: importPath,
       destruct: importPrisma ? ['Prisma', ...enumsToImport] : enumsToImport,
     };
   };

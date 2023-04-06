@@ -22,8 +22,8 @@ enum Stat {
 }
 
 export async function getConfigFile(file = FILE): Promise<Config> {
-  if (extname(file) !== '.js')
-    throw new Error('config file extension should be ".js"');
+  if (extname(file) !== '.js' && extname(file) !== '.mjs')
+    throw new Error('config file extension should be ".js" or ".mjs"');
   const path = isAbsolute(file) ? file : join(process.cwd(), file);
 
   const throwBad = () => {
