@@ -108,12 +108,14 @@ export const getModels = (
         .flatMap((x) => x.fields);
       return {
         ...model,
-        fields: model.fields.map((x) => ({
-          ...x,
-          annotations: annotate(regulars(x, fields)).concat(
-            x.kind === 'object' ? decoRelated : [],
-          ),
-        })),
+        fields: model.fields
+          .map((x) => ({
+            ...x,
+            annotations: annotate(regulars(x, fields)).concat(
+              x.kind === 'object' ? decoRelated : [],
+            ),
+          }))
+          .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
         output: {
           dto: outputToNestJsResourceStructure
             ? path.join(

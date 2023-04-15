@@ -1,5 +1,5 @@
 import type { Help } from '../help';
-import { transformCreate } from '../transform/transform-create';
+import { transformCreate } from '../transform';
 
 export const generateCreateDto = ({
   model,

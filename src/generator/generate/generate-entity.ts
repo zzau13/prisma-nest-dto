@@ -1,5 +1,5 @@
 import type { Help } from '../help';
-import { transformEntity } from '../transform/transform-entity';
+import { transformEntity } from '../transform';
 
 export const generateEntity = ({
   model,

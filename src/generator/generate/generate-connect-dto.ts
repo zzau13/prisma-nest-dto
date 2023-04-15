@@ -1,5 +1,5 @@
 import type { Help } from '../help';
-import { transformConnect } from '../transform/transform-connect';
+import { transformConnect } from '../transform';
 
 export const generateConnectDto = ({
   model,

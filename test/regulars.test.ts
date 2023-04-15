@@ -5,12 +5,13 @@ testFixtures('fixtures/regulars.prisma', {
   regulars: [
     {
       models: /^User$/,
-      fields: [{ regex: /password$/, decorators: '@Length(16)' }],
+      fields: [{ regex: /password$/, decorators: '@NoSet @Length(16)' }],
     },
     {
       fields: [
         { regex: /password$/, decorators: '@Length(8)' },
         { regex: /mail$/, decorators: '@IsEmail() @IsString()' },
+        { regex: /^score$/, decorators: '@Ignore' },
       ],
     },
   ],

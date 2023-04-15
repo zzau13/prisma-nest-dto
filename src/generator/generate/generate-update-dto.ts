@@ -1,5 +1,5 @@
 import type { Help } from '../help';
-import { transformUpdate } from '../transform/transform-update';
+import { transformUpdate } from '../transform';
 
 export const generateUpdateDto = ({
   model,

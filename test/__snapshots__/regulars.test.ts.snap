@@ -34,7 +34,6 @@ export class CreateProductDto {
   highlighted?: boolean;
   reviewCount?: number;
   attributes?: Prisma.InputJsonValue;
-  score?: number;
   categoryId: string;
   companyId: string;
   @Length(8)
@@ -65,7 +64,6 @@ export class UpdateProductDto {
   highlighted?: boolean  | null;
   reviewCount?: number  | null;
   attributes?: Prisma.JsonValue  | null;
-  score?: number  | null;
   @Length(8)
 password?: string ;
   @IsEmail()
@@ -91,7 +89,6 @@ export class Product {
   highlighted: boolean  | null;
   reviewCount: number  | null;
   attributes: Prisma.JsonValue  | null;
-  score: number  | null;
   categoryId: string ;
   companyId: string ;
   @Length(8)
@@ -136,12 +133,10 @@ mail: string;
   },
   {
     "content": "
-import {Length,IsEmail,IsString} from 'class-validator'
+import {IsEmail,IsString} from 'class-validator'
 
 
 export class UpdateUserDto {
-  @Length(16)
-password?: string ;
   @IsEmail()
 @IsString()
 mail?: string ;
