@@ -23,7 +23,7 @@ generator nestjsDto {
   dtoSuffix                       = "Dto"
   entityPrefix                    = ""
   entitySuffix                    = ""
-  fileNamingStyle                 = "kebak"
+  fileNamingStyle                 = "kebab"
   decimalAsNumber                 = "false"
   mode                            = "openapi"
   fileConfig                      = "nest-dto.js"
