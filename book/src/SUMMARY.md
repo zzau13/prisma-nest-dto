@@ -5,5 +5,4 @@
 - [Config file](./config.md)
 - [Extend Models](./extension.md)
 - [DTO](./dto.md)
-- [Entity](./entity.md)
 - [refactor notes](./refactor.md)

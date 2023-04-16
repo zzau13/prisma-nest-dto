@@ -10,8 +10,6 @@
 - ~~Add support for class-validator by comment, by name,~~ (in future by @db annotations)
 - ~~Add config regulars: put decorators in fields by regex of its name~~ and its parent
 - Simplify comment annotations and remove boilerplate
-- Create various dto depending on index fields
 - Clean Code and simplify structure
 - Prettify and complete documentation
 - ~100% coverage
-- Coverage e2e

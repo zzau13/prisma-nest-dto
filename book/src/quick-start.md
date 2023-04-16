@@ -1,8 +1,10 @@
-## Usage?
+# Quick start
 
 ```sh
 pnpm add -D prisma-generator-nestjs
 ```
+
+Prisma config defaults:
 
 ```prisma
 generator nestjsDto {
