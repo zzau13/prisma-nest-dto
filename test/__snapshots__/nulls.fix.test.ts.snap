@@ -34,7 +34,7 @@ decimal?: Prisma.Decimal;
   categoryId: string;
   companyId: string;
   @IsDateString()
-date?: string;
+date?: Date;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
@@ -62,7 +62,7 @@ decimal?: Prisma.Decimal  | null;
   categoryId?: string ;
   companyId?: string ;
   @IsDateString()
-date?: string ;
+date?: Date ;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
@@ -91,7 +91,7 @@ decimal: Prisma.Decimal  | null;
   categoryId: string ;
   companyId: string ;
   @IsDateString()
-date: string ;
+date: Date ;
 }
 export class ProductRel {
   

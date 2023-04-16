@@ -287,7 +287,7 @@ const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
     Float: 'number',
     // [Working with Decimal](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-decimal)
     Decimal: decimalAsNumber ? 'number' : 'Prisma.Decimal',
-    DateTime: 'string',
+    DateTime: 'Date',
     // [working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
     Json: 'Prisma.JsonValue',
     // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)

@@ -38,7 +38,7 @@ export class CreateProductDto {
   companyId: string;
   @Length(8)
 password: string;
-  date?: string;
+  date?: Date;
   @IsEmail()
 @IsString()
 companyEmail: string;
@@ -46,8 +46,8 @@ companyEmail: string;
 category: CreateProductCategoryRelationInputDto;
   @ValidateNested()
 company: CreateProductCompanyRelationInputDto;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 ",
     "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
@@ -67,7 +67,7 @@ export class UpdateProductDto {
   attributes?: Prisma.JsonValue  | null;
   @Length(8)
 password?: string ;
-  date?: string ;
+  date?: Date ;
   @IsEmail()
 @IsString()
 companyEmail?: string ;
@@ -95,7 +95,7 @@ export class Product {
   companyId: string ;
   @Length(8)
 password: string ;
-  date: string ;
+  date: Date ;
   @IsEmail()
 @IsString()
 companyEmail: string ;
