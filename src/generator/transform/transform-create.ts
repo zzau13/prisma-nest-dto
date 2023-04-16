@@ -9,8 +9,9 @@ import {
 } from '../field-classifiers';
 
 import type { DMMF } from '@prisma/generator-helper';
-import { Model, Help, concatIntoArray, generateRelationInput } from '../help';
+import { Help, concatIntoArray, generateRelationInput } from '../help';
 import type { Imports, ParsedField } from '../types';
+import { Model } from '../model';
 
 export function transformCreate({
   model,

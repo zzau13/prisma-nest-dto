@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { logger } from '@prisma/internals';
 
-import { getModels, makeHelpers } from './help';
+import { makeHelpers } from './help';
 import {
   transformEntity,
   transformCreate,
@@ -17,6 +17,7 @@ import {
 
 import { Options } from '../options';
 import { Config } from '../config';
+import { getModels } from './model';
 
 export const run = (options: Options, config: Config) => {
   const { dmmf, exportRelationModifierClasses } = options;

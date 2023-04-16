@@ -14,8 +14,8 @@ import {
   generateRelationInput,
   getRelationScalars,
   Help,
-  Model,
 } from '../help';
+import { Model } from '../model';
 import type { Imports, ParsedField } from '../types';
 
 export function transformUpdate({

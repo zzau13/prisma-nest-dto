@@ -1,5 +1,6 @@
 import { isId, isUnique } from '../field-classifiers';
-import { Help, Model } from '../help';
+import { Help } from '../help';
+import { Model } from '../model';
 
 export function transformConnect({
   model,

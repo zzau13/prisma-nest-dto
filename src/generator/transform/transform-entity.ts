@@ -4,13 +4,8 @@ import type { DMMF } from '@prisma/generator-helper';
 import { Ann } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
 import type { Imports, ParsedField } from '../types';
-import {
-  Help,
-  Model,
-  getRelationScalars,
-  getRelativePath,
-  slash,
-} from '../help';
+import { Help, getRelationScalars, getRelativePath, slash } from '../help';
+import { Model } from '../model';
 
 export function transformEntity({
   model,

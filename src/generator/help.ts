@@ -4,13 +4,14 @@ import { logger } from '@prisma/internals';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
 
-import { isAnnotatedWith } from './field-classifiers';
 import type { Imports, ParsedField } from './types';
+
+import { isAnnotatedWith } from './field-classifiers';
 import { Ann, IsAnn, IsDecoValidator } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
-import { Config } from '../config';
-import { regulars } from './regulars';
+import { Model } from './model';
+import { decoRelated } from '../contants';
 
 export function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);
@@ -22,13 +23,6 @@ export function slash(path: string) {
 
   return path.replace(/\\/g, '/');
 }
-
-const validateNested = {
-  name: 'ValidateNested',
-  code: '@ValidateNested()',
-  import: 'ValidateNested',
-} as const;
-const decoRelated = [validateNested];
 
 export const uniq = <T = unknown>(input: T[]): T[] =>
   Array.from(new Set(input));
@@ -80,7 +74,7 @@ export function annotate(doc?: string) {
           }
         } else throw new Error(`not valid decorator ${generate(x).code}`);
   }
-  return ret;
+  return ret as ReadonlyArray<(typeof ret)[number]>;
 }
 
 export const transformers: Record<
@@ -91,63 +85,6 @@ export const transformers: Record<
   kebab,
   pascal,
   snake,
-};
-
-export type Model = ReturnType<typeof getModels>[number];
-export const getModels = (
-  models: DMMF.Model[],
-  { outputToNestJsResourceStructure, output, fileNamingStyle }: Options,
-  config: Config,
-) =>
-  models
-    .map((model) => ({ ...model, annotations: annotate(model.documentation) }))
-    .filter((x) => !isAnnotatedWith(x, Ann.IGNORE))
-    .map((model) => {
-      const fields = config.regulars
-        .filter((x) => x.models === undefined || x.models.test(model.name))
-        .flatMap((x) => x.fields);
-      return {
-        ...model,
-        fields: model.fields
-          .map((x) => ({
-            ...x,
-            annotations: annotate(regulars(x, fields)).concat(
-              x.kind === 'object' ? decoRelated : [],
-            ),
-          }))
-          .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
-        output: {
-          dto: outputToNestJsResourceStructure
-            ? path.join(
-                output,
-                transformers[fileNamingStyle](model.name),
-                'dto',
-              )
-            : output,
-          entity: outputToNestJsResourceStructure
-            ? path.join(
-                output,
-                transformers[fileNamingStyle](model.name),
-                'entities',
-              )
-            : output,
-        },
-      };
-    });
-
-export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
-  const destruct = uniq(
-    parsed
-      .flatMap((x) => x.annotations)
-      .filter((x) => x.import)
-      .flatMap((x) => x.import as string),
-  );
-
-  if (destruct.length)
-    return {
-      from: 'class-validator',
-      destruct,
-    };
 };
 
 export const getRelationScalars = (
@@ -425,6 +362,21 @@ const importStatement = (input: Imports) => {
 
 const importStatements = (items: Imports[]) =>
   `${items.each(importStatement, '\n')}`;
+
+export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
+  const destruct = uniq(
+    parsed
+      .flatMap((x) => x.annotations)
+      .filter((x) => x.import)
+      .flatMap((x) => x.import as string),
+  );
+
+  if (destruct.length)
+    return {
+      from: 'class-validator',
+      destruct,
+    };
+};
 
 export const makeHelpers = ({
   connectDtoPrefix,
