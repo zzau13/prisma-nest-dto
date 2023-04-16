@@ -31,21 +31,18 @@ export const getModels = (
       return {
         ...model,
         fields: model.fields
-          .map((x) => {
-            if (x.type === 'DateTime') console.log('TYpe', x.name, x.type);
-            return {
-              ...x,
-              // TODO: wrap
-              annotations: annotate(doRegulars(x, regulars))
-                .concat(x.kind === 'object' ? decoRelated : [])
-                .concat(cvIsOptional && !x.isRequired ? decoNotRequired : [])
-                .concat(
-                  cvIsDateString && (x.type as PrismaType) === 'DateTime'
-                    ? decoIsDateString
-                    : [],
-                ),
-            };
-          })
+          .map((x) => ({
+            ...x,
+            // TODO: wrap
+            annotations: annotate(doRegulars(x, regulars))
+              .concat(x.kind === 'object' ? decoRelated : [])
+              .concat(cvIsOptional && !x.isRequired ? decoNotRequired : [])
+              .concat(
+                cvIsDateString && (x.type as PrismaType) === 'DateTime'
+                  ? decoIsDateString
+                  : [],
+              ),
+          }))
           .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
         output: {
           dto: outputToNestJsResourceStructure
