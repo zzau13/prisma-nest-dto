@@ -23,7 +23,7 @@ module.exports = defConfig({
     {
       fields: [
         { regex: /password$/, decorators: '@Length(8)' },
-        { regex: /mail$/, decorators: '@IsEmail() @IsString()' },
+        { regex: /mail$/, decorators: '@IsEmail() @Length(200)' },
       ],
     },
   ],
