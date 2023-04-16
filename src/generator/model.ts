@@ -3,11 +3,11 @@ import { DMMF } from '@prisma/generator-helper';
 
 import { Ann } from './annotations';
 import { Config } from '../config';
-import { decoNotRequired, decoRelated } from '../contants';
+import { decoIsDateString, decoNotRequired, decoRelated } from '../contants';
 import { isAnnotatedWith } from './field-classifiers';
-import { annotate, transformers } from './help';
+import { annotate, PrismaType, transformers } from './help';
 import { Options } from '../options';
-import { regulars } from './regulars';
+import { doRegulars } from './doRegulars';
 
 export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
@@ -16,7 +16,8 @@ export const getModels = (
     outputToNestJsResourceStructure,
     output,
     fileNamingStyle,
-    cVisOptional,
+    cvIsOptional,
+    cvIsDateString,
   }: Options,
   config: Config,
 ) =>
@@ -24,18 +25,27 @@ export const getModels = (
     .map((model) => ({ ...model, annotations: annotate(model.documentation) }))
     .filter((x) => !isAnnotatedWith(x, Ann.IGNORE))
     .map((model) => {
-      const fields = config.regulars
+      const regulars = config.regulars
         .filter((x) => x.models === undefined || x.models.test(model.name))
         .flatMap((x) => x.fields);
       return {
         ...model,
         fields: model.fields
-          .map((x) => ({
-            ...x,
-            annotations: annotate(regulars(x, fields))
-              .concat(x.kind === 'object' ? decoRelated : [])
-              .concat(cVisOptional && !x.isRequired ? decoNotRequired : []),
-          }))
+          .map((x) => {
+            if (x.type === 'DateTime') console.log('TYpe', x.name, x.type);
+            return {
+              ...x,
+              // TODO: wrap
+              annotations: annotate(doRegulars(x, regulars))
+                .concat(x.kind === 'object' ? decoRelated : [])
+                .concat(cvIsOptional && !x.isRequired ? decoNotRequired : [])
+                .concat(
+                  cvIsDateString && (x.type as PrismaType) === 'DateTime'
+                    ? decoIsDateString
+                    : [],
+                ),
+            };
+          })
           .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
         output: {
           dto: outputToNestJsResourceStructure

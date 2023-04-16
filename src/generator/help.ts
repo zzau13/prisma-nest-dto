@@ -275,6 +275,8 @@ export const zipImportStatementParams = (items: Imports[]): Imports[] => {
   return Object.values(itemsByFrom);
 };
 
+export type PrismaType = keyof ReturnType<typeof PrismaScalarToTypeScript>;
+
 const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
   ({
     String: 'string',
@@ -285,7 +287,7 @@ const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
     Float: 'number',
     // [Working with Decimal](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-decimal)
     Decimal: decimalAsNumber ? 'number' : 'Prisma.Decimal',
-    DateTime: 'Date',
+    DateTime: 'string',
     // [working with JSON fields](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields)
     Json: 'Prisma.JsonValue',
     // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)
@@ -437,11 +439,11 @@ export const makeHelpers = ({
         : entityName(field.type)
     }${when(field.isList, '[]')}`;
 
-  const fieldToDtoProp = (
+  function fieldToDtoProp(
     field: ParsedField,
     useInputTypes = false,
     forceOptional = false,
-  ) => {
+  ) {
     const annotations = field.annotations
       .filter((x) => x.code)
       .map((x) => x.code)
@@ -453,7 +455,7 @@ export const makeHelpers = ({
       field.isRequired && !forceOptional,
       '?',
     )}: ${fieldType(field, useInputTypes)};`;
-  };
+  }
 
   const fieldsToDtoProps = (
     fields: ParsedField[],
@@ -465,7 +467,7 @@ export const makeHelpers = ({
       '\n  ',
     )}`;
 
-  const fieldToEntityProp = (field: ParsedField, useInputTypes = false) => {
+  function fieldToEntityProp(field: ParsedField, useInputTypes = false) {
     const annotations = field.annotations
       .filter((x) => x.code)
       .map((x) => x.code)
@@ -477,7 +479,7 @@ export const makeHelpers = ({
       field.isRequired,
       '?',
     )}: ${fieldType(field)} ${when(field.isNullable, ' | null')};`;
-  };
+  }
 
   const fieldsToEntityProps = (fields: ParsedField[]) =>
     `  ${fields.each((field) => fieldToEntityProp(field), '\n  ')}`;

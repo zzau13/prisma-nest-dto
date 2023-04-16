@@ -29,4 +29,6 @@ model Product {
   decimal     Decimal?
   categoryId  String   @db.Uuid
   companyId   String   @db.Uuid
+
+  date DateTime @default(now()) @db.Timestamptz(6)
 }

@@ -4,7 +4,7 @@ import { Config } from '../config';
 import { isRelation } from './field-classifiers';
 
 // TODO: by parent name
-export function regulars(
+export function doRegulars(
   field: DMMF.Field,
   regulars: Config['regulars'][number]['fields'],
 ) {

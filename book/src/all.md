@@ -38,8 +38,10 @@ generator nestjsDto {
   importPath      = "@prisma/client"
 
   // Class validator auto generator
-  // Put @IsOptional() when not is required field
-  cvIsOptional = "true"
+  // @IsOptional() when not is required field
+  cvIsOptional   = "true"
+  // @IsDateString() DataTime types
+  cvIsDateString = "true"
 
   // Only "openapi" mode
   mode                            = "openapi"

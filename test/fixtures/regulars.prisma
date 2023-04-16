@@ -15,6 +15,7 @@ generator nestjsDto {
   entitySuffix                    = ""
   fileNamingStyle                 = "camel"
   cvIsOptional                    = "false"
+  cvIsDateString                  = "false"
 }
 
 model Product {
@@ -30,6 +31,7 @@ model Product {
   companyId   String   @db.Uuid
   password    String
 
+  date         DateTime @default(now()) @db.Timestamptz(6)
   /// @IsEmail()
   companyEmail String
 

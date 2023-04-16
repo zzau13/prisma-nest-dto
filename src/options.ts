@@ -33,6 +33,7 @@ export const parseOptions = ({
     importPath = '@prisma/client',
   } = config;
 
+  const cvIsDateString = stringToBoolean(config.cvIsDateString, true);
   const cvIsOptional = stringToBoolean(config.cvIsOptional, true);
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
   const exportRelationModifierClasses = stringToBoolean(
@@ -76,7 +77,8 @@ export const parseOptions = ({
     );
 
   return {
-    cVisOptional: cvIsOptional,
+    cvIsOptional,
+    cvIsDateString,
     connectDtoPrefix,
     createDtoPrefix,
     decimalAsNumber,
