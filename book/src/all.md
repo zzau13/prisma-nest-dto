@@ -14,20 +14,38 @@ npm install --save-dev prisma-generator-nestjs
 
 ```prisma
 generator nestjsDto {
-  provider                        = "prisma-generator-nestjs"
-  output                          = "../src/model"
+  // Prisma global
+  provider = "prisma-generator-nestjs"
+  output   = "../src/model"
+
+  // File config path
+  fileConfig = "nest-dto.js"
+
+  // Dto Prefix 
+  connectDtoPrefix = "Connect"
+  createDtoPrefix  = "Create"
+  updateDtoPrefix  = "Update"
+  // Suffix
+  dtoSuffix        = "Dto"
+  entityPrefix     = ""
+  entitySuffix     = ""
+
+  // Style file naming
+  fileNamingStyle = "kebab"
+  // Transform Prisma.Decimal to number
+  decimalAsNumber = "false"
+  // Import path for prisma
+  importPath      = "@prisma/client"
+
+  // Class validator auto generator
+  // Put @IsOptional() when not is required field
+  cvIsOptional = "true"
+
+  // Only "openapi" mode
+  mode                            = "openapi"
+  // 
   outputToNestJsResourceStructure = "true"
   exportRelationModifierClasses   = "true"
-  createDtoPrefix                 = "Create"
-  updateDtoPrefix                 = "Update"
-  dtoSuffix                       = "Dto"
-  entityPrefix                    = ""
-  entitySuffix                    = ""
-  fileNamingStyle                 = "kebab"
-  decimalAsNumber                 = "false"
-  mode                            = "openapi"
-  fileConfig                      = "nest-dto.js"
-  importPath                      = "@prisma/client"
 }
 ```
 

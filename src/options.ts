@@ -33,6 +33,7 @@ export const parseOptions = ({
     importPath = '@prisma/client',
   } = config;
 
+  const cvIsOptional = stringToBoolean(config.cvIsOptional, true);
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
   const exportRelationModifierClasses = stringToBoolean(
     config.exportRelationModifierClasses,
@@ -75,6 +76,7 @@ export const parseOptions = ({
     );
 
   return {
+    cVisOptional: cvIsOptional,
     connectDtoPrefix,
     createDtoPrefix,
     decimalAsNumber,
@@ -84,8 +86,8 @@ export const parseOptions = ({
     entitySuffix,
     exportRelationModifierClasses,
     fileConfig,
-    importPath,
     fileNamingStyle,
+    importPath,
     mode,
     output: parsedOutput,
     outputToNestJsResourceStructure,

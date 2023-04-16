@@ -3,7 +3,7 @@ import { DMMF } from '@prisma/generator-helper';
 
 import { Ann } from './annotations';
 import { Config } from '../config';
-import { decoRelated } from '../contants';
+import { decoNotRequired, decoRelated } from '../contants';
 import { isAnnotatedWith } from './field-classifiers';
 import { annotate, transformers } from './help';
 import { Options } from '../options';
@@ -12,7 +12,12 @@ import { regulars } from './regulars';
 export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
   models: DMMF.Model[],
-  { outputToNestJsResourceStructure, output, fileNamingStyle }: Options,
+  {
+    outputToNestJsResourceStructure,
+    output,
+    fileNamingStyle,
+    cVisOptional,
+  }: Options,
   config: Config,
 ) =>
   models
@@ -27,9 +32,9 @@ export const getModels = (
         fields: model.fields
           .map((x) => ({
             ...x,
-            annotations: annotate(regulars(x, fields)).concat(
-              x.kind === 'object' ? decoRelated : [],
-            ),
+            annotations: annotate(regulars(x, fields))
+              .concat(x.kind === 'object' ? decoRelated : [])
+              .concat(cVisOptional && !x.isRequired ? decoNotRequired : []),
           }))
           .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
         output: {

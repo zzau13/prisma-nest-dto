@@ -13,6 +13,7 @@ export class ConnectProductDto {
   },
   {
     "content": "
+import {IsOptional} from 'class-validator'
 import {Prisma} from '@app/prisma'
 
 
@@ -20,11 +21,16 @@ export class CreateProductDto {
   name: string;
   description: string;
   images: Prisma.InputJsonValue[];
-  highlighted?: boolean;
-  reviewCount?: number;
-  attributes?: Prisma.InputJsonValue;
-  score?: number;
-  decimal?: Prisma.Decimal;
+  @IsOptional()
+highlighted?: boolean;
+  @IsOptional()
+reviewCount?: number;
+  @IsOptional()
+attributes?: Prisma.InputJsonValue;
+  @IsOptional()
+score?: number;
+  @IsOptional()
+decimal?: Prisma.Decimal;
   categoryId: string;
   companyId: string;
 }
@@ -33,6 +39,7 @@ export class CreateProductDto {
   },
   {
     "content": "
+import {IsOptional} from 'class-validator'
 import {Prisma} from '@app/prisma'
 
 
@@ -40,11 +47,16 @@ export class UpdateProductDto {
   name?: string ;
   description?: string ;
   images?: Prisma.JsonValue[] ;
-  highlighted?: boolean  | null;
-  reviewCount?: number  | null;
-  attributes?: Prisma.JsonValue  | null;
-  score?: number  | null;
-  decimal?: Prisma.Decimal  | null;
+  @IsOptional()
+highlighted?: boolean  | null;
+  @IsOptional()
+reviewCount?: number  | null;
+  @IsOptional()
+attributes?: Prisma.JsonValue  | null;
+  @IsOptional()
+score?: number  | null;
+  @IsOptional()
+decimal?: Prisma.Decimal  | null;
   categoryId?: string ;
   companyId?: string ;
 }
@@ -53,6 +65,7 @@ export class UpdateProductDto {
   },
   {
     "content": "
+import {IsOptional} from 'class-validator'
 import {IntersectionType} from '@nestjs/swagger'
 import {Prisma} from '@app/prisma'
 
@@ -61,11 +74,16 @@ export class Product {
   name: string ;
   description: string ;
   images: Prisma.JsonValue[] ;
-  highlighted: boolean  | null;
-  reviewCount: number  | null;
-  attributes: Prisma.JsonValue  | null;
-  score: number  | null;
-  decimal: Prisma.Decimal  | null;
+  @IsOptional()
+highlighted: boolean  | null;
+  @IsOptional()
+reviewCount: number  | null;
+  @IsOptional()
+attributes: Prisma.JsonValue  | null;
+  @IsOptional()
+score: number  | null;
+  @IsOptional()
+decimal: Prisma.Decimal  | null;
   categoryId: string ;
   companyId: string ;
 }

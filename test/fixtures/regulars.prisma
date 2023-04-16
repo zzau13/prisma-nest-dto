@@ -14,6 +14,7 @@ generator nestjsDto {
   entityPrefix                    = ""
   entitySuffix                    = ""
   fileNamingStyle                 = "camel"
+  cvIsOptional                    = "false"
 }
 
 model Product {
