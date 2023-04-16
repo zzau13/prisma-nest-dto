@@ -36,6 +36,7 @@ export const parseOptions = ({
   const cvIsDateString = stringToBoolean(config.cvIsDateString, true);
   const cvIsOptional = stringToBoolean(config.cvIsOptional, true);
   const decimalAsNumber = stringToBoolean(config.decimalAsNumber, false);
+  const prettier = stringToBoolean(config.prettier, true);
   const exportRelationModifierClasses = stringToBoolean(
     config.exportRelationModifierClasses,
     true,
@@ -77,10 +78,10 @@ export const parseOptions = ({
     );
 
   return {
-    cvIsOptional,
-    cvIsDateString,
     connectDtoPrefix,
     createDtoPrefix,
+    cvIsDateString,
+    cvIsOptional,
     decimalAsNumber,
     dmmf,
     dtoSuffix,
@@ -93,6 +94,7 @@ export const parseOptions = ({
     mode,
     output: parsedOutput,
     outputToNestJsResourceStructure,
+    prettier,
     updateDtoPrefix,
   };
 };
