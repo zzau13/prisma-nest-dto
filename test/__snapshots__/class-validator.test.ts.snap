@@ -15,11 +15,13 @@ id: string;
   {
     "content": "
 import {IsUUID,IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCategoryDto} from './connect-category.dto'
 export class CreateProductCategoryRelationInputDto {
-      @ValidateNested()
+      @Type(() => ConnectCategoryDto)
+@ValidateNested()
 connect: ConnectCategoryDto;
   }
 @ApiExtraModels(ConnectCategoryDto,CreateProductCategoryRelationInputDto)
@@ -44,7 +46,8 @@ score?: number;
 categoryId?: string;
   @IsUUID('4')
 companyId: string;
-  @ValidateNested()
+  @Type(() => Category)
+@ValidateNested()
 @IsOptional()
 category: CreateProductCategoryRelationInputDto;
 }
@@ -54,11 +57,13 @@ category: CreateProductCategoryRelationInputDto;
   {
     "content": "
 import {IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
 import {ConnectCompanyDto} from './connect-company.dto'
 export class UpdateProductCompanyRelationInputDto {
-      @ValidateNested()
+      @Type(() => ConnectCompanyDto)
+@ValidateNested()
 connect: ConnectCompanyDto;
   }
 @ApiExtraModels(ConnectCompanyDto,UpdateProductCompanyRelationInputDto)
@@ -76,7 +81,8 @@ reviewCount?: number  | null;
 })
 @IsOptional()
 score?: number  | null;
-  @ValidateNested()
+  @Type(() => Company)
+@ValidateNested()
 company?: UpdateProductCompanyRelationInputDto ;
 }
 ",
@@ -85,6 +91,7 @@ company?: UpdateProductCompanyRelationInputDto ;
   {
     "content": "
 import {IsUUID,IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
 import {Company} from './company.entity'
@@ -113,10 +120,12 @@ categoryId: string ;
 companyId: string ;
 }
 export class ProductRel {
-  @ValidateNested()
+  @Type(() => Category)
+@ValidateNested()
 @IsOptional()
 category: Category ;
-  @ValidateNested()
+  @Type(() => Company)
+@ValidateNested()
 company: Company ;
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
@@ -157,6 +166,7 @@ export class UpdateCategoryDto {
   {
     "content": "
 import {ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
 import {Product} from './product.entity'
 
@@ -164,7 +174,8 @@ export class Category {
   id: string ;
 }
 export class CategoryRel {
-  @ValidateNested()
+  @Type(() => Product)
+@ValidateNested()
 product: Product[] ;
 }
 export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
@@ -205,6 +216,7 @@ export class UpdateCompanyDto {
   {
     "content": "
 import {ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
 import {Product} from './product.entity'
 
@@ -212,7 +224,8 @@ export class Company {
   id: string ;
 }
 export class CompanyRel {
-  @ValidateNested()
+  @Type(() => Product)
+@ValidateNested()
 product: Product[] ;
 }
 export class CompanyFull extends IntersectionType(Company, CompanyRel) {}

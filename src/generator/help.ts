@@ -1,13 +1,10 @@
 import path from 'node:path';
 import type { DMMF } from '@prisma/generator-helper';
-import { logger } from '@prisma/internals';
-import { parseExpression } from '@babel/parser';
-import generate from '@babel/generator';
 
 import type { Imports, ParsedField } from './types';
 
 import { isAnnotatedWith } from './field-classifiers';
-import { Ann, IsAnn, IsDecoValidator } from './annotations';
+import { Ann } from './annotations';
 import { Options } from '../options';
 import { camel, kebab, pascal, snake } from 'case';
 import { Model } from './model';
@@ -29,53 +26,6 @@ export const uniq = <T = unknown>(input: T[]): T[] =>
 
 export const concatIntoArray = <T = unknown>(source: T[], target: T[]) =>
   source.forEach((item) => target.push(item));
-
-export function annotate(doc?: string) {
-  const ret = [];
-  if (doc) {
-    const parsed = parseExpression(`${doc} class {}`, {
-      plugins: ['decorators-legacy'],
-    });
-    if (parsed.type !== 'ClassExpression')
-      throw new Error('error parsing decorators');
-
-    const has = new Set();
-
-    // TODO: Annotations
-    if (parsed.decorators)
-      for (const x of parsed.decorators)
-        if (
-          x.type === 'Decorator' &&
-          x.expression.type === 'CallExpression' &&
-          x.expression.callee.type === 'Identifier' &&
-          IsDecoValidator(x.expression.callee.name)
-        ) {
-          const name = x.expression.callee.name;
-          if (!has.has(name)) {
-            has.add(name);
-            ret.push({
-              name,
-              code: generate(x).code,
-              import: x.expression.callee.name,
-            });
-          } else {
-            logger.warn(`Duplicated decorator @${name}`);
-          }
-        } else if (
-          x.expression.type === 'Identifier' &&
-          IsAnn(x.expression.name)
-        ) {
-          const name = x.expression.name;
-          if (!has.has(name)) {
-            has.add(name);
-            ret.push({ name });
-          } else {
-            logger.warn(`Duplicated decorator @${name}`);
-          }
-        } else throw new Error(`not valid decorator ${generate(x).code}`);
-  }
-  return ret as ReadonlyArray<(typeof ret)[number]>;
-}
 
 export const transformers: Record<
   Options['fileNamingStyle'],
@@ -203,7 +153,7 @@ export const generateRelationInput = ({
     ${t.fieldsToDtoProps(
       relationInputClassProps.map((inputField) => ({
         ...inputField,
-        annotations: decoRelated,
+        annotations: decoRelated(inputField.type),
         kind: 'relation-input',
         isRequired: relationInputClassProps.length === 1,
         isList: field.isList,
@@ -365,19 +315,21 @@ const importStatement = (input: Imports) => {
 const importStatements = (items: Imports[]) =>
   `${items.each(importStatement, '\n')}`;
 
-export const getImportsDeco = (parsed: ParsedField[]): Imports | undefined => {
-  const destruct = uniq(
-    parsed
-      .flatMap((x) => x.annotations)
-      .filter((x) => x.import)
-      .flatMap((x) => x.import as string),
-  );
+export const getImportsDeco = (parsed: ParsedField[]): Imports[] => {
+  const ann = parsed
+    .flatMap((x) => x.annotations)
+    .reduce((acc, cur) => {
+      if (cur.importPath) {
+        if (acc[cur.importPath]) acc[cur.importPath].add(cur.import);
+        else acc[cur.importPath] = new Set([cur.import]);
+      }
+      return acc;
+    }, {} as Record<string, Set<string>>);
 
-  if (destruct.length)
-    return {
-      from: 'class-validator',
-      destruct,
-    };
+  return Object.entries(ann).map(([from, destruct]) => ({
+    from,
+    destruct: [...destruct],
+  }));
 };
 
 export const makeHelpers = ({
@@ -526,8 +478,7 @@ export const makeHelpers = ({
         imports.unshift({ from: this.nestImport(), destruct });
       }
 
-      const importDeco = getImportsDeco(fields);
-      if (importDeco) imports.push(importDeco);
+      imports.push(...getImportsDeco(fields));
 
       const importPrismaClient = makeImportsFromPrismaClient(fields);
       if (importPrismaClient) imports.unshift(importPrismaClient);

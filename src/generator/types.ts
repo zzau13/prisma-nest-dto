@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
-import { annotate } from './help';
+import { annotate } from './annotations';
 
 export type Annotation = { annotations: ReturnType<typeof annotate> };
 export type ParsedField = {
