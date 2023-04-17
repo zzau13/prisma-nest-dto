@@ -7,7 +7,7 @@ import { decoIsDateString, decoNotRequired, decoRelated } from '../contants';
 import { isAnnotatedWith } from './field-classifiers';
 import { PrismaType, transformers } from './help';
 import { Options } from '../options';
-import { doRegulars } from './doRegulars';
+import { doRegulars } from './regulars';
 
 export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (

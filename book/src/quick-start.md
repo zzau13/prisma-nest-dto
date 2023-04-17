@@ -3,7 +3,7 @@
 ## Install
 
 ```sh
-pnpm add -D prisma-generator-nestjs
+pnpm add -D prisma-generator-nestjs class-validator class-transformer
 ```
 
 ## Add Prisma schema generator
