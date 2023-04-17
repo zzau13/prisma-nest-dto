@@ -7,11 +7,13 @@ export enum Ann {
   NO_ENTITY = 'NoEntity',
   OPT_ADD = 'OptAdd',
   OPT_SET = 'OptSet',
-  DTO_RELATION_REQUIRED = 'DtoRelationRequired',
-  DTO_RELATION_CAN_CREATE_ON_CREATE = 'DtoRelationCanCreateOnCreate',
-  DTO_RELATION_CAN_CONNECT_ON_CREATE = 'DtoRelationCanConnectOnCreate',
-  DTO_RELATION_CAN_CREATE_ON_UPDATE = 'DtoRelationCanCreateOnUpdate',
-  DTO_RELATION_CAN_CONNECT_ON_UPDATE = 'DtoRelationCanConnectOnUpdate',
+  // TODO: add more specific coverage and wrap
+  DTO_RELATION_REQUIRED = 'RReq',
+  DTO_RELATION_CAN_CREATE_ON_CREATE = 'RAddOnAdd',
+  DTO_RELATION_CAN_CONNECT_ON_CREATE = 'RLnOnAdd',
+  DTO_RELATION_CAN_CREATE_ON_UPDATE = 'RAddOnSet',
+  DTO_RELATION_CAN_CONNECT_ON_UPDATE = 'RLnOnSet',
+  // TODO: rest of https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes
 }
 export const IsAnn = (s: string): s is Ann =>
   Object.values(Ann).includes(s as Ann);

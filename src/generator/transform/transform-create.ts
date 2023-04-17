@@ -44,14 +44,11 @@ export function transformCreate({
         canConnectAnnotation: Ann.DTO_RELATION_CAN_CONNECT_ON_CREATE,
       });
 
-      const isDtoRelationRequired = isAnnotatedWith(
-        field,
-        Ann.DTO_RELATION_REQUIRED,
-      );
-      if (isDtoRelationRequired) overrides.isRequired = true;
+      const isRReq = isAnnotatedWith(field, Ann.DTO_RELATION_REQUIRED);
+      if (isRReq) overrides.isRequired = true;
 
       // list fields can not be required
-      // TODO maybe throw an error if `isDtoRelationRequired` and `isList`
+      // TODO maybe throw an error if `isRReq` and `isList`
       if (field.isList) overrides.isRequired = false;
 
       overrides.type = relationInputType.type;

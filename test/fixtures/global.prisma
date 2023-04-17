@@ -28,12 +28,12 @@ model Product {
   categoryId  String   @db.Uuid
   companyId   String   @db.Uuid
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnCreate
+  /// @RReq
+  /// @RLnOnAdd
   category Category @relation(fields: [categoryId], references: [id])
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnCreate
+  /// @RReq
+  /// @RLnOnAdd
   company Company @relation(fields: [companyId], references: [id])
 
   /// @NoEntity

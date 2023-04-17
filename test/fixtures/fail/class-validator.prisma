@@ -32,12 +32,12 @@ model Product {
   /// @IsUUID('4')
   companyId   String   @db.Uuid
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnCreate
+  /// @RReq
+  /// @RLnOnAdd
   category Category? @relation(fields: [categoryId], references: [id])
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnUpdate
+  /// @RReq
+  /// @RLnOnSet
   company Company @relation(fields: [companyId], references: [id])
 
   @@map("products")

@@ -20,6 +20,13 @@ For a comprehensive list of class-validator decorators, refer to the
 - `@OptSet`: Makes the decorated property optional in the generated update DTO.
 - `@NoEntity`: Excludes the decorated field from the generated entity.
 
+- `@RReq`: Makes the decorated relation required in the all generated DTO.
+- [`@RAddOnAdd`][add]: Makes the additional class for create when create
+- [`@RLnOnAdd`][link]: Makes the additional class for connect when create
+- [`@RAddOnSet`][add]: Makes the additional class for create when update
+- [`@RLnOnSet`][link]: Makes the additional class for connect when update
+- Add `@RAddOn` and `@RLnOn` for [connect or create][linkOrAdd]
+
 All additional Prisma decorators can be used on fields, and the `@Ignore` decorator can be used on both models and fields.
 
 ## Configuring Decorators
@@ -40,3 +47,7 @@ model Ignored {
   id Int @id @default(autoincrement())
 }
 ```
+
+[add]: https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes
+[link]: https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#connect-an-existing-record
+[linkOrAdd]: https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#connect-or-create-a-record

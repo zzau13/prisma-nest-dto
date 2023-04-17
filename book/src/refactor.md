@@ -8,8 +8,8 @@
 - ~~Use @babel for parse comments like "COMMENT class {}" and extract decorator from ast~~
 - ~~Add Documentation and clean README.md~~
 - ~~Add support for class-validator by comment, by name,~~ (in future by @db annotations)
-- ~~Add config regulars: put decorators in fields by regex of its name~~ and its parent
-- Simplify comment annotations and remove boilerplate
+- ~~Add config regulars: put decorators in fields by regex of its name and its parent~~
+- ~~Simplify comment annotations and remove boilerplate~~
 - Clean Code and simplify structure
 - Prettify and complete documentation
 - ~100% coverage
