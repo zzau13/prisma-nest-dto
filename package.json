@@ -58,7 +58,7 @@
     "@babel/generator": "^7.21.4",
     "@babel/parser": "^7.21.4",
     "@prisma/generator-helper": "^4.12.0",
-    "@prisma/internals": "4.12.0",
+    "@prisma/internals": "4.13.0",
     "case": "^1.6.3",
     "class-validator": "^0.14.0",
     "make-dir": "^3.1.0",
@@ -86,7 +86,7 @@
     "lint-staged": "13.2.1",
     "prettier": "2.8.7",
     "prettier-plugin-prisma": "4.12.0",
-    "prisma": "4.12.0",
+    "prisma": "4.13.0",
     "release-it": "15.10.1",
     "typescript": "5.0.4",
     "vitest": "0.30.1"
