@@ -69,7 +69,7 @@
     "@commitlint/config-conventional": "17.6.1",
     "@release-it/conventional-changelog": "5.1.1",
     "@types/babel__generator": "7.6.4",
-    "@types/chai": "4.3.4",
+    "@types/chai": "4.3.5",
     "@types/jest": "29.5.1",
     "@types/node": "18.16.2",
     "@types/prettier": "2.7.2",
