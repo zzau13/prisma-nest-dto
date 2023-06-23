@@ -62,7 +62,7 @@
     "@prisma/internals": "4.16.1",
     "case": "^1.6.3",
     "class-validator": "^0.14.0",
-    "make-dir": "^3.1.0",
+    "make-dir": "^4.0.0",
     "ts-toolbelt": "^9.6.0"
   },
   "devDependencies": {
