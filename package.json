@@ -72,7 +72,7 @@
     "@types/babel__generator": "7.6.4",
     "@types/chai": "4.3.5",
     "@types/jest": "29.5.2",
-    "@types/node": "20.3.2",
+    "@types/node": "20.3.3",
     "@types/prettier": "2.7.3",
     "@types/validator": "13.7.17",
     "@typescript-eslint/eslint-plugin": "5.60.0",
