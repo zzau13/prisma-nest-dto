@@ -53,8 +53,8 @@ devDependencies:
     specifier: 29.5.3
     version: 29.5.3
   '@types/node':
-    specifier: 20.4.4
-    version: 20.4.4
+    specifier: 20.4.5
+    version: 20.4.5
   '@types/prettier':
     specifier: 2.7.3
     version: 2.7.3
@@ -268,15 +268,15 @@ packages:
       '@commitlint/execute-rule': 17.4.0
       '@commitlint/resolve-extends': 17.6.7
       '@commitlint/types': 17.4.4
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       chalk: 4.1.2
       cosmiconfig: 8.2.0
-      cosmiconfig-typescript-loader: 4.3.0(@types/node@20.4.4)(cosmiconfig@8.2.0)(ts-node@10.9.1)(typescript@5.1.6)
+      cosmiconfig-typescript-loader: 4.3.0(@types/node@20.4.5)(cosmiconfig@8.2.0)(ts-node@10.9.1)(typescript@5.1.6)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
       resolve-from: 5.0.0
-      ts-node: 10.9.1(@types/node@20.4.4)(typescript@5.1.6)
+      ts-node: 10.9.1(@types/node@20.4.5)(typescript@5.1.6)
       typescript: 5.1.6
     transitivePeerDependencies:
       - '@swc/core'
@@ -647,7 +647,7 @@ packages:
       '@jest/schemas': 29.6.0
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       '@types/yargs': 17.0.24
       chalk: 4.1.2
     dev: true
@@ -1075,7 +1075,7 @@ packages:
   /@types/cross-spawn@6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
     dev: false
 
   /@types/debug@4.1.8:
@@ -1123,8 +1123,8 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
-  /@types/node@20.4.4:
-    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
+  /@types/node@20.4.5:
+    resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -2126,7 +2126,7 @@ packages:
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
-  /cosmiconfig-typescript-loader@4.3.0(@types/node@20.4.4)(cosmiconfig@8.2.0)(ts-node@10.9.1)(typescript@5.1.6):
+  /cosmiconfig-typescript-loader@4.3.0(@types/node@20.4.5)(cosmiconfig@8.2.0)(ts-node@10.9.1)(typescript@5.1.6):
     resolution: {integrity: sha512-NTxV1MFfZDLPiBMjxbHRwSh5LaLcPMwNdCutmnHJCKoVnlvldPWlllonKwrsRJ5pYZBIBGRWWU2tfvzxgeSW5Q==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -2135,9 +2135,9 @@ packages:
       ts-node: '>=10'
       typescript: '>=3'
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       cosmiconfig: 8.2.0
-      ts-node: 10.9.1(@types/node@20.4.4)(typescript@5.1.6)
+      ts-node: 10.9.1(@types/node@20.4.5)(typescript@5.1.6)
       typescript: 5.1.6
     dev: true
 
@@ -2722,7 +2722,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/expect-utils': 29.6.1
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       jest-get-type: 29.4.3
       jest-matcher-utils: 29.6.1
       jest-message-util: 29.6.1
@@ -3780,7 +3780,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -5665,7 +5665,7 @@ packages:
       typescript: 5.1.6
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.4.4)(typescript@5.1.6):
+  /ts-node@10.9.1(@types/node@20.4.5)(typescript@5.1.6):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -5684,7 +5684,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -5933,7 +5933,7 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /vite-node@0.33.0(@types/node@20.4.4):
+  /vite-node@0.33.0(@types/node@20.4.5):
     resolution: {integrity: sha512-19FpHYbwWWxDr73ruNahC+vtEdza52kA90Qb3La98yZ0xULqV8A5JLNPUff0f5zID4984tW7l3DH2przTJUZSw==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -5943,7 +5943,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.4.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -5955,7 +5955,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.6(@types/node@20.4.4):
+  /vite@4.4.6(@types/node@20.4.5):
     resolution: {integrity: sha512-EY6Mm8vJ++S3D4tNAckaZfw3JwG3wa794Vt70M6cNJ6NxT87yhq7EC8Rcap3ahyHdo8AhCmV9PTk+vG1HiYn1A==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -5983,7 +5983,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       esbuild: 0.18.16
       postcss: 8.4.27
       rollup: 3.26.3
@@ -6024,7 +6024,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       '@vitest/expect': 0.33.0
       '@vitest/runner': 0.33.0
       '@vitest/snapshot': 0.33.0
@@ -6043,8 +6043,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.6.0
-      vite: 4.4.6(@types/node@20.4.4)
-      vite-node: 0.33.0(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.4.5)
+      vite-node: 0.33.0(@types/node@20.4.5)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
