@@ -47,7 +47,7 @@ async function writeFiles(
   files: ReturnType<typeof completeFiles>,
   { prettier }: Options,
 ) {
-  let format: (str: string) => string;
+  let format: (str: string) => Promise<string>;
   if (prettier) {
     const prettier = await import('prettier');
     const configPath = await prettier.resolveConfigFile();
@@ -55,17 +55,16 @@ async function writeFiles(
     try {
       if (configPath) config = await prettier.resolveConfig(configPath);
     } catch (_e) {}
-    format = (src: string) =>
-      prettier.format(src, { parser: 'babel-ts', ...config });
+    format = (src) => prettier.format(src, { parser: 'babel-ts', ...config });
   } else {
-    format = (str) => str;
+    format = async (str) => str;
   }
 
   return await Promise.all(
     files.map(async ({ fileName, content, override }) => {
       if (override || !(await fs.stat(fileName).catch(() => false))) {
         await makeDir(path.dirname(fileName));
-        return fs.writeFile(fileName, format(content));
+        return fs.writeFile(fileName, await format(content));
       }
     }),
   );

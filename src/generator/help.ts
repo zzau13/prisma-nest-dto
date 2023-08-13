@@ -213,14 +213,17 @@ export const mergeImportStatements = (
 };
 
 export const zipImportStatementParams = (items: Imports[]): Imports[] => {
-  const itemsByFrom = items.reduce((result, item) => {
-    const { from } = item;
-    const { [from]: existingItem } = result;
-    if (!existingItem) {
-      return { ...result, [from]: item };
-    }
-    return { ...result, [from]: mergeImportStatements(existingItem, item) };
-  }, {} as Record<Imports['from'], Imports>);
+  const itemsByFrom = items.reduce(
+    (result, item) => {
+      const { from } = item;
+      const { [from]: existingItem } = result;
+      if (!existingItem) {
+        return { ...result, [from]: item };
+      }
+      return { ...result, [from]: mergeImportStatements(existingItem, item) };
+    },
+    {} as Record<Imports['from'], Imports>,
+  );
 
   return Object.values(itemsByFrom);
 };
@@ -242,7 +245,7 @@ const PrismaScalarToTypeScript = (decimalAsNumber: boolean) =>
     Json: 'Prisma.JsonValue',
     // [Working with Bytes](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields#working-with-bytes)
     Bytes: 'Buffer',
-  } as const);
+  }) as const;
 
 const _scalarToTS = (table: ReturnType<typeof PrismaScalarToTypeScript>) => {
   const knownPrismaScalarTypes = Object.keys(table);
@@ -318,13 +321,16 @@ const importStatements = (items: Imports[]) =>
 export const getImportsDeco = (parsed: ParsedField[]): Imports[] => {
   const ann = parsed
     .flatMap((x) => x.annotations)
-    .reduce((acc, cur) => {
-      if (cur.importPath) {
-        if (acc[cur.importPath]) acc[cur.importPath].add(cur.import);
-        else acc[cur.importPath] = new Set([cur.import]);
-      }
-      return acc;
-    }, {} as Record<string, Set<string>>);
+    .reduce(
+      (acc, cur) => {
+        if (cur.importPath) {
+          if (acc[cur.importPath]) acc[cur.importPath].add(cur.import);
+          else acc[cur.importPath] = new Set([cur.import]);
+        }
+        return acc;
+      },
+      {} as Record<string, Set<string>>,
+    );
 
   return Object.entries(ann).map(([from, destruct]) => ({
     from,

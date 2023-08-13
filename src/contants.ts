@@ -4,7 +4,7 @@ const makeDeco = (name: string) =>
     code: `@${name}()`,
     import: name,
     importPath: 'class-validator' as const,
-  } as const);
+  }) as const;
 
 export const decoRelated = (type: string) => [
   {

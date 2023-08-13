@@ -1,8 +1,8 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
-import { parseEnvValue } from '@prisma/internals';
+import { Dictionary, parseEnvValue } from '@prisma/internals';
 import { FILE } from './config';
 
-const stringToBoolean = (input: string, defaultValue = false) => {
+function stringToBoolean(input?: string | string[], defaultValue = false) {
   if (input === 'true') {
     return true;
   }
@@ -11,15 +11,16 @@ const stringToBoolean = (input: string, defaultValue = false) => {
   }
 
   return defaultValue;
-};
+}
 
 export type Options = ReturnType<typeof parseOptions>;
 
-export const parseOptions = ({
+export function parseOptions({
   generator: { config, output },
   dmmf,
-}: Pick<GeneratorOptions, 'dmmf' | 'generator'>) => {
+}: Pick<GeneratorOptions, 'dmmf' | 'generator'>) {
   const parsedOutput = output ? parseEnvValue(output) : '';
+  // TODO: check is string
   const {
     connectDtoPrefix = 'Connect',
     createDtoPrefix = 'Create',
@@ -31,7 +32,7 @@ export const parseOptions = ({
     mode = 'openapi',
     fileConfig = FILE,
     importPath = '@prisma/client',
-  } = config;
+  } = config as Dictionary<string>;
 
   const cvIsDateString = stringToBoolean(config.cvIsDateString, true);
   const cvIsOptional = stringToBoolean(config.cvIsOptional, true);
@@ -54,7 +55,9 @@ export const parseOptions = ({
     'pascal',
     'snake',
   ];
-  const isSupportedFileNamingStyle = (style: string): style is NamingStyle =>
+  const isSupportedFileNamingStyle = (
+    style: string | string[],
+  ): style is NamingStyle =>
     supportedFileNamingStyles.includes(style as NamingStyle);
 
   if (!isSupportedFileNamingStyle(fileNamingStyle)) {
@@ -68,7 +71,7 @@ export const parseOptions = ({
 
   type Mode = 'openapi' | 'graphql';
   const modes: Mode[] = ['openapi', 'graphql'];
-  const isMode = (mode: string): mode is Mode => modes.includes(mode as Mode);
+  const isMode = (mode: unknown): mode is Mode => modes.includes(mode as Mode);
   if (!isMode(mode))
     throw new Error(
       `${mode} is not a valid mode. Valid options ar ${modes.each(
@@ -97,4 +100,4 @@ export const parseOptions = ({
     prettier,
     updateDtoPrefix,
   };
-};
+}
