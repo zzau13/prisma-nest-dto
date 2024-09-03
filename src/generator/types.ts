@@ -33,3 +33,7 @@ export interface Imports {
    */
   destruct?: (string | Record<string, string>)[];
 }
+
+export type FieldOverride = Partial<
+  { -readonly [P in keyof DMMF.Field]: DMMF.Field[P] } & { isNullable: boolean }
+>;

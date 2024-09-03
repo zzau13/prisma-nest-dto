@@ -11,7 +11,7 @@ import { doRegulars } from './regulars';
 
 export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
-  models: DMMF.Model[],
+  models: readonly DMMF.Model[],
   {
     outputToNestJsResourceStructure,
     output,

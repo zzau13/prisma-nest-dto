@@ -1,7 +1,7 @@
 import { extname, isAbsolute, join } from 'node:path';
 import { stat } from 'node:fs/promises';
 
-export const FILE = 'nest-dto.js';
+export const FILE = 'nest-dto.mjs';
 const CONFIG = {
   regulars: [] as {
     models?: RegExp;

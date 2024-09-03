@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import makeDir from 'make-dir';
+import { makeDirectory } from 'make-dir';
 import { GeneratorOptions } from '@prisma/generator-helper';
 
 import { run } from './generator';
@@ -52,9 +52,8 @@ async function writeFiles(
     const prettier = await import('prettier');
     const configPath = await prettier.resolveConfigFile();
     let config: Awaited<ReturnType<typeof prettier.resolveConfig>> = null;
-    try {
-      if (configPath) config = await prettier.resolveConfig(configPath);
-    } catch (_e) {}
+    // TODO
+    if (configPath) config = await prettier.resolveConfig(configPath);
     format = (src) => prettier.format(src, { parser: 'babel-ts', ...config });
   } else {
     format = async (str) => str;
@@ -63,7 +62,7 @@ async function writeFiles(
   return await Promise.all(
     files.map(async ({ fileName, content, override }) => {
       if (override || !(await fs.stat(fileName).catch(() => false))) {
-        await makeDir(path.dirname(fileName));
+        await makeDirectory(path.dirname(fileName));
         return fs.writeFile(fileName, await format(content));
       }
     }),

@@ -86,6 +86,9 @@ export const generateRelationInput = ({
   const generatedClasses: string[] = [];
 
   if (isAnnotatedWith(field, canCreateAnnotation)) {
+    if (field.type === 'IndexedRepository') {
+      console.log(field);
+    }
     const preAndPostfixesName = t.createDtoName(field.type);
     apiExtraModels.push(preAndPostfixesName);
 
@@ -393,8 +396,8 @@ export const makeHelpers = ({
       field.kind === 'scalar'
         ? scalarToTS(field.type, toInputType)
         : field.kind === 'enum' || field.kind === 'relation-input'
-        ? field.type
-        : entityName(field.type)
+          ? field.type
+          : entityName(field.type)
     }${when(field.isList, '[]')}`;
 
   function fieldToDtoProp(

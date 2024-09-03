@@ -1,0 +1,249 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fixtures/issues/*.prisma 1`] = `
+[
+  {
+    "content": "
+
+export class ConnectCodeSpaceDto {
+  id: number;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-codeSpace.dto.ts",
+  },
+  {
+    "content": "
+import {IsOptional,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
+import {ApiExtraModels} from '@nestjs/swagger'
+import {CreateIndexedRepositoryDto} from './create-indexedRepository.dto'
+import {ConnectIndexedRepositoryDto} from './connect-indexedRepository.dto'
+export class CreateCodeSpaceIndexedRepoRelationInputDto {
+      @Type(() => CreateIndexedRepositoryDto)
+@ValidateNested()
+create?: CreateIndexedRepositoryDto;
+  @Type(() => ConnectIndexedRepositoryDto)
+@ValidateNested()
+connect?: ConnectIndexedRepositoryDto;
+  }
+@ApiExtraModels(CreateIndexedRepositoryDto,ConnectIndexedRepositoryDto,CreateCodeSpaceIndexedRepoRelationInputDto)
+export class CreateCodeSpaceDto {
+  @IsOptional()
+name?: string;
+  @IsOptional()
+description?: string;
+  ownerId: string;
+  @Type(() => IndexedRepository)
+@ValidateNested()
+indexedRepo: CreateCodeSpaceIndexedRepoRelationInputDto;
+  indexedRepositoryUrl: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-codeSpace.dto.ts",
+  },
+  {
+    "content": "
+import {IsOptional} from 'class-validator'
+
+
+export class UpdateCodeSpaceDto {
+  @IsOptional()
+name?: string  | null;
+  @IsOptional()
+description?: string  | null;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-codeSpace.dto.ts",
+  },
+  {
+    "content": "
+import {IsOptional,IsDateString,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
+import {IntersectionType} from '@nestjs/swagger'
+import {User} from './user.entity'
+import {IndexedRepository} from './indexedRepository.entity'
+import {Conversation} from './conversation.entity'
+
+export class CodeSpace {
+  id: number ;
+  @IsOptional()
+name: string  | null;
+  @IsOptional()
+description: string  | null;
+  @IsDateString()
+createdOn: Date ;
+  ownerId: string ;
+  indexedRepositoryUrl: string ;
+}
+export class CodeSpaceRel {
+  @Type(() => User)
+@ValidateNested()
+owner: User ;
+  @Type(() => IndexedRepository)
+@ValidateNested()
+indexedRepo: IndexedRepository ;
+  @Type(() => Conversation)
+@ValidateNested()
+conversations: Conversation[] ;
+}
+export class CodeSpaceFull extends IntersectionType(CodeSpace, CodeSpaceRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace.entity.ts",
+  },
+  {
+    "content": "
+
+export class ConnectIndexedRepositoryDto {
+  url: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-indexedRepository.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class CreateIndexedRepositoryDto {
+  url: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-indexedRepository.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class UpdateIndexedRepositoryDto {
+  
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-indexedRepository.dto.ts",
+  },
+  {
+    "content": "
+import {ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
+import {IntersectionType} from '@nestjs/swagger'
+import {CodeSpace} from './codeSpace.entity'
+
+export class IndexedRepository {
+  url: string ;
+}
+export class IndexedRepositoryRel {
+  @Type(() => CodeSpace)
+@ValidateNested()
+CodeSpace: CodeSpace[] ;
+}
+export class IndexedRepositoryFull extends IntersectionType(IndexedRepository, IndexedRepositoryRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository.entity.ts",
+  },
+  {
+    "content": "
+
+export class ConnectConversationDto {
+  id: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-conversation.dto.ts",
+  },
+  {
+    "content": "
+import {IsOptional} from 'class-validator'
+
+
+export class CreateConversationDto {
+  id: string;
+  @IsOptional()
+codeSpaceId?: number;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-conversation.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class UpdateConversationDto {
+  
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-conversation.dto.ts",
+  },
+  {
+    "content": "
+import {IsOptional,ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
+import {IntersectionType} from '@nestjs/swagger'
+import {CodeSpace} from './codeSpace.entity'
+
+export class Conversation {
+  id: string ;
+  @IsOptional()
+codeSpaceId: number  | null;
+}
+export class ConversationRel {
+  @Type(() => CodeSpace)
+@ValidateNested()
+@IsOptional()
+CodeSpace: CodeSpace  | null;
+}
+export class ConversationFull extends IntersectionType(Conversation, ConversationRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation.entity.ts",
+  },
+  {
+    "content": "
+
+export class ConnectUserDto {
+  authenticatorId: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-user.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class CreateUserDto {
+  authenticatorId: string;
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-user.dto.ts",
+  },
+  {
+    "content": "
+
+
+
+export class UpdateUserDto {
+  
+}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-user.dto.ts",
+  },
+  {
+    "content": "
+import {ValidateNested} from 'class-validator'
+import {Type} from 'class-transformer'
+import {IntersectionType} from '@nestjs/swagger'
+import {CodeSpace} from './codeSpace.entity'
+
+export class User {
+  authenticatorId: string ;
+}
+export class UserRel {
+  @Type(() => CodeSpace)
+@ValidateNested()
+CodeSpace: CodeSpace[] ;
+}
+export class UserFull extends IntersectionType(User, UserRel) {}
+",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user.entity.ts",
+  },
+]
+`;

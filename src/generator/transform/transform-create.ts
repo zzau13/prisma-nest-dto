@@ -8,9 +8,8 @@ import {
   isUpdatedAt,
 } from '../field-classifiers';
 
-import type { DMMF } from '@prisma/generator-helper';
 import { Help, concatIntoArray, generateRelationInput } from '../help';
-import type { Imports, ParsedField } from '../types';
+import type { FieldOverride, Imports, ParsedField } from '../types';
 import { Model } from '../model';
 
 export function transformCreate({
@@ -28,7 +27,7 @@ export function transformCreate({
 
   const fields = model.fields.reduce((result, field) => {
     if (isAnnotatedWith(field, Ann.NO_ADD)) return result;
-    const overrides: Partial<DMMF.Field> = {};
+    const overrides: FieldOverride = {};
 
     if (isRelation(field)) {
       if (!isAnnotatedWithOneOf(field, DTO_RELATION_MODIFIERS_ON_CREATE)) {
@@ -55,6 +54,7 @@ export function transformCreate({
       // since relation input field types are translated to something like { connect: Foo[] }, the field type itself is not a list anymore.
       // You provide list input in the nested `connect` or `create` properties.
       overrides.isList = false;
+      // console.log("Add ", relationInputType.imports);
       concatIntoArray(relationInputType.imports, imports);
       concatIntoArray(relationInputType.generatedClasses, extraClasses);
       concatIntoArray(relationInputType.apiExtraModels, apiExtraModels);
@@ -72,10 +72,14 @@ export function transformCreate({
     return [...result, { ...field, ...overrides }];
   }, [] as ParsedField[]);
 
+  const _imports = help.addImports(fields, imports, apiExtraModels);
+  // console.log("Imports: ", _imports)
+  // console.log("Imports 2: ", imports)
+
   return {
     model,
     fields,
-    imports: help.addImports(fields, imports, apiExtraModels),
+    imports: _imports,
     extraClasses,
     apiExtraModels,
   };

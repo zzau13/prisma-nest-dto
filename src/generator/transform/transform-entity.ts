@@ -1,9 +1,8 @@
 import path from 'node:path';
-import type { DMMF } from '@prisma/generator-helper';
 
 import { Ann } from '../annotations';
 import { isAnnotatedWith, isRelation, isRequired } from '../field-classifiers';
-import type { Imports, ParsedField } from '../types';
+import type { FieldOverride, Imports, ParsedField } from '../types';
 import { Help, getRelationScalars, getRelativePath, slash } from '../help';
 import { Model } from '../model';
 
@@ -24,7 +23,7 @@ export function transformEntity({
 
   const fields = model.fields.reduce((result, field) => {
     const { name } = field;
-    const overrides: Partial<DMMF.Field> = {
+    const overrides: FieldOverride = {
       isRequired: true,
       isNullable: !field.isRequired,
     };
@@ -39,8 +38,8 @@ export function transformEntity({
       overrides.isNullable = field.isList
         ? false
         : field.isRequired
-        ? false
-        : !isAnnotatedWith(field, Ann.DTO_RELATION_REQUIRED);
+          ? false
+          : !isAnnotatedWith(field, Ann.DTO_RELATION_REQUIRED);
 
       // don't try to import the class we're preparing params for
       if (field.type !== model.name) {

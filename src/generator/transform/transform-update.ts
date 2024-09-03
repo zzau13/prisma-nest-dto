@@ -1,5 +1,3 @@
-import { DMMF } from '@prisma/generator-helper';
-
 import { Ann, DTO_RELATION_MODIFIERS_ON_UPDATE } from '../annotations';
 import {
   isAnnotatedWith,
@@ -16,7 +14,7 @@ import {
   Help,
 } from '../help';
 import { Model } from '../model';
-import type { Imports, ParsedField } from '../types';
+import type { FieldOverride, Imports, ParsedField } from '../types';
 
 export function transformUpdate({
   model,
@@ -43,7 +41,7 @@ export function transformUpdate({
       return result;
 
     const { name, isRequired } = field;
-    const overrides: Partial<DMMF.Field> = {
+    const overrides: FieldOverride = {
       isNullable: !isRequired,
       isRequired: false,
     };

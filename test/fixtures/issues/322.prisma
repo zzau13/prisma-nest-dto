@@ -1,0 +1,48 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+}
+
+generator nestjsDto {
+  provider                        = "node -r ts-node/register/transpile-only src/cli.ts"
+  output                          = "../src/@generated/prisma-generator-nestjs-dto"
+  outputToNestJsResourceStructure = "false"
+  exportRelationModifierClasses   = "true"
+  createDtoPrefix                 = "Create"
+  updateDtoPrefix                 = "Update"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  fileNamingStyle                 = "camel"
+  importPath                      = "@app/prisma"
+}
+
+model CodeSpace {
+  id                   Int               @id @default(autoincrement())
+  name                 String?
+  description          String?
+  /// @NoAdd  @NoSet
+  createdOn            DateTime          @default(now())
+  owner                User              @relation(fields: [ownerId], references: [authenticatorId], onDelete: Cascade)
+  ownerId              String
+  /// @RAddOnAdd @RLnOnAdd
+  indexedRepo          IndexedRepository @relation(fields: [indexedRepositoryUrl], references: [url])
+  conversations        Conversation[]
+  indexedRepositoryUrl String
+}
+
+model IndexedRepository {
+  url       String      @id
+  CodeSpace CodeSpace[]
+}
+
+model Conversation {
+  id          String     @id
+  codeSpaceId Int?
+  CodeSpace   CodeSpace? @relation(fields: [codeSpaceId], references: [id])
+}
+
+model User {
+  authenticatorId String      @id
+  CodeSpace       CodeSpace[]
+}

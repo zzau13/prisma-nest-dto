@@ -13,6 +13,7 @@ export function transformConnect({
   const fields = model.fields.filter(
     (field) => isId(field, model.primaryKey) || isUnique(field),
   );
+  const imports = help.addImports(fields);
 
-  return { model, fields, imports: help.addImports(fields) };
+  return { model, fields, imports };
 }
