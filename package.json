@@ -40,13 +40,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/botika/prisma-generator-nestjs-dto"
+    "url": "https://github.com/zzau13/prisma-nest-dto"
   },
   "bin": {
     "prisma-generator-nestjs": "dist/cli.js"
   },
   "engines": {
-    "node": ">=14.20"
+    "node": ">=18.20.4"
   },
   "files": [
     "dist"
