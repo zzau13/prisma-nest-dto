@@ -9,12 +9,12 @@ export class ConnectProductDto {
   id: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/connect-product.dto.ts",
   },
   {
     "content": "
 import {IsOptional,IsDateString} from 'class-validator'
-import {Prisma} from '@app/prisma'
+import {Prisma} from '@prisma/client'
 
 
 export class CreateProductDto {
@@ -37,12 +37,12 @@ decimal?: Prisma.Decimal;
 date?: Date;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/create-product.dto.ts",
   },
   {
     "content": "
 import {IsOptional,IsDateString} from 'class-validator'
-import {Prisma} from '@app/prisma'
+import {Prisma} from '@prisma/client'
 
 
 export class UpdateProductDto {
@@ -65,13 +65,13 @@ decimal?: Prisma.Decimal  | null;
 date?: Date ;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/update-product.dto.ts",
   },
   {
     "content": "
 import {IsOptional,IsDateString} from 'class-validator'
+import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
-import {Prisma} from '@app/prisma'
 
 export class Product {
   id: string ;
@@ -98,7 +98,7 @@ export class ProductRel {
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/entities/product.entity.ts",
   },
 ]
 `;

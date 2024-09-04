@@ -10,7 +10,7 @@ export class ConnectProductDto {
 id: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/connect-product.dto.ts",
   },
   {
     "content": "
@@ -18,7 +18,7 @@ import {IsUUID,IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'c
 import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
-import {ConnectCategoryDto} from './connect-category.dto'
+import {ConnectCategoryDto} from '../../category/dto/connect-category.dto'
 export class CreateProductCategoryRelationInputDto {
       @Type(() => ConnectCategoryDto)
 @ValidateNested()
@@ -52,7 +52,7 @@ companyId: string;
 category: CreateProductCategoryRelationInputDto;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/create-product.dto.ts",
   },
   {
     "content": "
@@ -60,7 +60,7 @@ import {IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'class-va
 import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {ApiExtraModels} from '@nestjs/swagger'
-import {ConnectCompanyDto} from './connect-company.dto'
+import {ConnectCompanyDto} from '../../company/dto/connect-company.dto'
 export class UpdateProductCompanyRelationInputDto {
       @Type(() => ConnectCompanyDto)
 @ValidateNested()
@@ -86,7 +86,7 @@ score?: number  | null;
 company?: UpdateProductCompanyRelationInputDto ;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/update-product.dto.ts",
   },
   {
     "content": "
@@ -94,8 +94,8 @@ import {IsUUID,IsBoolean,IsOptional,IsPositive,IsDecimal,ValidateNested} from 'c
 import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
-import {Company} from './company.entity'
-import {Category} from './category.entity'
+import {Company} from '../../company/entities/company.entity'
+import {Category} from '../../category/entities/category.entity'
 
 export class Product {
   @IsUUID('4')
@@ -130,7 +130,7 @@ company: Company ;
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/entities/product.entity.ts",
   },
   {
     "content": "
@@ -139,7 +139,7 @@ export class ConnectCategoryDto {
   id: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-category.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/category/dto/connect-category.dto.ts",
   },
   {
     "content": "
@@ -150,7 +150,7 @@ export class CreateCategoryDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-category.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/category/dto/create-category.dto.ts",
   },
   {
     "content": "
@@ -161,14 +161,14 @@ export class UpdateCategoryDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-category.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/category/dto/update-category.dto.ts",
   },
   {
     "content": "
 import {ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {Product} from './product.entity'
+import {Product} from '../../product/entities/product.entity'
 
 export class Category {
   id: string ;
@@ -180,7 +180,7 @@ product: Product[] ;
 }
 export class CategoryFull extends IntersectionType(Category, CategoryRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/category.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/category/entities/category.entity.ts",
   },
   {
     "content": "
@@ -189,7 +189,7 @@ export class ConnectCompanyDto {
   id: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-company.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/company/dto/connect-company.dto.ts",
   },
   {
     "content": "
@@ -200,7 +200,7 @@ export class CreateCompanyDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-company.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/company/dto/create-company.dto.ts",
   },
   {
     "content": "
@@ -211,14 +211,14 @@ export class UpdateCompanyDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-company.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/company/dto/update-company.dto.ts",
   },
   {
     "content": "
 import {ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {Product} from './product.entity'
+import {Product} from '../../product/entities/product.entity'
 
 export class Company {
   id: string ;
@@ -230,7 +230,7 @@ product: Product[] ;
 }
 export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/company.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/company/entities/company.entity.ts",
   },
 ]
 `;

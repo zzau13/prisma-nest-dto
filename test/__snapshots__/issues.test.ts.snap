@@ -9,15 +9,15 @@ export class ConnectCodeSpaceDto {
   id: number;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-codeSpace.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace/dto/connect-codeSpace.dto.ts",
   },
   {
     "content": "
 import {IsOptional,ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {ApiExtraModels} from '@nestjs/swagger'
-import {CreateIndexedRepositoryDto} from './create-indexedRepository.dto'
-import {ConnectIndexedRepositoryDto} from './connect-indexedRepository.dto'
+import {CreateIndexedRepositoryDto} from '../../indexedRepository/dto/create-indexedRepository.dto'
+import {ConnectIndexedRepositoryDto} from '../../indexedRepository/dto/connect-indexedRepository.dto'
 export class CreateCodeSpaceIndexedRepoRelationInputDto {
       @Type(() => CreateIndexedRepositoryDto)
 @ValidateNested()
@@ -39,7 +39,7 @@ indexedRepo: CreateCodeSpaceIndexedRepoRelationInputDto;
   indexedRepositoryUrl: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-codeSpace.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace/dto/create-codeSpace.dto.ts",
   },
   {
     "content": "
@@ -53,16 +53,16 @@ name?: string  | null;
 description?: string  | null;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-codeSpace.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace/dto/update-codeSpace.dto.ts",
   },
   {
     "content": "
 import {IsOptional,IsDateString,ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {User} from './user.entity'
-import {IndexedRepository} from './indexedRepository.entity'
-import {Conversation} from './conversation.entity'
+import {User} from '../../user/entities/user.entity'
+import {IndexedRepository} from '../../indexedRepository/entities/indexedRepository.entity'
+import {Conversation} from '../../conversation/entities/conversation.entity'
 
 export class CodeSpace {
   id: number ;
@@ -88,7 +88,7 @@ conversations: Conversation[] ;
 }
 export class CodeSpaceFull extends IntersectionType(CodeSpace, CodeSpaceRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/codeSpace/entities/codeSpace.entity.ts",
   },
   {
     "content": "
@@ -97,7 +97,7 @@ export class ConnectIndexedRepositoryDto {
   url: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-indexedRepository.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository/dto/connect-indexedRepository.dto.ts",
   },
   {
     "content": "
@@ -108,7 +108,7 @@ export class CreateIndexedRepositoryDto {
   url: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-indexedRepository.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository/dto/create-indexedRepository.dto.ts",
   },
   {
     "content": "
@@ -119,14 +119,14 @@ export class UpdateIndexedRepositoryDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-indexedRepository.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository/dto/update-indexedRepository.dto.ts",
   },
   {
     "content": "
 import {ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {CodeSpace} from './codeSpace.entity'
+import {CodeSpace} from '../../codeSpace/entities/codeSpace.entity'
 
 export class IndexedRepository {
   url: string ;
@@ -138,7 +138,7 @@ CodeSpace: CodeSpace[] ;
 }
 export class IndexedRepositoryFull extends IntersectionType(IndexedRepository, IndexedRepositoryRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/indexedRepository/entities/indexedRepository.entity.ts",
   },
   {
     "content": "
@@ -147,7 +147,7 @@ export class ConnectConversationDto {
   id: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-conversation.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation/dto/connect-conversation.dto.ts",
   },
   {
     "content": "
@@ -160,7 +160,7 @@ export class CreateConversationDto {
 codeSpaceId?: number;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-conversation.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation/dto/create-conversation.dto.ts",
   },
   {
     "content": "
@@ -171,14 +171,14 @@ export class UpdateConversationDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-conversation.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation/dto/update-conversation.dto.ts",
   },
   {
     "content": "
 import {IsOptional,ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {CodeSpace} from './codeSpace.entity'
+import {CodeSpace} from '../../codeSpace/entities/codeSpace.entity'
 
 export class Conversation {
   id: string ;
@@ -193,7 +193,7 @@ CodeSpace: CodeSpace  | null;
 }
 export class ConversationFull extends IntersectionType(Conversation, ConversationRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/conversation/entities/conversation.entity.ts",
   },
   {
     "content": "
@@ -202,7 +202,7 @@ export class ConnectUserDto {
   authenticatorId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-user.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user/dto/connect-user.dto.ts",
   },
   {
     "content": "
@@ -213,7 +213,7 @@ export class CreateUserDto {
   authenticatorId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-user.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user/dto/create-user.dto.ts",
   },
   {
     "content": "
@@ -224,14 +224,14 @@ export class UpdateUserDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-user.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user/dto/update-user.dto.ts",
   },
   {
     "content": "
 import {ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {CodeSpace} from './codeSpace.entity'
+import {CodeSpace} from '../../codeSpace/entities/codeSpace.entity'
 
 export class User {
   authenticatorId: string ;
@@ -243,7 +243,7 @@ CodeSpace: CodeSpace[] ;
 }
 export class UserFull extends IntersectionType(User, UserRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/user/entities/user.entity.ts",
   },
 ]
 `;

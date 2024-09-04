@@ -13,7 +13,7 @@ export class ConnectSettingDto {
 type: SettingPropType;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-setting.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting/dto/connect-setting.dto.ts",
   },
   {
     "content": "
@@ -29,7 +29,7 @@ export class CreateSettingDto {
 type: SettingPropType;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-setting.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting/dto/create-setting.dto.ts",
   },
   {
     "content": "
@@ -40,7 +40,7 @@ export class UpdateSettingDto {
   value?: string ;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-setting.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting/dto/update-setting.dto.ts",
   },
   {
     "content": "
@@ -59,7 +59,7 @@ export class SettingRel {
 }
 export class SettingFull extends IntersectionType(Setting, SettingRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/setting/entities/setting.entity.ts",
   },
 ]
 `;

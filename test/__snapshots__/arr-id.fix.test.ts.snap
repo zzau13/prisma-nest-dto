@@ -9,7 +9,7 @@ export class ConnectPlantDto {
   plantId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-plant.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant/dto/connect-plant.dto.ts",
   },
   {
     "content": "
@@ -20,7 +20,7 @@ export class CreatePlantDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-plant.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant/dto/create-plant.dto.ts",
   },
   {
     "content": "
@@ -31,15 +31,15 @@ export class UpdatePlantDto {
   
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-plant.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant/dto/update-plant.dto.ts",
   },
   {
     "content": "
 import {ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {IntersectionType} from '@nestjs/swagger'
-import {Product} from './product.entity'
-import {Item} from './item.entity'
+import {Product} from '../../product/entities/product.entity'
+import {Item} from '../../item/entities/item.entity'
 
 export class Plant {
   plantId: string ;
@@ -54,7 +54,7 @@ items: Item[] ;
 }
 export class PlantFull extends IntersectionType(Plant, PlantRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/plant/entities/plant.entity.ts",
   },
   {
     "content": "
@@ -64,7 +64,7 @@ export class ConnectProductDto {
   plantId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/connect-product.dto.ts",
   },
   {
     "content": "
@@ -91,7 +91,7 @@ decimal?: Prisma.Decimal;
   companyId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/create-product.dto.ts",
   },
   {
     "content": "
@@ -117,7 +117,7 @@ decimal?: Prisma.Decimal  | null;
   companyId?: string ;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-product.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/dto/update-product.dto.ts",
   },
   {
     "content": "
@@ -125,7 +125,7 @@ import {IsOptional,ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
-import {Plant} from './plant.entity'
+import {Plant} from '../../plant/entities/plant.entity'
 
 export class Product {
   id: string ;
@@ -153,7 +153,7 @@ plant: Plant ;
 }
 export class ProductFull extends IntersectionType(Product, ProductRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/product/entities/product.entity.ts",
   },
   {
     "content": "
@@ -164,7 +164,7 @@ export class ConnectItemDto {
   orderId: string;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/connect-item.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item/dto/connect-item.dto.ts",
   },
   {
     "content": "
@@ -181,7 +181,7 @@ diner?: Prisma.Decimal;
   quantity: Prisma.Decimal;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/create-item.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item/dto/create-item.dto.ts",
   },
   {
     "content": "
@@ -196,7 +196,7 @@ diner?: Prisma.Decimal  | null;
   quantity?: Prisma.Decimal ;
 }
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/update-item.dto.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item/dto/update-item.dto.ts",
   },
   {
     "content": "
@@ -204,7 +204,7 @@ import {IsOptional,ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 import {Prisma} from '@prisma/client'
 import {IntersectionType} from '@nestjs/swagger'
-import {Plant} from './plant.entity'
+import {Plant} from '../../plant/entities/plant.entity'
 
 export class Item {
   itemId: string ;
@@ -222,7 +222,7 @@ plant: Plant ;
 }
 export class ItemFull extends IntersectionType(Item, ItemRel) {}
 ",
-    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item.entity.ts",
+    "fileName": "../src/@generated/prisma-generator-nestjs-dto/item/entities/item.entity.ts",
   },
 ]
 `;
