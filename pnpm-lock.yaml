@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@antfu/ni':
-    specifier: 0.21.12
-    version: 0.21.12
+    specifier: 0.23.0
+    version: 0.23.0
   '@babel/generator':
     specifier: ^7.25.6
     version: 7.25.6
@@ -132,8 +132,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
-  /@antfu/ni@0.21.12:
-    resolution: {integrity: sha512-2aDL3WUv8hMJb2L3r/PIQWsTLyq7RQr3v9xD16fiz6O8ys1xEyLhhTOv8gxtZvJiTzjTF5pHoArvRdesGL1DMQ==}
+  /@antfu/ni@0.23.0:
+    resolution: {integrity: sha512-R5/GkA3PfGewAXLzz6lN5XagunF6PKeDtWt8dbZQXvHfebLS0qEczV+Azg/d+tKgSh6kRBpxvu8oSjARdPtw0A==}
     hasBin: true
     dev: false
 
