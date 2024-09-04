@@ -12,13 +12,7 @@ import { doRegulars } from './regulars';
 export type Model = ReturnType<typeof getModels>[number];
 export const getModels = (
   models: readonly DMMF.Model[],
-  {
-    outputToNestJsResourceStructure,
-    output,
-    fileNamingStyle,
-    cvIsOptional,
-    cvIsDateString,
-  }: Options,
+  { output, fileNamingStyle, cvIsOptional, cvIsDateString }: Options,
   config: Config,
 ) =>
   models
@@ -45,20 +39,16 @@ export const getModels = (
           }))
           .filter((x) => !isAnnotatedWith(x, Ann.IGNORE)),
         output: {
-          dto: outputToNestJsResourceStructure
-            ? path.join(
-                output,
-                transformers[fileNamingStyle](model.name),
-                'dto',
-              )
-            : output,
-          entity: outputToNestJsResourceStructure
-            ? path.join(
-                output,
-                transformers[fileNamingStyle](model.name),
-                'entities',
-              )
-            : output,
+          dto: path.join(
+            output,
+            transformers[fileNamingStyle](model.name),
+            'dto',
+          ),
+          entity: path.join(
+            output,
+            transformers[fileNamingStyle](model.name),
+            'entities',
+          ),
         },
       };
     });

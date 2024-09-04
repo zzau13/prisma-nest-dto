@@ -2,8 +2,8 @@ import { IsOptional, ValidateNested, IsDateString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Prisma } from '@prisma/client';
 import { ApiExtraModels } from '@nestjs/swagger';
-import { ConnectCompanyDto } from './connect-company.dto';
-import { ConnectCategoryDto } from './connect-category.dto';
+import { ConnectCompanyDto } from '../../company/dto/connect-company.dto';
+import { ConnectCategoryDto } from '../../category/dto/connect-category.dto';
 export class CreateProductCategoryRelationInputDto {
   @Type(() => ConnectCategoryDto)
   @ValidateNested()

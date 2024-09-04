@@ -6,7 +6,7 @@ datasource db {
 generator nestjsDto {
   provider                        = "prisma-generator-nestjs"
   fileConfig                      = "../nest-dto.js"
-  output                          = "./src/@generated/prisma-generator-nestjs-dto"
+  output                          = "./src/@generated"
   outputToNestJsResourceStructure = "false"
   exportRelationModifierClasses   = "true"
   createDtoPrefix                 = "Create"

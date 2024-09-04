@@ -2,8 +2,8 @@ import { IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Prisma } from '@prisma/client';
 import { IntersectionType } from '@nestjs/swagger';
-import { Company } from './company.entity';
-import { Category } from './category.entity';
+import { Company } from '../../company/entities/company.entity';
+import { Category } from '../../category/entities/category.entity';
 
 export class Product {
   id: string;

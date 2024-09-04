@@ -1,14 +1,14 @@
 import { ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { IntersectionType } from '@nestjs/swagger';
-import { Product } from './product.entity';
+import { Product } from '../../product/entities/product.entity';
 
-export class Company {
+export class Category {
   id: string;
 }
-export class CompanyRel {
+export class CategoryRel {
   @Type(() => Product)
   @ValidateNested()
   Product: Product[];
 }
-export class CompanyFull extends IntersectionType(Company, CompanyRel) {}
+export class CategoryFull extends IntersectionType(Category, CategoryRel) {}

@@ -10,6 +10,8 @@ import { camel, kebab, pascal, snake } from 'case';
 import { Model } from './model';
 import { decoRelated } from '../contants';
 
+const importPath = '@prisma/client';
+
 export function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);
   const hasNonAscii = /[^\u0000-\u0080]+/.test(path); // eslint-disable-line no-control-regex
@@ -349,9 +351,7 @@ export const makeHelpers = ({
   entityPrefix,
   entitySuffix,
   decimalAsNumber,
-  mode,
   fileNamingStyle,
-  importPath,
 }: Options) => {
   const transformFileNameCase = transformers[fileNamingStyle];
   const transformClassNameCase = pascal;
@@ -449,10 +449,7 @@ export const makeHelpers = ({
     `@ApiExtraModels(${names.map(entityName)})`;
 
   /*'@nestjs/graphql'*/
-  let imports = '';
-  if (mode === 'openapi') imports = '@nestjs/swagger';
-  else throw new Error('unimplemented graphql support');
-  const nestImport = () => imports;
+  const nestImport = () => '@nestjs/swagger';
   const makeImportsFromPrismaClient = (
     fields: ParsedField[],
   ): Imports | null => {

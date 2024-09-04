@@ -6,7 +6,7 @@ import { run } from './generator';
 import { Options, parseOptions } from './options';
 import { getConfigFile } from './config';
 
-export const completeFiles = (results: ReturnType<typeof run>) => {
+export function completeFiles(results: ReturnType<typeof run>) {
   const indexCollections: Record<string, ReturnType<typeof run>[number]> = {};
   results.forEach(({ fileName }) => {
     const dirName = path.dirname(fileName);
@@ -40,7 +40,7 @@ export const completeFiles = (results: ReturnType<typeof run>) => {
     .concat(Object.values(indexCollections))
     .map((x) => ({ ...x, override: true }))
     .concat(extensionsCollections.map((x) => ({ ...x, override: false })));
-};
+}
 
 async function writeFiles(
   files: ReturnType<typeof completeFiles>,

@@ -28,9 +28,7 @@ export function parseOptions({
     entityPrefix = '',
     entitySuffix = '',
     fileNamingStyle = 'kebab',
-    mode = 'openapi',
     fileConfig = FILE,
-    importPath = '@prisma/client',
   } = config as Record<string, string>;
 
   const cvIsDateString = stringToBoolean(config.cvIsDateString, true);
@@ -40,11 +38,6 @@ export function parseOptions({
   const exportRelationModifierClasses = stringToBoolean(
     config.exportRelationModifierClasses,
     true,
-  );
-
-  const outputToNestJsResourceStructure = stringToBoolean(
-    config.outputToNestJsResourceStructure,
-    false,
   );
 
   type NamingStyle = 'snake' | 'camel' | 'pascal' | 'kebab';
@@ -68,17 +61,6 @@ export function parseOptions({
     );
   }
 
-  type Mode = 'openapi' | 'graphql';
-  const modes: Mode[] = ['openapi', 'graphql'];
-  const isMode = (mode: unknown): mode is Mode => modes.includes(mode as Mode);
-  if (!isMode(mode))
-    throw new Error(
-      `${mode} is not a valid mode. Valid options ar ${modes.each(
-        (s) => `'${s}'`,
-        ', ',
-      )}`,
-    );
-
   return {
     connectDtoPrefix,
     createDtoPrefix,
@@ -92,10 +74,7 @@ export function parseOptions({
     exportRelationModifierClasses,
     fileConfig,
     fileNamingStyle,
-    importPath,
-    mode,
     output: parsedOutput,
-    outputToNestJsResourceStructure,
     prettier,
     updateDtoPrefix,
   };
