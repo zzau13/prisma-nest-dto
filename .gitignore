@@ -7,5 +7,7 @@ dist
 package-lock.json
 .idea
 .eslintcache
+prisma-generator-nestjs*.tgz
+/example/pnpm-lock.yaml
 
 *.log

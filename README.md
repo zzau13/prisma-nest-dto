@@ -1,4 +1,4 @@
-# Prisma Generator NestJS [![npm version](https://badge.fury.io/js/prisma-generator-nestjs.svg)](https://www.npmjs.com/package/prisma-generator-nestjs) [![codecov](https://codecov.io/gh/botika/prisma-generator-nestjs-dto/branch/main/graph/badge.svg?token=HIJKP2ENHQ)](https://codecov.io/gh/botika/prisma-generator-nestjs-dto) [![Netlify Status](https://api.netlify.com/api/v1/badges/5506fb1e-286c-4834-adae-9e3c967f294b/deploy-status)](https://app.netlify.com/sites/prisma-generator-nestjs/deploys)
+# Prisma Generator NestJS [![npm version](https://badge.fury.io/js/prisma-generator-nestjs.svg)](https://www.npmjs.com/package/prisma-generator-nestjs) [![Netlify Status](https://api.netlify.com/api/v1/badges/5506fb1e-286c-4834-adae-9e3c967f294b/deploy-status)](https://app.netlify.com/sites/prisma-generator-nestjs/deploys)
 
 ## [Documentation](https://prisma-generator-nestjs.netlify.app/)
 

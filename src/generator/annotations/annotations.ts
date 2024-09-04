@@ -1,7 +1,6 @@
 import * as deco from 'class-validator/cjs/decorator/decorators';
 import { parseExpression } from '@babel/parser';
 import generate from '@babel/generator';
-import { logger } from '@prisma/internals';
 
 export enum Ct {
   TYPE = 'Type',
@@ -73,8 +72,6 @@ export function annotate(doc?: string) {
                 ? ('class-transformer' as const)
                 : ('class-validator' as const),
             });
-          } else {
-            logger.warn(`Duplicated decorator @${name}`);
           }
         } else if (
           x.expression.type === 'Identifier' &&
@@ -84,8 +81,6 @@ export function annotate(doc?: string) {
           if (!has.has(name)) {
             has.add(name);
             ret.push({ name });
-          } else {
-            logger.warn(`Duplicated decorator @${name}`);
           }
         } else throw new Error(`not valid decorator ${generate(x).code}`);
   }

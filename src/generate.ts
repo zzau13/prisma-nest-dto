@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { makeDirectory } from 'make-dir';
 import { GeneratorOptions } from '@prisma/generator-helper';
 
 import { run } from './generator';
@@ -62,7 +61,7 @@ async function writeFiles(
   return await Promise.all(
     files.map(async ({ fileName, content, override }) => {
       if (override || !(await fs.stat(fileName).catch(() => false))) {
-        await makeDirectory(path.dirname(fileName));
+        await fs.mkdir(path.dirname(fileName), { recursive: true });
         return fs.writeFile(fileName, await format(content));
       }
     }),
@@ -71,7 +70,7 @@ async function writeFiles(
 
 export async function generate(options: GeneratorOptions) {
   const parsedOptions = parseOptions(options);
-  const config = await getConfigFile(parsedOptions.fileConfig);
+  const config = await getConfigFile(parsedOptions.fileConfig as string);
   const results = run(parsedOptions, config);
   const final = completeFiles(results);
 

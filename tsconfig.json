@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ES2021",
     "declaration": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "outDir": "dist",
     "removeComments": true,
-    "strict": true,
-    "target": "ES2015",
-    "allowJs": true
+    "strict": true
   },
-  "exclude": ["node_modules", "coverage", "dist"]
+  "exclude": ["node_modules", "coverage", "dist", "example"]
 }

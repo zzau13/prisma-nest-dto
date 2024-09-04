@@ -1,5 +1,4 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
-import { Dictionary, parseEnvValue } from '@prisma/internals';
 import { FILE } from './config';
 
 function stringToBoolean(input?: string | string[], defaultValue = false) {
@@ -19,7 +18,7 @@ export function parseOptions({
   generator: { config, output },
   dmmf,
 }: Pick<GeneratorOptions, 'dmmf' | 'generator'>) {
-  const parsedOutput = output ? parseEnvValue(output) : '';
+  const parsedOutput = output?.value ?? '';
   // TODO: check is string
   const {
     connectDtoPrefix = 'Connect',
@@ -32,7 +31,7 @@ export function parseOptions({
     mode = 'openapi',
     fileConfig = FILE,
     importPath = '@prisma/client',
-  } = config as Dictionary<string>;
+  } = config as Record<string, string>;
 
   const cvIsDateString = stringToBoolean(config.cvIsDateString, true);
   const cvIsOptional = stringToBoolean(config.cvIsOptional, true);

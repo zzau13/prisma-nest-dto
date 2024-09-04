@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { logger } from '@prisma/internals';
 
 import { makeHelpers } from './help';
 import {
@@ -25,8 +24,6 @@ export const run = (options: Options, config: Config) => {
   const allModels = getModels(dmmf.datamodel.models, options, config);
 
   return allModels.flatMap((model) => {
-    logger.info(`Processing Model ${model.name}`);
-
     // generate connect-model.dto.ts
     const connectDto = {
       fileName: path.join(
