@@ -1,0 +1,4 @@
+[build]
+  base = "book/"
+  publish = "book/book"
+  command = "cargo install mdbook && mdbook build"
